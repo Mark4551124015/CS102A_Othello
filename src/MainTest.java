@@ -17,6 +17,7 @@ public class MainTest {
 
         Grid.roundsTurn(1);
         Grid.setonDisk(new intVct(3,2));
+        //FUCK JERRY
         Grid.printGrid();
 
     }
