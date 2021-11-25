@@ -1,7 +1,7 @@
 package Object;
 
 public class Player extends OthelloObject{
-    private  String playerID;
+    private String playerID;
     private String playerName;
 
     private boolean Active;

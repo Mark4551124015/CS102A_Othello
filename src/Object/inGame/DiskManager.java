@@ -28,7 +28,7 @@ public class DiskManager extends OthelloObject {
     public void roundsTurn(int toPlayer) {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if(this.Disks[r][c].isonBoard() == false){
+                if(!this.Disks[r][c].isOnBoard()){
                     this.Disks[r][c].setStatus(toPlayer);
                 }
             }
@@ -49,7 +49,7 @@ public class DiskManager extends OthelloObject {
         System.out.println();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (this.Disks[r][c].getVisbility() == true){
+                if (this.Disks[r][c].getVisbility()){
                     System.out.print(this.getDiskstatus(new intVct(r, c)));
                 } else {
                     System.out.print(0);

@@ -35,7 +35,7 @@ public class Disk extends OthelloObject {
         this.setVisibility(true);
     }
 
-    public boolean isonBoard() {
+    public boolean isOnBoard() {
         return this.onBoard;
     }
 
