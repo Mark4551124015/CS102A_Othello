@@ -12,11 +12,11 @@ public class MainTest {
         Grid.printGrid();
 
         Grid.roundsTurn(-1);
-        Grid.setonDisk(new intVct(2,2));
+        Grid.setDisk(new intVct(2,2),-1);
         Grid.printGrid();
 
         Grid.roundsTurn(1);
-        Grid.setonDisk(new intVct(3,2));
+        Grid.setDisk(new intVct(3,2), 1);
         //FUCK JERRY
         Grid.printGrid();
 

@@ -6,6 +6,7 @@ public class Player extends OthelloObject{
 
     private boolean Active;
     private boolean Ready;
+    private int color;
 //    private boolean isOnline;
 //    private boolean isLocal;
 
@@ -20,6 +21,7 @@ public class Player extends OthelloObject{
         this.Ready = false;
         this.Active = true;
         this.isCheating = false;
+        this.color = 0;
     }
 
     public boolean getReady() {
@@ -38,7 +40,13 @@ public class Player extends OthelloObject{
         this.playerName = name;
     }
 
+    public int getColor() {
+        return this.color;
+    }
 
+    public void setColor(int color) {
+        this.color = color;
+    }
 
 
 

@@ -17,12 +17,14 @@ public class DiskManager extends OthelloObject {
                 ++index;
             }
         }
+
+
+
     }
 
     public void flipDisks(intVct bP) {
         this.Disks[bP.r][bP.c].flip();
     }
-
 
     //换边
     public void roundsTurn(int toPlayer) {
@@ -35,12 +37,14 @@ public class DiskManager extends OthelloObject {
         }
     }
 
-    //落子
-    public void setonDisk(intVct bP) {
+    //设置某个子
+    public void setDisk(intVct bP, int status) {
         this.Disks[bP.r][bP.c].setOnBoard();
+        this.Disks[bP.r][bP.c].setStatus(status);
     }
 
-    public int getDiskstatus(intVct bP) {
+    //获取某个子的状态
+    public int getDiskStatus(intVct bP) {
         return this.Disks[bP.r][bP.c].getStatus();
     }
 
@@ -50,7 +54,7 @@ public class DiskManager extends OthelloObject {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (this.Disks[r][c].getVisbility()){
-                    System.out.print(this.getDiskstatus(new intVct(r, c)));
+                    System.out.print(this.getDiskStatus(new intVct(r, c)));
                 } else {
                     System.out.print(0);
                 }
@@ -59,5 +63,11 @@ public class DiskManager extends OthelloObject {
             System.out.println();
         }
     }
+
+    public void operation() {
+
+    }
+
+
 
 }
