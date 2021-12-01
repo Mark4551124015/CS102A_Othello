@@ -10,6 +10,4 @@ public class Operation {
         this.Operation = operation;
         this.Operator = operator;
     }
-
-
 }

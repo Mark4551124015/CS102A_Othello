@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class DiskManager extends OthelloObject {
     private Disk[][] Disks = new Disk[8][8];
 
+
     //创建64个棋
     public DiskManager(){
         super("DiskManager");
@@ -24,6 +25,20 @@ public class DiskManager extends OthelloObject {
 
     public void flipDisks(intVct bP) {
         this.Disks[bP.r][bP.c].flip();
+    }
+
+    //检查某个位置可否下棋子
+    public boolean checkDisk(intVct bP, int status) {
+        if (this.Disks[bP.r][bP.c] != null) {
+            return false;
+        }if (this.Disks[][])
+    }
+
+    //检查玩家可落子的地方
+    public ArrayList validBP(intVct bP, int status) {
+        ArrayList<intVct> validBP = new ArrayList<>(0);
+
+        if() {}
     }
 
     //换边
@@ -64,7 +79,8 @@ public class DiskManager extends OthelloObject {
         }
     }
 
-    public void operation() {
+    public void dropDisk(intVct bP, Player player) {
+        setDisk(bP,player.getColor());
 
     }
 
