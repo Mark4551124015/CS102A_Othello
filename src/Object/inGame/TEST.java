@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import Object.Player;
 import newData.Operation;
 
-public class Game {
+public class TEST {
+    public Object start;
     private int gid;
     private String name;
     private static int gameCnt=1;
@@ -14,7 +15,7 @@ public class Game {
     private ArrayList<Operation> operationArrayList;
     private int[][] board = new int[8][8];
 
-    public Game(String name, Player whitePlayer, Player blackPlayer) {
+    public TEST(String name, Player whitePlayer, Player blackPlayer) {
         this.name = name;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
@@ -23,11 +24,11 @@ public class Game {
         this.operationArrayList = new ArrayList<>(0);
     }
 
-    public Game() {
+    public TEST() {
         String name = "Game_" + gid;
         Player white = new Player("White","White");
         Player black = new Player("Black","black");
-        new Game(name,white,black);
+        new TEST(name,white,black);
     }
 
 //    public boolean checkStep(int sid) {

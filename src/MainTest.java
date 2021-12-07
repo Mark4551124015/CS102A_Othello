@@ -1,26 +1,29 @@
 import Object.inGame.Disk;
-import Object.inGame.DiskManager;
+import Object.inGame.*;
+import Object.Player;
+import Object.Game;
 import newData.Trans;
 import newData.Vct;
 import Object.OthelloObject;
 import newData.intVct;
 
+
 public class MainTest {
     public static void main (String[] args) {
 
-        DiskManager Grid = new DiskManager();
-        Grid.printGrid();
-
-        Grid.roundsTurn(-1);
-        Grid.setDisk(new intVct(2,2),-1);
-        Grid.printGrid();
-
-        Grid.roundsTurn(1);
-        Grid.setDisk(new intVct(3,2), 1);
-        //FUCK JERRY
-        Grid.printGrid();
-
+        Player white = new Player("1","FZX");
+        white.setColor(1);
+        Player black = new Player("2", "JR");
+        black.setColor(-1);
+        Game TEST = new Game("TEST",white,black);
+        for(int i = 0; i< 100; i++) {
+            TEST.start();
+            TEST.renew();
+        }
+        }
     }
 
-}
+
+
+
 
