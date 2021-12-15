@@ -1,6 +1,6 @@
 package newData;
 
-import Object.Player;
+import object.Player;
 
 public class Operation {
     public String Operation;
