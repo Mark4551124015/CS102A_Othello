@@ -49,6 +49,12 @@ public class GameManager implements Runnable {
                 this.stageContainer.enterStage(new Othello(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
             }
         }
+
+
+
+
+
+
     }
 
 
