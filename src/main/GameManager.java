@@ -1,26 +1,33 @@
 package main;
 
 
+import object.Player;
+import object.PlayerManager;
+
+import static object.Player.playerType.local;
+import static object.PlayerManager.User;
+
 import stage.GameStage;
-import stage.GameStageID;
+import stage.GameStage.GameStageID;
 import stage.scene.*;
 import stage.StageContainer;
 import stage.transition.FadeInTransition;
 import input.Controller;
 import stage.transition.FadeOutTransition;
-
 import java.awt.*;
 
 public class GameManager implements Runnable {
     public static final int FPS = 144;
 
     private StageContainer stageContainer;
+    private PlayerManager playerManager = new PlayerManager();
 
     public GameManager() {
         this.stageContainer = new StageContainer();
     }
 
     public void start() {
+        User = new Player("mark455","Mark455", local);
         Thread GMThread = new Thread(this);
         GMThread.start();
     }
@@ -46,22 +53,14 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
             if (((Lobby)stage).isReadyForGame()) {
-                this.stageContainer.enterStage(new Othello(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
+                this.stageContainer.enterStage(new Matching(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
             }
         }
-
-
-
-
-
-
     }
-
 
     public StageContainer getStageContainer() {
         return this.stageContainer;
     }
-
 
     @Override
     public void run() {

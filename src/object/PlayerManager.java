@@ -5,10 +5,11 @@ import net.sf.json.JSONObject;
 import java.util.ArrayList;
 
 import static object.Player.playerType.*;
-import static util.JsonHanderler.saveDataToFile;
+import static util.JsonHandler.saveDataToFile;
 
 public class PlayerManager extends OthelloObject{
     private ArrayList<Player> players = new ArrayList<>();
+
     public static Player User;
 
     public PlayerManager(){
@@ -42,13 +43,19 @@ public class PlayerManager extends OthelloObject{
         }
     }
 
-    public void savePlayer(String username) {
-        if (User == null) {
-            System.out.println("Failed");
+    public void savePlayer(Player player) {
+        if (player == null) {
+            System.out.println("Failed to save null Player");
+            return;
         }
-        JSONObject jsonObject = JSONObject.fromObject(User);
-        String jsonStr=jsonObject.toString();
-        saveDataToFile("/player/" +username,jsonStr);
+
+        if (player.getType() != local) {
+            System.out.println("Failed to save not Player on cloud");
+            return;
+        }
+        JSONObject jsonPlayer = player.toJson();
+        String str = jsonPlayer.toString();
+        saveDataToFile("/player/" + player.getUsername(), str);
         System.out.println("Successfully Saved");
     }
 
@@ -57,8 +64,6 @@ public class PlayerManager extends OthelloObject{
             System.out.println("Failed");
         }
     }
-
-
 
 
 }

@@ -13,7 +13,6 @@ import object.OthelloObject;
 import object.Player;
 import object.inGame.BoardIndex;
 import object.inGame.DiskManager;
-import stage.GameStageID;
 
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
@@ -58,6 +57,14 @@ public class Othello extends OthelloObject implements stage.GameStage {
         this.addObj(background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
 
+        init_Game();
+
+
+    }
+
+
+
+    public void init_Game() {
         //棋盘
         this.Board = new OthelloObject("Board", new Sprite("Board"));
         this.background.addObj(this.Board);
@@ -72,9 +79,7 @@ public class Othello extends OthelloObject implements stage.GameStage {
         this.boardIndex = new BoardIndex();
         this.boardIndex.setVisibility(true);
         this.Board.addObj(this.boardIndex);
-
     }
-
 
     public intVct mouseBP() {
         Vct pos = Controller.getMousePos();

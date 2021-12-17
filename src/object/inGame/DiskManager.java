@@ -238,6 +238,9 @@ public class DiskManager extends OthelloObject {
         }
     }
 
+    //同步棋盘
+
+
     @Override
     public void update(double dt) {
         for (int r=0; r<8; r++) {
@@ -253,4 +256,6 @@ public class DiskManager extends OthelloObject {
         super.update(dt);
 
     }
+
+
 }

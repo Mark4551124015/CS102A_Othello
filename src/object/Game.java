@@ -77,7 +77,7 @@ public class Game extends OthelloObject{
             System.out.println("Draw");
         }
         else {
-            this.winner.winCntplus(1);
+            this.winner.winCntPlus(1);
             System.out.println("Winner is " + this.winner.getId());
         }
 
@@ -92,7 +92,6 @@ public class Game extends OthelloObject{
     }
 
     public void update(double dt) {
-
         super.update(dt);
     }
 

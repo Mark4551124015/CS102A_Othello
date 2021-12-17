@@ -99,5 +99,4 @@ public class StageContainer extends JPanel {
         super.paint(g);
         this.render((Graphics2D)g);
     }
-
 }

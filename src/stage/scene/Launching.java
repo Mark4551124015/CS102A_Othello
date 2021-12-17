@@ -4,8 +4,6 @@ import graphics.Shape;
 import main.mainApp;
 import object.OthelloObject;
 import stage.GameStage;
-import stage.GameStageID;
-
 import java.awt.*;
 
 public class Launching extends OthelloObject implements GameStage {
@@ -38,5 +36,4 @@ public class Launching extends OthelloObject implements GameStage {
     public double getTotalTime() {
         return this.totalTime;
     }
-
 }

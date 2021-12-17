@@ -3,7 +3,6 @@ package stage.scene;
 import main.mainApp;
 import stage.GameStage;
 import object.OthelloObject;
-import stage.GameStageID;
 import graphics.Sprite;
 
 public class Demo extends OthelloObject implements GameStage {

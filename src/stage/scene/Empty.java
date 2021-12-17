@@ -2,7 +2,7 @@ package stage.scene;
 import main.mainApp;
 import object.OthelloObject;
 import stage.GameStage;
-import stage.GameStageID;
+
 import graphics.Shape;
 import java.awt.*;
 

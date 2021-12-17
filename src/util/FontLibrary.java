@@ -21,6 +21,10 @@ public class FontLibrary {
         return new Font("Cooper Std", Font.BOLD, fontSize);
     }
 
+    public static Font GetNormalButtonFont(int fontSize) {
+        return new Font("Cooper Std", Font.BOLD, fontSize);
+    }
+
     public static Font GetInputBoxDefaultFont(int fontSize) {
         return new Font("Consolas", Font.ITALIC, fontSize);
     }

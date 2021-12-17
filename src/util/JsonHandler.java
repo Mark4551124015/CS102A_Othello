@@ -1,8 +1,10 @@
 package util;
 
+import net.sf.json.JSONObject;
+
 import java.io.*;
 
-public class JsonHanderler {
+public class JsonHandler {
 
     private static String path = "./save";
 
@@ -37,8 +39,7 @@ public class JsonHanderler {
     }
 
     //取
-    public static String getDatafromFile(String fileName) {
-
+    public static String getStringFromFile(String fileName) {
         String Path= path + fileName+ ".json";
         BufferedReader reader = null;
         String laststr = "";
@@ -64,8 +65,5 @@ public class JsonHanderler {
         }
         return laststr;
     }
-
-
-
 
 }

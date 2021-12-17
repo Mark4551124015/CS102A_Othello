@@ -17,6 +17,8 @@ public class BoardIndex extends OthelloObject {
     public static final double TraceDuration = 0.05;
 
     private boolean pressedState;
+    private boolean clicked;
+
 
     private Animator amt_hx;
     private Animator amt_hy;
@@ -51,17 +53,18 @@ public class BoardIndex extends OthelloObject {
 
     @Override
     public void update(double dt) {
-
         if (mouseIsOnboard) {
             this.amt_a.forceAppend(Animation.GetTanh(this.amt_a.val(), 0.8, PopOutDuration, true));
             if (MouseKeyStatus==1) {
                 this.togglePressedZoom(true);
-            } else {
-                this.togglePressedZoom(false);
             }
-        }  else {
+        }else {
             this.amt_a.forceAppend(Animation.GetTanh(this.amt_a.val(), 0.2, TraceDuration, true));
         }
+        if (MouseKeyStatus == 0) {
+            this.togglePressedZoom(false);
+        }
+
 
         this.setPosition(this.amt_hx.val(), this.amt_hy.val());
         this.setScale(this.amt_v.val(), this.amt_v.val());
@@ -74,6 +77,14 @@ public class BoardIndex extends OthelloObject {
         this.amt_hy.forceAppend(Animation.GetTanh(this.amt_hy.val(), position.y, TraceDuration, true));
     }
 
+    public boolean isClicked() {
+        if (this.clicked) {
+            this.clicked = false;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 

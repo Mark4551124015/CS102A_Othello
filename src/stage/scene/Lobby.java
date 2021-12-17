@@ -6,7 +6,6 @@ import main.mainApp;
 import newData.Vct;
 import object.GUI.Buttons.MenuButton;
 import stage.GameStage;
-import stage.GameStageID;
 
 import object.OthelloObject;
 import graphics.Sprite;

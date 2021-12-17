@@ -8,4 +8,7 @@ public interface GameStage {
     void update(double dt);
     AffineTransform render(Graphics2D g2d);
     GameStageID getGameStageID();
+    public enum GameStageID {
+        Empty,Launching,Matching,Othello,Demo,Lobby
+    }
 }

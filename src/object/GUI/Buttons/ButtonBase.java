@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 public abstract class ButtonBase extends OthelloObject implements InputCallback {
     // whether the hover component.animation will step on
     protected boolean active;
+    protected boolean lock;
 
     public ButtonBase(String id, Sprite sprite) {
         super(id,sprite);
@@ -31,13 +32,17 @@ public abstract class ButtonBase extends OthelloObject implements InputCallback 
     public void onMousePressed(MouseEvent e) {
         if (this.isHovering() && this.active) {
             // System.out.println("[RectButton] Being Clicked!");
-            this.onClicked(e.getButton());
+            this.lock = true;
         }
     }
 
     @Override
     public void onMouseReleased(MouseEvent e) {
-
+        if (this.isHovering() && this.active) {
+            // System.out.println("[RectButton] Being Clicked!");
+            this.onClicked(e.getButton());
+        }
+        this.lock = false;
     }
 
     @Override
