@@ -1,14 +1,12 @@
 package stage.scene;
 
-import component.animation.Animation;
 import graphics.Shape;
 import graphics.Sprite;
 import input.Controller;
-import input.InputCallback;
-import main.AudioManager;
 import main.mainApp;
-import newData.*;
-
+import newData.Vct;
+import newData.intVct;
+import object.Game;
 import object.OthelloObject;
 import object.Player;
 import object.inGame.BoardIndex;
@@ -18,10 +16,11 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static input.Controller.MouseKeyStatus;
+import static object.PlayerManager.Competitor;
+import static object.PlayerManager.User;
 
 
-public class Othello extends OthelloObject implements stage.GameStage {
+public class Othello_Local extends OthelloObject implements stage.GameStage {
     public static final double BoardSize = mainApp.Height * 0.65;
     public static final double DiskSize = (BoardSize - 10) / 8;
 
@@ -32,7 +31,7 @@ public class Othello extends OthelloObject implements stage.GameStage {
     private Map<Integer, Player> idMap;
 
 
-    private DiskManager diskManager;
+    private Game game;
     private Controller controller;
     private BoardIndex boardIndex;
 
@@ -45,7 +44,7 @@ public class Othello extends OthelloObject implements stage.GameStage {
 
     private OthelloObject Board;
 
-    public Othello() {
+    public Othello_Local() {
         super("scene_Game");
     }
 
@@ -56,20 +55,20 @@ public class Othello extends OthelloObject implements stage.GameStage {
         this.addObj(background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
 
-        init_Game();
+        init_local_Game();
     }
 
 
-    public void init_Game() {
+    public void init_local_Game() {
         //棋盘
         this.Board = new OthelloObject("Board", new Sprite("Board"));
         this.background.addObj(this.Board);
         this.Board.resizeTo(new Vct(BoardSize, BoardSize));
         this.Board.setPosition(0, 0);
 
-        //棋子管理器
-        this.diskManager = new DiskManager();
-        this.Board.addObj(diskManager);
+        //本地游戏管理器
+        this.game = new Game("game", User, Competitor);
+        this.Board.addObj(game);
 
         //指针
         this.boardIndex = new BoardIndex();
@@ -110,17 +109,9 @@ public class Othello extends OthelloObject implements stage.GameStage {
         checkMouseOnBoard();
 //        System.out.println(mouseBP().c + "" + mouseBP().r);
 
-        this.boardIndex.traceMouse(this.diskManager.Disks[mouseBP().c][mouseBP().r].getTrans().position);
+        this.boardIndex.traceMouse(this.game.getGrid().Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
         super.update(dt);
-
-
-
-
-
-
-
-
 
     }
 
