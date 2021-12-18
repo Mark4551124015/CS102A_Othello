@@ -1,7 +1,9 @@
 package object.inGame;
 
 import graphics.Sprite;
-import newData.*;
+import newData.Vct;
+import newData.direction;
+import newData.intVct;
 import object.*;
 
 import java.util.ArrayList;
