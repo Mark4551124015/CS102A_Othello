@@ -55,6 +55,12 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isReadyForGame()) {
                 this.stageContainer.enterStage(new Matching(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
             }
+            if (((Lobby)stage).isHelping()) {
+                this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,1,0.25), new FadeInTransition(Color.black, 1, 0));
+            }
+            if (((Lobby)stage).isOptions()) {
+                this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,1,0.25), new FadeInTransition(Color.black, 1, 0));
+            }
         }
     }
 

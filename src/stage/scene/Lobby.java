@@ -24,6 +24,8 @@ public class Lobby extends OthelloObject implements GameStage {
     public static final double MenuShift = MenuButtonWidth;
     private boolean readyForGame;
     private boolean exitFlag;
+    private boolean help;
+    private boolean options;
 
 
 //数据部分结束
@@ -42,6 +44,7 @@ public class Lobby extends OthelloObject implements GameStage {
     private OthelloObject menu_main;
     private MenuButton button_main_start;
     private MenuButton button_main_help;
+    private MenuButton button_main_options;
     private MenuButton button_main_exit;
     private Animator menu_main_animator;
     private Animator menu_main_alphaAnimator;
@@ -80,9 +83,15 @@ public class Lobby extends OthelloObject implements GameStage {
                 System.out.println("Play被点击");
                 this.readyForGame = true;
             }
-//            if (this.button_main_exit.isClicked()) {
-//                this.exitFlag = true;
-//            }
+            if (this.button_main_exit.isClicked()) {
+                this.exitFlag = true;
+           }
+            if(this.button_main_help.isClicked()){
+                this.help = true;
+            }
+            if(this.button_main_options.isClicked()){
+                this.options = true;
+            }
         }
 
     }
@@ -102,18 +111,44 @@ public class Lobby extends OthelloObject implements GameStage {
 
         this.button_main_start = new MenuButton("menu_main_start", new Sprite("popo"));
         this.menu_main.addObj(this.button_main_start);
+        this.button_main_help = new MenuButton("menu_main_help", new Sprite("popo"));
+        this.menu_main.addObj(this.button_main_help);
+        this.button_main_options = new MenuButton("menu_main_options", new Sprite("popo"));
+        this.menu_main.addObj(this.button_main_options);
+        this.button_main_exit = new MenuButton("menu_main_exit", new Sprite("popo"));
+        this.menu_main.addObj(this.button_main_exit);
 
         //大小
         this.button_main_start.resizeTo(MenuButtonWidth, MenuButtonHeight);
+        this.button_main_help.resizeTo(MenuButtonWidth, MenuButtonHeight);
+        this.button_main_options.resizeTo(MenuButtonWidth, MenuButtonHeight);
+        this.button_main_exit.resizeTo(MenuButtonWidth, MenuButtonHeight);
 
         //位置
-        this.button_main_start.setPosition(0,0);
+        this.button_main_start.setPosition(0,50);
+        this.button_main_help.setPosition(0,125);
+        this.button_main_options.setPosition(0,180);
+        this.button_main_exit.setPosition(0,235);
+
 
         //文字显示
-        Font font = FontLibrary.GetMenuButtonFont(30);
-        this.button_main_start.setFont(font);
-        this.button_main_start.setText("Play");
+        Font font1 = FontLibrary.GetMenuButtonFont(30);
+        this.button_main_start.setFont(font1);
+        Font font2 = FontLibrary.GetMenuButtonFont(15);
+        this.button_main_help.setFont(font2);
+        this.button_main_options.setFont(font2);
+        this.button_main_exit.setFont(font2);
+
+        this.button_main_start.setText("Play    ");
+        this.button_main_help.setText("Help              ");
+        this.button_main_options.setText("Options         ");
+        this.button_main_exit.setText("Exit Game      ");
+
         this.button_main_start.setTextColor(new Color(212, 212, 212));
+        this.button_main_help.setTextColor(new Color(212, 212, 212));
+        this.button_main_options.setTextColor(new Color(212, 212, 212));
+        this.button_main_exit.setTextColor(new Color(212, 212, 212));
+
 
         this.menu_main_animator = new Animator(0);
         this.menu_main_alphaAnimator = new Animator(0);
@@ -145,6 +180,15 @@ public class Lobby extends OthelloObject implements GameStage {
         return exitFlag;
     }
 
-    public boolean isReadyForGame() { return  readyForGame;}
+    public boolean isReadyForGame() {
+        return  readyForGame;
+    }
 
+    public boolean isHelping() {
+        return help;
+    }
+
+    public boolean isOptions(){
+        return options;
+    }
 }
