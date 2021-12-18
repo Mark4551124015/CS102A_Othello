@@ -11,6 +11,7 @@ public class PlayerManager extends OthelloObject{
     private ArrayList<Player> players = new ArrayList<>();
 
     public static Player User;
+    public static Player Competitor;
 
     public PlayerManager(){
         super("PlayerManger");

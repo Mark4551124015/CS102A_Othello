@@ -21,7 +21,6 @@ public class StageContainer extends JPanel {
     public StageContainer() {
         this.setPreferredSize(new Dimension(mainApp.Width, mainApp.Height));
 
-
         this.preventStage = null;
         this.currentStage = new Empty();
 

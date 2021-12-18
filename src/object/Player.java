@@ -119,4 +119,9 @@ public class Player extends OthelloObject{
         }
         return false;
     }
+
+    public void resetForGame() {
+        this.Ready = false;
+
+    }
 }

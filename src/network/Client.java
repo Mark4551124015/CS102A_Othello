@@ -28,9 +28,6 @@ public class Client extends Thread {
     private Queue<JSONObject> queue;
 
 
-
-
-
     public Client(String host, int port) { // 新建客户端程序要传入2个数据，host地址，端口号
         this.ready = false;
         this.connected = false;
@@ -204,5 +201,9 @@ public class Client extends Thread {
         if (this.getInitState() != 1)
             return null;
         return this.queue.poll();
+    }
+
+    public String getSession_id() {
+        return this.session_id;
     }
 }
