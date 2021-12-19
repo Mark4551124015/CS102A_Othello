@@ -1,6 +1,8 @@
 package main;
 
 
+import javafx.stage.Stage;
+import object.Game;
 import object.Player;
 import object.PlayerManager;
 
@@ -52,8 +54,9 @@ public class GameManager implements Runnable {
         }else if (stage.getGameStageID() == GameStageID.Lobby) {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
-            if (((Lobby)stage).isReadyForLocalGame()) {
-                this.stageContainer.enterStage(new Othello_Local(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
+
+            if (((Lobby)stage).isReadyForGame()) {
+                this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
             }
             if (((Lobby)stage).isHelping()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,1,0.25), new FadeInTransition(Color.black, 1, 0));
