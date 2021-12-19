@@ -65,8 +65,7 @@ public class Matching extends OthelloObject implements stage.GameStage {
         this.addObj(this.background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         //
-        this.Ready = new NormalButton("Ready_Button", new Sprite("NormalButton"));
-        this.Ready.resizeTo(mainApp.Width/9+10, mainApp.Height/9-5);
+        this.Ready = new NormalButton("Ready_Button");
         this.Ready.setText(" Ready");
         this.Ready.setTextColor(new Color(212, 212, 212));
         this.background.addObj(this.Ready);
