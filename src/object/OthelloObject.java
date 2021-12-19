@@ -217,6 +217,9 @@ public class OthelloObject {
         return this.sprite;
     }
 
+    //3D model
+
+
 
     public void addComponent(Component component){
         this.components.add(component);

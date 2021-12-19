@@ -20,6 +20,8 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
     private static Vct mousePos = new Vct(0, 0);
     private static Lock lock = new ReentrantLock();
     public static int MouseKeyStatus;
+    public static boolean mouseIsOnboard;
+
     private boolean clicked;
 
     public boolean isClicked() {
