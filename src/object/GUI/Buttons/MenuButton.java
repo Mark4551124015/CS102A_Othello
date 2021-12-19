@@ -197,7 +197,6 @@ public class MenuButton extends ButtonBase {
 
     @Override
     public void onMouseWheelMoved(MouseWheelEvent e) {
-
     }
 
     public OthelloObject getBase() {

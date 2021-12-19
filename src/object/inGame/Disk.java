@@ -3,6 +3,8 @@ import object.OthelloObject;
 import newData.Vct;
 import newData.intVct;
 
+import static stage.scene.Othello.BoardSize;
+
 public class Disk extends OthelloObject {
     private int status;
     private boolean onBoard;
@@ -15,6 +17,7 @@ public class Disk extends OthelloObject {
         this.bP = bP;
         this.status = 0;
         this.Visibility = false;
+
     }
 
 //    public Disk(Vct position, int status) {

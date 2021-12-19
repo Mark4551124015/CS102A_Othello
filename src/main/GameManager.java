@@ -54,6 +54,7 @@ public class GameManager implements Runnable {
         }else if (stage.getGameStageID() == GameStageID.Lobby) {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
+
             if (((Lobby)stage).isReadyForGame()) {
                 this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
             }

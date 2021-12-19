@@ -27,7 +27,8 @@ public class Lobby extends OthelloObject implements GameStage {
     public static final double MenuButtonHeight = 60;
     public static final Vct MainManuButtonsPivot = new Vct(MenuButtonWidth * 0.43, mainApp.Height * 0.30);
     public static final double MenuShift = MenuButtonWidth;
-    private boolean readyForGame;
+    private boolean ReadyForOnlineGame;
+    private boolean readyForLocalGame;
     private boolean exitFlag;
     private boolean help;
     private boolean options;
@@ -99,9 +100,10 @@ public class Lobby extends OthelloObject implements GameStage {
         this.menu_SelectMode_update(dt);
 
 
-        if (this.menuState == MenuState.Main) { // Main
+        if (this.menuState == MenuState.Main) { // MainTest
             if (this.button_main_start.isClicked()) {
                 System.out.println("Play被点击");
+                this.readyForLocalGame = true;
                 this.changeMenuState(MenuState.SelectMode);
             }
             if (this.button_main_exit.isClicked()) {
@@ -226,8 +228,17 @@ public class Lobby extends OthelloObject implements GameStage {
         return exitFlag;
     }
 
+    public boolean isReadyForOnlineGame() {
+        return ReadyForOnlineGame;
+    }
+
+    public boolean isReadyForLocalGame() {
+        return readyForLocalGame;
+     }
+
     public boolean isReadyForGame() {
         return readyForGame;
+
     }
 
     public boolean isHelping() {

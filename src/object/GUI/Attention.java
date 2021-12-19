@@ -30,7 +30,7 @@ public class Attention extends OthelloObject {
     public Attention(String msg, Sprite sprite, double lastTime) {
         super("attention", sprite);
 
-        this.text = new Text("attention_text", msg, FontLibrary.GetAttentionFont(25));
+        this.text = new Text("attention_text", msg, FontLibrary.GetAttentionFont(12));
         this.text.setColor(new Color(212, 212, 212));
         this.resizeTo(this.text.getSize().x * 1.5, this.text.getSize().y + 14);
         this.addObj(text);
