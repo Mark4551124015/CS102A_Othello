@@ -8,7 +8,7 @@ import object.OthelloObject;
 
 import static input.Controller.MouseKeyStatus;
 import static stage.scene.Othello.DiskSize;
-import static stage.scene.Othello.mouseIsOnboard;
+import static input.Controller.mouseIsOnboard;
 
 public class BoardIndex extends OthelloObject {
 

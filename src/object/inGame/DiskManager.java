@@ -8,6 +8,7 @@ import object.*;
 
 import java.util.ArrayList;
 
+import static object.Game.switchRound;
 import static stage.scene.Othello.DiskSize;
 
 public class DiskManager extends OthelloObject {
@@ -99,6 +100,9 @@ public class DiskManager extends OthelloObject {
     public boolean SetDisk(intVct bp, Player player) {
             if (checkDisk(bp, player)) {
                 forceSetDisk(bp, player.getColor());
+                //落子成功
+                System.out.print("落子成功");
+                switchRound();
                 this.Disks[bp.r][bp.c].setVisibility(true);
                 for (intVct index : check(bp, player, "flip")){
                     flipDisks(index);

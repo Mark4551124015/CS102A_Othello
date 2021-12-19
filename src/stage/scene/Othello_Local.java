@@ -4,6 +4,8 @@ import graphics.Shape;
 import graphics.Sprite;
 import input.Controller;
 import main.mainApp;
+import net.sf.json.JSONObject;
+import newData.Operation;
 import newData.Vct;
 import newData.intVct;
 import object.Game;
@@ -12,10 +14,15 @@ import object.Player;
 import object.inGame.BoardIndex;
 import object.inGame.DiskManager;
 
+import java.awt.event.MouseListener;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static input.Controller.mouseIsOnboard;
+import static main.mainApp.controller;
+import static newData.Operation.Operation_Type.SetDisk;
+import static object.Player.playerType.local;
 import static object.PlayerManager.Competitor;
 import static object.PlayerManager.User;
 
@@ -32,13 +39,11 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
 
 
     private Game game;
-    private Controller controller;
     private BoardIndex boardIndex;
-
-    public static boolean mouseIsOnboard;
 
     private boolean gameOver;
     private boolean gameOverState;
+    double totalTime = 0;
 
 
 
@@ -58,8 +63,10 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         init_local_Game();
     }
 
-
     public void init_local_Game() {
+        User = new Player("Mark455","Mark455",local);
+        Competitor = new Player("JR","JR",local);
+
         //棋盘
         this.Board = new OthelloObject("Board", new Sprite("Board"));
         this.background.addObj(this.Board);
@@ -74,6 +81,8 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         this.boardIndex = new BoardIndex();
         this.boardIndex.setVisibility(true);
         this.Board.addObj(this.boardIndex);
+
+        this.game.start();
     }
 
     public intVct mouseBP() {
@@ -111,6 +120,10 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
 
         this.boardIndex.traceMouse(this.game.getGrid().Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
+        totalTime += dt;
+        if (totalTime > 0.5) {
+            setDiskCheck();
+        }
         super.update(dt);
 
     }
@@ -130,4 +143,14 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
             mouseIsOnboard = true;
         }
     }
+
+    public void setDiskCheck(){
+        Player operator = this.game.getPlayer(this.game.getCurrentSide());
+        if (controller.isClicked() && mouseIsOnboard){
+//            JSONObject jsonOperation = new Operation(operator, , SetDisk).toJson();
+            this.game.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c,mouseBP().r), SetDisk));
+        }
+    }
+
+
 }

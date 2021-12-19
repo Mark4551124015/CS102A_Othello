@@ -19,7 +19,7 @@ public class Game extends OthelloObject{
     private int round;
     private Player winner = null;
     private ArrayList<Operation> operationList;
-    private int CurrentPlayer;
+    private static int CurrentSide;
 
     Scanner sc = new Scanner(System.in);
 
@@ -30,53 +30,14 @@ public class Game extends OthelloObject{
         this.blackPlayer=black;
         this.Grid = new DiskManager();
         this.addObj(Grid);
+        this.whitePlayer.setColor(1);
+        this.blackPlayer.setColor(-1);
+        this.operationList = new ArrayList<>(0);
+        this.CurrentSide = 1;
     }
 
     public void start() {
         this.round = 1;
-
-
-        while (true) {
-
-            //白先
-
-            if(this.Grid.validBP(this.whitePlayer).isEmpty()){
-                this.CurrentPlayer = -1;
-            } else {
-                this.CurrentPlayer = 1;
-            }
-
-            //检查胜者
-            if (this.winner != null) {
-                break;
-            }
-            if (this.winnerCheck()) {
-                break;
-            }
-
-            if(this.Grid.validBP(this.blackPlayer).isEmpty()){
-                this.CurrentPlayer = 1;
-            } else {
-                this.CurrentPlayer = -1;
-            }
-
-            ++this.round;
-            if (this.winner != null) {
-                break;
-            }
-            if (this.winnerCheck()) {
-                break;
-            }
-
-        }
-
-        //没有胜者就计算棋盘
-        if (!this.winnerCheck()) {
-            this.winner = this.Grid.checkWinner(this.whitePlayer, this.blackPlayer);
-        }
-
-
-
 
 
     }
@@ -91,6 +52,16 @@ public class Game extends OthelloObject{
 
     public void update(double dt) {
         super.update(dt);
+
+        if ((this.winner == null || !this.gameEnd() )) {
+            if (this.Grid.validBP(this.whitePlayer).isEmpty()) {
+                this.CurrentSide = -1;
+            }
+            if (this.Grid.validBP(this.blackPlayer).isEmpty()) {
+                this.CurrentSide = 1;
+            }
+        }
+
 
     }
 
@@ -110,24 +81,20 @@ public class Game extends OthelloObject{
             } else if (operator.getColor() == -1) {
                 this.winner = this.whitePlayer;
             }
-            operationList.add(operation);
-            switchRound();
-        }
+            this.operationList.add(operation);
 
-        if (operator.getColor() == CurrentPlayer) {
-
+        } else if (operator.getColor() == this.CurrentSide) {
             if (operation.type == SetDisk) {
                 this.Grid.SetDisk(operation.position, operator);
-                operationList.add(operation);
-                switchRound();
+                this.operationList.add(operation);
             }
 
             if (operation.type == MadeInHeaven) {
                 this.Grid.forceSetDisk(operation.position, operator.getColor());
-                operationList.add(operation);
+                this.operationList.add(operation);
             }
 
-        } else {
+        } else if (operator.getColor() != this.CurrentSide){
             AttentionManager.showWarnMessage("Not you round");
         }
 
@@ -140,15 +107,16 @@ public class Game extends OthelloObject{
         return this.Grid;
     }
 
-    public boolean winnerCheck() {
-        if(this.Grid.validBP(this.whitePlayer).isEmpty()&&this.Grid.validBP(this.blackPlayer).isEmpty()) {
+    public boolean gameEnd() {
+        if(this.Grid.validBP(this.whitePlayer).isEmpty() && this.Grid.validBP(this.blackPlayer).isEmpty()) {
             return true;
         }
         return false;
     }
 
-    public void switchRound() {
-        CurrentPlayer *= -1;
+    public static void switchRound() {
+        CurrentSide *= -1;
+        System.out.print(CurrentSide);
     }
 
     public void gameEnding(){
@@ -159,6 +127,20 @@ public class Game extends OthelloObject{
             this.winner.winCntPlus(1);
             System.out.println("Winner is " + this.winner.getId());
         }
+    }
+
+    public int getCurrentSide() {
+        return this.CurrentSide;
+    }
+
+    public Player getPlayer(int a){
+        if ( a == 1) {
+            return this.whitePlayer;
+        }
+        if ( a == -1) {
+            return this.blackPlayer;
+        }
+        return null;
     }
 
 }

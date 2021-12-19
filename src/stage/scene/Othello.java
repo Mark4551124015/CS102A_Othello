@@ -118,10 +118,6 @@ public class Othello extends OthelloObject implements stage.GameStage {
 
 
 
-
-
-
-
     }
 
     public void checkMouseOnBoard() {
