@@ -1,5 +1,6 @@
 package util;
 import com.interactivemesh.jfx.importer.ModelImporter;
+import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import com.interactivemesh.jfx.importer.stl.StlMeshImporter;
 import com.interactivemesh.jfx.importer.tds.TdsModelImporter;
 import com.interactivemesh.jfx.importer.x3d.X3dModelImporter;
@@ -39,14 +40,17 @@ public class Importer3D {
                     stlImporter.close();
                     return new Group(cylinderHeadMeshView);
                 case "x3d":
-
                     X3dModelImporter x3dModel = new X3dModelImporter();
                     x3dModel.read(fileUrl);
-
                     final Node[] x3dMesh = x3dModel.getImport();
                     x3dModel.close();
                     return new Group(x3dMesh);
-
+                case "obj":
+                    ObjModelImporter objModel = new ObjModelImporter();
+                    objModel.read(fileUrl);
+                    final Node[] objMesh = objModel.getImport();
+                    objModel.clear();
+                    return new Group(objMesh);
                 default:
                     throw new IOException("Unsupported 3D file format [" + extension + "]");
             }

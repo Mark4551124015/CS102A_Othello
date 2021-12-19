@@ -6,7 +6,7 @@ import java.io.*;
 
 public class JsonHandler {
 
-    private static String path = "./save";
+    private static String path = "./save/";
 
     //存
     public static void saveDataToFile(String fileName,String data) {

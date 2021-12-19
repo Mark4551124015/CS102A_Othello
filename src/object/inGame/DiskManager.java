@@ -9,7 +9,7 @@ import object.*;
 import java.util.ArrayList;
 
 import static object.Game.switchRound;
-import static stage.scene.Othello.DiskSize;
+import static stage.scene.Othello_Local.DiskSize;
 
 public class DiskManager extends OthelloObject {
     public Disk[][] Disks = new Disk[8][8];
@@ -28,6 +28,7 @@ public class DiskManager extends OthelloObject {
                 this.Disks[r][c] = new Disk(new intVct(r,c),index);
                 this.addObj(this.Disks[r][c]);
                 this.Disks[r][c].resizeTo(new Vct(DiskSize,DiskSize));
+                System.out.println(DiskSize);
                 this.Disks[r][c].setPosition(new intVct(r,c).toPosition());
                 ++index;
             }
