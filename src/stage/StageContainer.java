@@ -13,6 +13,9 @@ import java.awt.*;
 public class StageContainer extends JPanel {
 
 
+    public static final double BoardSize = mainApp.Height * 0.65;
+    public static final double DiskSize = (BoardSize - 10) / 8;
+
     private GameStage currentStage;
     private GameStage preventStage;
     private Transition enterTransition;
