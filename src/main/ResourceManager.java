@@ -85,7 +85,9 @@ public class ResourceManager {
         addList(fullList, "attention_yellow","attention.png",new Color(0xE8BF0F));
         addList(fullList, "attention_red","attention.png",new Color(0xE80F21));
         addList(fullList, "attention_green","attention.png",new Color(0x07BB09));
-
+        for (int i = 0 ; i<9 ; i++) {
+            addList(fullList, i+"","Flip/"+i+".png");
+        }
 
 
 

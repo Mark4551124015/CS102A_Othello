@@ -111,11 +111,6 @@ public class Othello extends OthelloObject implements stage.GameStage {
         this.boardIndex.traceMouse(this.diskManager.Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
         super.update(dt);
-
-
-
-
-
     }
 
     public void checkMouseOnBoard() {

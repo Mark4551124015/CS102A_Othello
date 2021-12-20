@@ -112,6 +112,7 @@ public class Animator implements Component {
     }
 
     // may be override immediately if the Animator is active
+
     public void setValue(double value) {
         this.value = value;
     }

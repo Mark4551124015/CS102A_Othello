@@ -77,9 +77,6 @@ public class Game extends OthelloObject{
             }
         }
 
-
-
-
     }
 
     public DiskManager getGrid(){
@@ -95,7 +92,6 @@ public class Game extends OthelloObject{
 
     public static void switchRound() {
         CurrentSide *= -1;
-        System.out.print(CurrentSide);
     }
 
     public void gameEnding(){

@@ -190,6 +190,11 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
         lock.unlock();
     }
 
+    public void cleanClick(){
+        if (this.clicked == true ){
+            this.clicked = false;
+        }
+    }
 
 
 }

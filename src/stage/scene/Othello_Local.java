@@ -32,6 +32,7 @@ import static object.Game.gamePath;
 import static object.Player.playerType.local;
 import static object.PlayerManager.Competitor;
 import static object.PlayerManager.User;
+import static object.inGame.DiskManager.isReadyForNextOperation;
 import static stage.StageContainer.BoardSize;
 import static util.Tools.getStringFromFile;
 
@@ -77,14 +78,14 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
         //棋盘
         this.Board = new OthelloObject("Board", new Sprite("Board"));
-        this.background.addObj(this.Board);
+        this.addObj(this.Board);
+        this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         this.Board.resizeTo(new Vct(BoardSize, BoardSize));
-        this.Board.setPosition(0, 0);
 
         //本地游戏管理器
         this.game = new Game(User, Competitor);
         this.operationManager = new OperationManager(this.game);
-        this.addObj(this.game);
+        this.Board.addObj(this.game);
 
         //指针
         this.boardIndex = new BoardIndex();
@@ -92,12 +93,10 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.Board.addObj(this.boardIndex);
 
         this.game.start();
-        isReadyForOperate =false;
+        totalTime = 0;
+        isReadyForOperate =true;
     }
 
-    public void ini_Local_Menu(){
-
-    }
 
     public intVct mouseBP() {
         Vct pos = Controller.getMousePos();
@@ -135,14 +134,12 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.boardIndex.traceMouse(this.game.getGrid().Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
         totalTime += dt;
-
-        if (totalTime > 0.5) {
-            isReadyForOperate = true;
+        if (!isReadyForOperate) {
+            controller.cleanClick();
         }
-        if (isReadyForOperate) {
+        if (isReadyForOperate && isReadyForNextOperation()) {
             OperationCheck();
         }
-
         super.update(dt);
 
     }
