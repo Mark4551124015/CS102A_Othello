@@ -7,8 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="groovy-4.0.0-beta-1" level="project" />
-    <orderEntry type="library" name="KotlinJavaRuntime (2)" level="project" />
+    <orderEntry type="library" name="json-lib-2.4-jdk15" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="javaFX" level="project" />
+    <orderEntry type="library" name="JFX3DModelImporters_EA_2014-02-09" level="project" />
   </component>
 </module>
