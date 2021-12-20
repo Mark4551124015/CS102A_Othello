@@ -61,7 +61,7 @@ public class MenuButton extends ButtonBase {
     }
 
 
-        public void setFont(Font font) {
+    public void setFont(Font font) {
         this.text.setFont(font);
     }
 

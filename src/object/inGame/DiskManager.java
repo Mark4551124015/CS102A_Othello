@@ -15,6 +15,7 @@ import static util.Tools.cleanArray;
 public class DiskManager extends OthelloObject {
     public Disk[][] Disks = new Disk[8][8];
     private direction direction = new direction();
+    public static int ReadyForNextOperation;
 
     //创建64个棋
     public DiskManager(){
@@ -102,13 +103,11 @@ public class DiskManager extends OthelloObject {
     public boolean SetDisk(intVct bp, Player player) {
             if (checkDisk(bp, player)) {
                 forceSetDisk(bp, player.getColor());
-                //落子成功
-                System.out.print("落子成功");
                 switchRound();
-                this.Disks[bp.r][bp.c].setVisibility(true);
-                for (intVct index : check(bp, player, "flip")){
+                for (intVct index : check(bp, player, "flip")) {
                     flipDisks(index);
                 }
+
                 return true;
             }
             return false;
@@ -118,6 +117,7 @@ public class DiskManager extends OthelloObject {
     public void forceSetDisk(intVct bP, int status) {
         this.Disks[bP.r][bP.c].setOnBoard();
         this.Disks[bP.r][bP.c].setStatus(status);
+        this.Disks[bP.r][bP.c].setVisibility(true);
     }
 
     //获取某个子的状态
@@ -143,8 +143,6 @@ public class DiskManager extends OthelloObject {
             System.out.println();
         }
     }
-
-
 
     //查找
     public ArrayList<intVct> check(intVct disk, Player player, String operation){
@@ -236,22 +234,23 @@ public class DiskManager extends OthelloObject {
     }
 
     //同步棋盘
-
-
     @Override
     public void update(double dt) {
-        for (int r=0; r<8; r++) {
-            for (int c=0; c<8; c++) {
-                if (this.Disks[r][c].getStatus() == 1) {
-                    this.Disks[r][c].setSprite(new Sprite("White_Disk"));
-                } else if (this.Disks[r][c].getStatus() == -1) {
-                    this.Disks[r][c].setSprite(new Sprite("Black_Disk"));
-                }
+        int index =0;
+        for(int r=0; r<8 ; r++) {
+            for(int c=0; c< 8; c++){
+                index += this.Disks[r][c].getFlippingState();
             }
         }
-
+        ReadyForNextOperation = index;
         super.update(dt);
+    }
 
+    public static boolean isReadyForNextOperation() {
+        if(ReadyForNextOperation != 0){
+            return false;
+        }
+        return true;
     }
 
 

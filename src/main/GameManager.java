@@ -56,9 +56,9 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
 
-//            if (((Lobby)stage).isReadyForGame()) {
-//                this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
-//            }
+            if (((Lobby)stage).ChosenLocal()) {
+                this.stageContainer.enterStage(new Othello_Local(), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
+            }
             if (((Lobby)stage).isHelping()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
             }
