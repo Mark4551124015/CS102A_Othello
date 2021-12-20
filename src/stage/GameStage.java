@@ -9,6 +9,6 @@ public interface GameStage {
     AffineTransform render(Graphics2D g2d);
     GameStageID getGameStageID();
     public enum GameStageID {
-        Empty,Launching,Matching,Othello,Demo,Lobby
+        Empty,Launching,Matching,Othello,Othello_Local,Demo,Lobby
     }
 }

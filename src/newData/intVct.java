@@ -2,7 +2,8 @@
 
 package newData;
 
-import static stage.scene.Othello.BoardSize;
+
+import static stage.StageContainer.BoardSize;
 
 public class intVct {
     public int r, c;

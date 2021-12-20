@@ -22,14 +22,15 @@ public class GameManager implements Runnable {
     public static final int FPS = 144;
 
     private StageContainer stageContainer;
-    private PlayerManager playerManager = new PlayerManager();
+    public static PlayerManager playerManager = new PlayerManager();
 
     public GameManager() {
         this.stageContainer = new StageContainer();
     }
 
     public void start() {
-        User = new Player("mark455","Mark455", local);
+        playerManager.readAll();
+        System.out.println(playerManager.getPlayersName());
         Thread GMThread = new Thread(this);
         GMThread.start();
     }
