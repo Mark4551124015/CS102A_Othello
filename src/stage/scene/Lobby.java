@@ -2,6 +2,7 @@ package stage.scene;
 
 import component.animation.Animation;
 import component.animation.Animator;
+import jdk.vm.ci.meta.Local;
 import main.mainApp;
 import newData.Vct;
 import object.GUI.Buttons.MenuButton;
@@ -64,7 +65,6 @@ public class Lobby extends OthelloObject implements GameStage {
     private NormalButton button_SelectMode_back;
     private Animator menu_SelectMode_animator;
     private Animator menu_SelectMode_alphaAnimator;
-
 
     public Lobby() {
         super("scene_lobby");
