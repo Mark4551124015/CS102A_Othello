@@ -11,10 +11,11 @@ import newData.intVct;
 import object.Game;
 import object.OthelloObject;
 import object.Player;
+import object.PlayerManager;
 import object.inGame.BoardIndex;
-import object.inGame.DiskManager;
+import object.inGame.OperationManager;
+import stage.GameStage;
 
-import java.awt.event.MouseListener;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -22,14 +23,17 @@ import java.util.Map;
 import static input.Controller.mouseIsOnboard;
 import static main.mainApp.controller;
 import static newData.Operation.Operation_Type.SetDisk;
+import static object.Game.gameInfoName;
+import static object.Game.gamePath;
 import static object.Player.playerType.local;
 import static object.PlayerManager.Competitor;
 import static object.PlayerManager.User;
+import static stage.StageContainer.BoardSize;
+import static util.Tools.getStringFromFile;
 
 
-public class Othello_Local extends OthelloObject implements stage.GameStage {
-    public static final double BoardSize = mainApp.Height * 0.65;
-    public static final double DiskSize = (BoardSize - 10) / 8;
+public class Othello_Local extends OthelloObject implements GameStage {
+
 
     private Shape canvas;
     private OthelloObject background;
@@ -37,8 +41,11 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
     private ArrayList<Player> playerList;
     private Map<Integer, Player> idMap;
 
+    private OperationManager operationManager;
+
 
     private Game game;
+    public static boolean isReadyForOperate;
     private BoardIndex boardIndex;
 
     private boolean gameOver;
@@ -60,7 +67,6 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         this.background = new OthelloObject("Game_bg", new Sprite("Game_BackGround"));
         this.addObj(background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
-
         init_local_Game();
     }
 
@@ -75,8 +81,9 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         this.Board.setPosition(0, 0);
 
         //本地游戏管理器
-        this.game = new Game("game", User, Competitor);
-        this.Board.addObj(game);
+        this.game = new Game(User, Competitor);
+        this.operationManager = new OperationManager(this.game);
+        this.addObj(this.game);
 
         //指针
         this.boardIndex = new BoardIndex();
@@ -84,6 +91,7 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         this.Board.addObj(this.boardIndex);
 
         this.game.start();
+        isReadyForOperate =false;
     }
 
     public void ini_Local_Menu(){
@@ -115,7 +123,7 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
 
     @Override
     public GameStageID getGameStageID() {
-        return GameStageID.Othello;
+        return GameStageID.Othello_Local;
     }
 
     @Override
@@ -126,9 +134,14 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         this.boardIndex.traceMouse(this.game.getGrid().Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
         totalTime += dt;
+
         if (totalTime > 0.5) {
-            setDiskCheck();
+            isReadyForOperate = true;
         }
+        if (isReadyForOperate) {
+            OperationCheck();
+        }
+
         super.update(dt);
 
     }
@@ -137,11 +150,9 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         Vct pos = Controller.getMousePos();
         try {
             pos.transform(this.Board.getAbsoluteTransform().createInverse());
-        } catch (NoninvertibleTransformException ignored) {
-        }
+        } catch (NoninvertibleTransformException ignored) {}
 
         intVct intPosition = new intVct((int) Math.floor(pos.x / (BoardSize / 8)) + 4, (int) Math.floor(pos.y / (BoardSize / 8)) + 4);
-
         if (intPosition.r > 7 || intPosition.r < 0 || intPosition.c > 7 || intPosition.c < 0 ) {
             mouseIsOnboard = false;
         } else {
@@ -149,13 +160,50 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         }
     }
 
-    public void setDiskCheck(){
+    public void OperationCheck(){
         Player operator = this.game.getPlayer(this.game.getCurrentSide());
         if (controller.isClicked() && mouseIsOnboard){
-//            JSONObject jsonOperation = new Operation(operator, , SetDisk).toJson();
-            this.game.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c,mouseBP().r), SetDisk));
+            this.operationManager.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c,mouseBP().r), SetDisk));
         }
     }
 
+    public void saveGame(){
+        this.game.save();
+        this.operationManager.save();
+    }
 
+    public void reStart(){
+        this.game.renew();
+        this.operationManager.renew();
+    }
+
+    public boolean loadGame(String gameName){
+        String gameInfoJsonStr = getStringFromFile(gamePath+gameName+gameInfoName);
+        JSONObject gameInfoJson = JSONObject.fromObject(gameInfoJsonStr);
+        if (PlayerManager.User.getUsername() != gameInfoJson.getString("white_Player") )
+
+        if(User.getUsername() != gameInfoJson.getString("white_Player") || User.getUsername() != gameInfoJson.getString("black_Player")){
+            return false;
+        }
+        if(Competitor.getUsername() != gameInfoJson.getString("white_Player") || Competitor.getUsername() != gameInfoJson.getString("black_Player")){
+            return false;
+        }
+        this.operationManager.renew();
+        this.game.renew();
+        this.game.loadGameInfo(gameInfoJson);
+        this.operationManager.loadOperations();
+        return true;
+    }
+
+    private void cleanInComingOperations() {
+        if (!this.operationManager.getIncomingOperations().isEmpty()) {
+            isReadyForOperate = false;
+            if (((int)totalTime*2) % 1 == 0) {
+                this.operationManager.OperationHandler((Operation) this.operationManager.getIncomingOperations().get(0));
+                this.operationManager.deleteFirstOperation();
+            }
+        } else {
+            isReadyForOperate = true;
+        }
+    }
 }

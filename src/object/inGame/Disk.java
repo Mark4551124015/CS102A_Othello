@@ -3,7 +3,7 @@ import object.OthelloObject;
 import newData.Vct;
 import newData.intVct;
 
-import static stage.scene.Othello.BoardSize;
+import static stage.StageContainer.BoardSize;
 
 public class Disk extends OthelloObject {
     private int status;

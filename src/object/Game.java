@@ -1,45 +1,60 @@
 package object;
 
 import main.AttentionManager;
+import net.sf.json.JSONObject;
 import newData.Operation;
 import object.inGame.DiskManager;
 import newData.intVct;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import static newData.Operation.Operation_Type.*;
+import static object.PlayerManager.Competitor;
+import static object.PlayerManager.User;
+import static util.Tools.saveDataToFile;
 
 public class Game extends OthelloObject{
-    private int gameID;
     private String name;
     private Player whitePlayer;
     private Player blackPlayer;
     private DiskManager Grid;
     private int round;
     private Player winner = null;
-    private ArrayList<Operation> operationList;
     private static int CurrentSide;
+
+
+    public static final String gamePath = "games/";
+
+    public static final String gameInfoName = "gameInfo";
+
 
     Scanner sc = new Scanner(System.in);
 
 
-    public Game(String name,Player white, Player black){
-        super("Game_"+name, null);
+    public Game(Player white, Player black){
+        super("Game", null);
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        this.name = "Game_"+formatter.format(date);
         this.whitePlayer=white;
         this.blackPlayer=black;
         this.Grid = new DiskManager();
         this.addObj(Grid);
         this.whitePlayer.setColor(1);
         this.blackPlayer.setColor(-1);
-        this.operationList = new ArrayList<>(0);
         this.CurrentSide = 1;
+    }
+
+
+    public String getName() {
+        return this.name;
     }
 
     public void start() {
         this.round = 1;
-
-
     }
 
     public Player getWinner(){
@@ -60,42 +75,6 @@ public class Game extends OthelloObject{
             if (this.Grid.validBP(this.blackPlayer).isEmpty()) {
                 this.CurrentSide = 1;
             }
-        }
-
-
-    }
-
-    public void OperationHandler(Operation operation) {
-        Player operator = null;
-        if (this.whitePlayer.getUsername() == operation.Operator) {
-            operator = this.whitePlayer;
-        }
-        if (this.blackPlayer.getUsername() == operation.Operator) {
-            operator = this.blackPlayer;
-        }
-
-
-        if (operation.type == Surrender) {
-            if (operator.getColor() == 1) {
-                this.winner = this.blackPlayer;
-            } else if (operator.getColor() == -1) {
-                this.winner = this.whitePlayer;
-            }
-            this.operationList.add(operation);
-
-        } else if (operator.getColor() == this.CurrentSide) {
-            if (operation.type == SetDisk) {
-                this.Grid.SetDisk(operation.position, operator);
-                this.operationList.add(operation);
-            }
-
-            if (operation.type == MadeInHeaven) {
-                this.Grid.forceSetDisk(operation.position, operator.getColor());
-                this.operationList.add(operation);
-            }
-
-        } else if (operator.getColor() != this.CurrentSide){
-            AttentionManager.showWarnMessage("Not you round");
         }
 
 
@@ -142,5 +121,37 @@ public class Game extends OthelloObject{
         }
         return null;
     }
+
+    private JSONObject gameInfoToJson() {
+        JSONObject gameInfo = new JSONObject();
+        gameInfo.put("white_Player", this.whitePlayer.getUsername());
+        gameInfo.put("black_Player", this.blackPlayer.getUsername());
+        gameInfo.put("Name", this.name);
+        return gameInfo;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void save() {
+        saveDataToFile(gamePath+this.getName()+"/" + gameInfoName,gameInfoToJson().toString());
+    }
+
+    public void setWinner(Player player) {
+        this.winner = player;
+    }
+
+    public void loadGameInfo(JSONObject json) {
+        this.name = json.getString("Name");
+        if (User.getUsername() == json.getString("white_Player") ){
+            this.whitePlayer = User;
+            this.blackPlayer = Competitor;
+        } else {
+            this.whitePlayer = Competitor;
+            this.blackPlayer = User;
+        }
+    }
+
 
 }

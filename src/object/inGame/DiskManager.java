@@ -9,7 +9,8 @@ import object.*;
 import java.util.ArrayList;
 
 import static object.Game.switchRound;
-import static stage.scene.Othello_Local.DiskSize;
+import static stage.StageContainer.DiskSize;
+import static util.Tools.cleanArray;
 
 public class DiskManager extends OthelloObject {
     public Disk[][] Disks = new Disk[8][8];
@@ -93,7 +94,7 @@ public class DiskManager extends OthelloObject {
                 validBP.add(index);
             }
         }
-        validBP = cleanArray(validBP);
+        cleanArray(validBP);
         return validBP;
     }
 
@@ -143,18 +144,7 @@ public class DiskManager extends OthelloObject {
         }
     }
 
-   //清理重复的项
-    public ArrayList cleanArray(ArrayList<intVct> object) {
-        for (int a = 0; a < object.size(); a++) {
-            for (int b = 0; b < a; b++) {
-                if (object.get(b).r == object.get(a).r && object.get(b).c == object.get(a).c) {
-                    object.remove(b);
-                    --a;
-                }
-            }
-        }
-        return object;
-    }
+
 
     //查找
     public ArrayList<intVct> check(intVct disk, Player player, String operation){

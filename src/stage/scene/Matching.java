@@ -23,8 +23,6 @@ import static object.PlayerManager.User;
 
 
 public class Matching extends OthelloObject implements stage.GameStage {
-    public static final double BoardSize = mainApp.Height * 0.65;
-    public static final double DiskSize = (BoardSize - 10) / 8;
 
     private Shape canvas;
     private OthelloObject background;

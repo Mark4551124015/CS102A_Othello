@@ -2,15 +2,13 @@ package object;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import util.JsonHandler;
+import util.Tools;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import static object.Player.playerType.*;
-import static util.JsonHandler.getStringFromFile;
-import static util.JsonHandler.saveDataToFile;
+import static util.Tools.*;
 
 public class PlayerManager extends OthelloObject{
     private ArrayList<Player> players;
@@ -69,6 +67,14 @@ public class PlayerManager extends OthelloObject{
         return null;
     }
 
+    public ArrayList getPlayers(){
+        return this.players;
+    }
+
+    public ArrayList getPlayersName(){
+        return this.playersName;
+    }
+
     public void savePlayers() {
         for (Player player : this.players) {
             if (player == null) {
@@ -90,13 +96,12 @@ public class PlayerManager extends OthelloObject{
     public void  savePlayersName() {
 //        System.out.println(this.playersName.toString());
         JSONArray names = new JSONArray();
-
         for (String name : this.playersName) {
 //            JSONObject nameJson = new JSONObject();
 //            nameJson.put("username",name);
             names.add(name);
         }
-        JsonHandler.saveDataToFile(playerPath+"playerNameList",names.toString());
+        Tools.saveDataToFile(playerPath+"playerNameList",names.toString());
     }
 
     private void readPlayersName() {
@@ -110,9 +115,8 @@ public class PlayerManager extends OthelloObject{
 
     private void readPlayers() {
         try {
-            this.readPlayersName();
             for (String index : this.playersName) {
-                JSONObject jsonPlayer = JSONObject.fromObject(JsonHandler.getStringFromFile(playerPath+"/"+index+"/"+index));
+                JSONObject jsonPlayer = JSONObject.fromObject(Tools.getStringFromFile(playerPath+"/"+index+"/"+index));
                 this.players.add(new Player(jsonPlayer));
             }
         } catch (Exception e) {}
@@ -122,9 +126,19 @@ public class PlayerManager extends OthelloObject{
         this.readPlayersName();
         this.readPlayers();
     }
+
     public void save() {
         this.savePlayersName();
         this.savePlayers();
+    }
+
+    public void deletePlayer(Player player){
+       if(player != null) {
+           Tools.delete(playerPath+player.getUsername());
+           removePlayer(this.players, player);
+           removeString(this.playersName, player.getUsername());
+       }
+       System.out.println("删除成功");
     }
 
 
