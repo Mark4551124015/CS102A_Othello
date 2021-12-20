@@ -1,5 +1,6 @@
 package stage.scene;
 
+import component.animation.Animator;
 import graphics.Shape;
 import graphics.Sprite;
 import input.Controller;
@@ -8,6 +9,9 @@ import net.sf.json.JSONObject;
 import newData.Operation;
 import newData.Vct;
 import newData.intVct;
+import object.GUI.Buttons.MenuButton;
+import object.GUI.Buttons.NormalButton;
+import object.GUI.Buttons.SelectModeButton;
 import object.Game;
 import object.OthelloObject;
 import object.Player;
@@ -44,9 +48,6 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
     private boolean gameOver;
     private boolean gameOverState;
     double totalTime = 0;
-
-    private OthelloObject menu_Local;
-
 
     private OthelloObject Board;
 
@@ -87,7 +88,7 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
     }
 
     public void ini_Local_Menu(){
-        
+
     }
 
     public intVct mouseBP() {
