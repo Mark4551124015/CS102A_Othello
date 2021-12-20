@@ -22,14 +22,15 @@ public class GameManager implements Runnable {
     public static final int FPS = 144;
 
     private StageContainer stageContainer;
-    private PlayerManager playerManager = new PlayerManager();
+    public static PlayerManager playerManager = new PlayerManager();
 
     public GameManager() {
         this.stageContainer = new StageContainer();
     }
 
     public void start() {
-        User = new Player("mark455","Mark455", local);
+        playerManager.readAll();
+        System.out.println(playerManager.getPlayersName());
         Thread GMThread = new Thread(this);
         GMThread.start();
     }
@@ -41,13 +42,13 @@ public class GameManager implements Runnable {
     private void updateStage() {
         GameStage stage = this.stageContainer.getCurrentStage();
         if (stage.getGameStageID() == GameStageID.Empty) {
-            if (((Empty)stage).getTotalTime() >= 0.5 && ResourceManager.getLoadState() >= 1) {
+            if (((Empty)stage).getTotalTime() >= 0.3 && ResourceManager.getLoadState() >= 1) {
                 this.stageContainer.enterStage(new Launching(), null, new FadeInTransition(Color.black, 0.5));
 //                AudioManager.PlayWithVolume("intro", 0.1, 0);
             }
         } else if (stage.getGameStageID() == GameStageID.Launching) {
-            if (((Launching)stage).getTotalTime() >= 2 && ResourceManager.getLoadState() == 2) {
-                this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 1), new FadeInTransition(Color.black, 0.5));
+            if (((Launching)stage).getTotalTime() >= 0.6 && ResourceManager.getLoadState() == 2) {
+                this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 0.3), new FadeInTransition(Color.black, 0.3));
 //                AudioManager.initBGM();
 //                AudioManager.playBGM();
             }
@@ -55,14 +56,14 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
 
-//            if (((Lobby)stage).isReadyForGame()) {
-//                this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 1, 0.25), new FadeInTransition(Color.black, 1, 0));
-//            }
+            if (((Lobby)stage).ChosenLocal()) {
+                this.stageContainer.enterStage(new Othello_Local(), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
+            }
             if (((Lobby)stage).isHelping()) {
-                this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,1,0.25), new FadeInTransition(Color.black, 1, 0));
+                this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
             }
             if (((Lobby)stage).isOptions()) {
-                this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,1,0.25), new FadeInTransition(Color.black, 1, 0));
+                this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
             }
         }
     }

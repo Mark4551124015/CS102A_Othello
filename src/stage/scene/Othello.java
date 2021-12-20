@@ -19,12 +19,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import static input.Controller.MouseKeyStatus;
+import static stage.StageContainer.BoardSize;
 
 
 public class Othello extends OthelloObject implements stage.GameStage {
-    public static final double BoardSize = mainApp.Height * 0.65;
-    public static final double DiskSize = (BoardSize - 10) / 8;
-
     private Shape canvas;
     private OthelloObject background;
 
@@ -113,11 +111,6 @@ public class Othello extends OthelloObject implements stage.GameStage {
         this.boardIndex.traceMouse(this.diskManager.Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
         super.update(dt);
-
-
-
-
-
     }
 
     public void checkMouseOnBoard() {

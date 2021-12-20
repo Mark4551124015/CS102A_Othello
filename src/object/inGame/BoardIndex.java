@@ -7,8 +7,8 @@ import newData.Vct;
 import object.OthelloObject;
 
 import static input.Controller.MouseKeyStatus;
-import static stage.scene.Othello.DiskSize;
 import static input.Controller.mouseIsOnboard;
+import static stage.StageContainer.DiskSize;
 
 public class BoardIndex extends OthelloObject {
 
@@ -27,7 +27,7 @@ public class BoardIndex extends OthelloObject {
 
     public BoardIndex(){
         super("boardIndex",new Sprite("BoardIndex"));
-        this.resizeTo(new Vct(DiskSize, DiskSize));
+        this.resizeTo(new Vct(DiskSize*0.8, DiskSize*0.8));
         this.setVisibility(false);
         this.amt_hx = new Animator(0);
         this.amt_hy = new Animator(0);
@@ -43,7 +43,7 @@ public class BoardIndex extends OthelloObject {
     public void togglePressedZoom(boolean flag) {
         if (flag && !this.pressedState) {
             this.pressedState = true;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.86, PopOutDuration, true));
+            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.95, PopOutDuration, true));
 
         } else if (!flag && this.pressedState){
             this.pressedState = false;

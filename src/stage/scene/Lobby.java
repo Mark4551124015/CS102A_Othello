@@ -25,8 +25,6 @@ public class Lobby extends OthelloObject implements GameStage {
     public static final double MenuButtonHeight = 60;
     public static final Vct MainManuButtonsPivot = new Vct(MenuButtonWidth * 0.43, mainApp.Height * 0.30);
     public static final double MenuShift = MenuButtonWidth;
-    private boolean ReadyForOnlineGame;
-    private boolean readyForLocalGame;
     private boolean exitFlag;
     private boolean help;
     private boolean options;
@@ -100,7 +98,6 @@ public class Lobby extends OthelloObject implements GameStage {
         if (this.menuState == MenuState.Main) { // MainTest
             if (this.button_main_start.isClicked()) {
                 System.out.println("Play被点击");
-                this.readyForLocalGame = true;
                 this.changeMenuState(MenuState.SelectMode);
             }
             if (this.button_main_exit.isClicked()) {
@@ -113,6 +110,7 @@ public class Lobby extends OthelloObject implements GameStage {
                 this.options = true;
             }
         }
+
         if(this.menuState == MenuState.SelectMode){
             if(this.button_SelectMode_local.isClicked()){
                 this.local = true;
@@ -225,15 +223,6 @@ public class Lobby extends OthelloObject implements GameStage {
         return exitFlag;
     }
 
-    public boolean isReadyForOnlineGame() {
-        return ReadyForOnlineGame;
-    }
-
-    public boolean isReadyForLocalGame() {
-        return readyForLocalGame;
-     }
-
-
     public boolean isHelping() {
         return help;
     }
@@ -315,19 +304,19 @@ public class Lobby extends OthelloObject implements GameStage {
     }
 
     public boolean ChosenLocal() {
-        return local;
+        return this.local;
     }
 
     public boolean ChosenOnline() {
-        return online;
+        return this.online;
     }
 
     public boolean ChosenAi() {
-        return ai;
+        return this.ai;
     }
 
     public boolean Back() {
-        return back;
+        return this.back;
     }
 
     private void changeMenuState(MenuState nextState){
