@@ -149,20 +149,20 @@ public class Lobby extends OthelloObject implements GameStage {
         this.menu_main.setPosition(MainManuButtonsPivot);
         this.menu_main.setAlpha(0);
 
-        this.button_main_start = new MenuButton("menu_main_start", new Sprite("popo"));
+        this.button_main_start = new MenuButton("menu_main_start",null);
         this.menu_main.addObj(this.button_main_start);
-        this.button_main_help = new MenuButton("menu_main_help", new Sprite("popo"));
+        this.button_main_help = new MenuButton("menu_main_help",null);
         this.menu_main.addObj(this.button_main_help);
-        this.button_main_options = new MenuButton("menu_main_options", new Sprite("popo"));
+        this.button_main_options = new MenuButton("menu_main_options", null);
         this.menu_main.addObj(this.button_main_options);
-        this.button_main_exit = new MenuButton("menu_main_exit", new Sprite("popo"));
+        this.button_main_exit = new MenuButton("menu_main_exit", null);
         this.menu_main.addObj(this.button_main_exit);
 
         //大小
         this.button_main_start.resizeTo(MenuButtonWidth, MenuButtonHeight);
-        this.button_main_help.resizeTo(MenuButtonWidth, MenuButtonHeight);
-        this.button_main_options.resizeTo(MenuButtonWidth, MenuButtonHeight);
-        this.button_main_exit.resizeTo(MenuButtonWidth, MenuButtonHeight);
+        this.button_main_help.resizeTo(MenuButtonWidth, MenuButtonHeight-7);
+        this.button_main_options.resizeTo(MenuButtonWidth, MenuButtonHeight-7);
+        this.button_main_exit.resizeTo(MenuButtonWidth, MenuButtonHeight-7);
 
         //位置
         this.button_main_start.setPosition(0, 50);

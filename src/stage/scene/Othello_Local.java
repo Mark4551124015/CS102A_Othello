@@ -45,6 +45,7 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
     private boolean gameOverState;
     double totalTime = 0;
 
+    private OthelloObject menu_Local;
 
 
     private OthelloObject Board;
@@ -83,6 +84,10 @@ public class Othello_Local extends OthelloObject implements stage.GameStage {
         this.Board.addObj(this.boardIndex);
 
         this.game.start();
+    }
+
+    public void ini_Local_Menu(){
+        
     }
 
     public intVct mouseBP() {

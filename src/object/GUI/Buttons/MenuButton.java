@@ -32,9 +32,6 @@ public class MenuButton extends ButtonBase {
     private OthelloObject root;
     private Text text;
 
-    private OthelloObject base;
-    private OthelloObject surface;
-
     private boolean hoverState;
     private boolean pressedState;
 
@@ -46,20 +43,10 @@ public class MenuButton extends ButtonBase {
 
 
     public MenuButton(String id, Sprite sprite) {
-        super(id, null);
+        super(id, sprite);
 
         this.root = new OthelloObject(this.id + "_root");
         this.addObj(this.root);
-
-        this.base = new OthelloObject(this.id + "_base", new Sprite("popo"));
-        this.base.setColor(new Color(255, 255, 255, 20));
-        this.base.resizeTo(sprite.getUnitSize());
-        this.root.addObj(this.base);
-
-        this.surface = new OthelloObject(this.id + "_surface", sprite);
-        this.surface.setColor(Color.white);
-        this.root.addObj(this.surface);
-
 
         this.text = new Text(this.id + "_text", "", new Font("黑体", Font.BOLD, 50));
         this.root.addObj(this.text);
@@ -73,7 +60,8 @@ public class MenuButton extends ButtonBase {
         this.addComponent(this.amt_a);
     }
 
-    public void setFont(Font font) {
+
+        public void setFont(Font font) {
         this.text.setFont(font);
     }
 
@@ -119,7 +107,6 @@ public class MenuButton extends ButtonBase {
 
         this.root.setPosition(this.amt_h.val(), 0);
         this.setScale(this.amt_v.val(), this.amt_v.val());
-        this.surface.setAlpha(this.amt_a.val());
     }
 
     @Override
@@ -130,7 +117,7 @@ public class MenuButton extends ButtonBase {
 
     @Override
     public boolean isHovering() {
-        Vct size = this.base.getSprite().getUnitSize();
+        Vct size = this.getSize();
         Vct pos = Controller.getMousePos();
         try {
             pos.transform(this.getAbsoluteTransform().createInverse());
@@ -151,7 +138,7 @@ public class MenuButton extends ButtonBase {
     public void toggleHoverZoom(boolean flag) {
         if (flag && !this.hoverState) {
             this.hoverState = true;
-            this.amt_h.forceAppend(Animation.GetTanh(this.amt_h.val(), this.base.getSprite().getUnitSize().x * 0.2, PopOutDuration, true));
+            this.amt_h.forceAppend(Animation.GetTanh(this.amt_h.val(), this.getSize().x * 0.2, PopOutDuration, true));
             this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.05, PopOutDuration, true));
             this.amt_a.forceAppend(Animation.GetTanh(this.amt_a.val(), 1, PopOutDuration, true));
         } else if (!flag && this.hoverState){
@@ -165,15 +152,11 @@ public class MenuButton extends ButtonBase {
     @Override
     public void resizeTo(Vct rect) {
         super.resizeTo(rect);
-        this.base.resizeTo(rect);
-        this.surface.resizeTo(rect);
     }
 
     @Override
     public void resizeTo(double x, double y) {
         super.resizeTo(x, y);
-        this.base.resizeTo(x, y);
-        this.surface.resizeTo(x, y);
     }
 
 
@@ -199,9 +182,7 @@ public class MenuButton extends ButtonBase {
     public void onMouseWheelMoved(MouseWheelEvent e) {
     }
 
-    public OthelloObject getBase() {
-        return this.base;
-    }
+
 
 
     public void togglePressedZoom(boolean flag) {
