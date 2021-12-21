@@ -23,6 +23,7 @@ import stage.GameStage;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 import static input.Controller.mouseIsOnboard;
 import static main.mainApp.controller;
@@ -178,12 +179,12 @@ public class Othello_Local extends OthelloObject implements GameStage {
     public boolean loadGame(String gameName){
         String gameInfoJsonStr = getStringFromFile(gamePath+gameName+gameInfoName);
         JSONObject gameInfoJson = JSONObject.fromObject(gameInfoJsonStr);
-        if (PlayerManager.User.getUsername() != gameInfoJson.getString("white_Player") )
+        if (!Objects.equals(User.getUsername(), gameInfoJson.getString("white_Player")))
 
-        if(User.getUsername() != gameInfoJson.getString("white_Player") || User.getUsername() != gameInfoJson.getString("black_Player")){
+        if(!Objects.equals(User.getUsername(), gameInfoJson.getString("white_Player")) || !Objects.equals(User.getUsername(), gameInfoJson.getString("black_Player"))){
             return false;
         }
-        if(Competitor.getUsername() != gameInfoJson.getString("white_Player") || Competitor.getUsername() != gameInfoJson.getString("black_Player")){
+        if(!Objects.equals(Competitor.getUsername(), gameInfoJson.getString("white_Player")) || !Objects.equals(Competitor.getUsername(), gameInfoJson.getString("black_Player"))){
             return false;
         }
         this.operationManager.renew();

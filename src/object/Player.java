@@ -38,7 +38,7 @@ public class Player extends OthelloObject{
     }
 
     public Player(JSONObject json) {
-        this(json.getString("username"), json.getString("playerName"), fromString(json.getString("Type")) );
+        this(json.getString("username"), json.getString("playerName"), local );
         this.winCnt = json.getInt("winCnt");
         this.played = json.getInt("roundPlayed");
     }

@@ -6,6 +6,7 @@ import newData.Operation;
 import object.inGame.DiskManager;
 import newData.intVct;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class Game extends OthelloObject{
 
     public Game(Player white, Player black){
         super("Game", null);
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'_'HH-mm-ss");
         Date date = new Date(System.currentTimeMillis());
         this.name = "Game_"+formatter.format(date);
         this.whitePlayer=white;
@@ -131,7 +132,12 @@ public class Game extends OthelloObject{
     }
 
     public void save() {
-        saveDataToFile(gamePath+this.getName()+"/" + gameInfoName,gameInfoToJson().toString());
+
+        File file = new File("./save/" + gamePath+this.getName());
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        saveDataToFile(gamePath + this.getName()+"/" + gameInfoName,gameInfoToJson().toString());
     }
 
     public void setWinner(Player player) {
@@ -143,9 +149,13 @@ public class Game extends OthelloObject{
         if (User.getUsername() == json.getString("white_Player") ){
             this.whitePlayer = User;
             this.blackPlayer = Competitor;
+            User.setColor(1);
+            Competitor.setColor(-1);
         } else {
             this.whitePlayer = Competitor;
             this.blackPlayer = User;
+            User.setColor(-1);
+            Competitor.setColor(1);
         }
     }
 

@@ -29,7 +29,7 @@ public class PlayerManager extends OthelloObject{
 
     }
 
-    public void createPlayer(String username, String name ) {
+    public void createPlayer(String username, String name) {
         try{
             File file = new File("./save/"+playerPath + username);
             file.mkdir();
@@ -59,7 +59,7 @@ public class PlayerManager extends OthelloObject{
 
     public Player getPlayer(String username) {
         for (Player index : this.players) {
-            if (index.getUsername() == username) {
+            if (index.getUsername().equals(username)) {
                 return index;
             }
         }
@@ -107,7 +107,6 @@ public class PlayerManager extends OthelloObject{
     private void readPlayersName() {
        String playersNameString = getStringFromFile(playerPath + "playerNameList");
        JSONArray players = JSONArray.fromObject(playersNameString);
-
        for (int i =0; i<players.size();i++) {
            this.playersName.add(players.getString(i));
        }
@@ -116,7 +115,7 @@ public class PlayerManager extends OthelloObject{
     private void readPlayers() {
         try {
             for (String index : this.playersName) {
-                JSONObject jsonPlayer = JSONObject.fromObject(Tools.getStringFromFile(playerPath+"/"+index+"/"+index));
+                JSONObject jsonPlayer = JSONObject.fromObject(Tools.getStringFromFile(playerPath+index+"/"+index));
                 this.players.add(new Player(jsonPlayer));
             }
         } catch (Exception e) {}

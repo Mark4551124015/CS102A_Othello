@@ -34,10 +34,10 @@ public class OperationManager extends OthelloObject {
 
     public void OperationHandler(Operation operation) {
         Player operator = null;
-        if (this.game.getPlayer(1).getUsername() == operation.Operator) {
+        if (this.game.getPlayer(1).getUsername().equals(operation.Operator)) {
             operator = this.game.getPlayer(1);
         }
-        if (this.game.getPlayer(-1).getUsername() == operation.Operator) {
+        if (this.game.getPlayer(-1).getUsername().equals(operation.Operator)) {
             operator = this.game.getPlayer(-1);
         }
 
@@ -48,19 +48,14 @@ public class OperationManager extends OthelloObject {
                 this.game.setWinner(this.game.getPlayer(1));
             }
             this.operationList.add(operation);
-
+        }if (operation.type == MadeInHeaven) {
+            this.game.getGrid().forceSetDisk(operation.position, operator.getColor());
+            this.operationList.add(operation);
         } else if (operator.getColor() == this.game.getCurrentSide()) {
-
             if (operation.type == SetDisk) {
                 this.game.getGrid().SetDisk(operation.position, operator);
                 this.operationList.add(operation);
             }
-
-            if (operation.type == MadeInHeaven) {
-                this.game.getGrid().forceSetDisk(operation.position, operator.getColor());
-                this.operationList.add(operation);
-            }
-
         } else if (operator.getColor() != this.game.getCurrentSide()){
             AttentionManager.showWarnMessage("Not you round");
         }
@@ -88,7 +83,7 @@ public class OperationManager extends OthelloObject {
     }
 
     public void save(){
-        saveDataToFile(gamePath+this.game.getName()+"/" + OperationFileName,getOperationListJson().toString());
+        saveDataToFile(gamePath + this.game.getName()+"/" + OperationFileName,getOperationListJson().toString());
     }
 
     public void renew(){
@@ -108,4 +103,13 @@ public class OperationManager extends OthelloObject {
     public void deleteFirstOperation() {
         this.incomingOperations.remove(0);
     }
+
+    public void cleanInComingOperations() {
+        if (!this.getIncomingOperations().isEmpty()) {
+                this.OperationHandler((Operation) this.getIncomingOperations().get(0));
+                this.deleteFirstOperation();
+        } else {
+        }
+    }
+
 }
