@@ -76,7 +76,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
     public void init_local_Game() {
         User = new Player("Mark455","Mark455",local);
-        Competitor = new Player("JR","JR",local);
+        Competitor = new Player("Jerry","Jerry",local);
 
         //棋盘
         this.Board = new OthelloObject("Board", new Sprite("Board"));

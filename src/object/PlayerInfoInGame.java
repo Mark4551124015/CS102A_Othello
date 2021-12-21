@@ -15,15 +15,14 @@ public class PlayerInfoInGame extends OthelloObject{
     private NormalButton Surrender;
 
     public PlayerInfoInGame(Player player){
-        super("User_info");
+        super("User_info"+player.getUsername());
 
         this.playerProfile = new OthelloObject("Player Profile");
-
         this.setSprite(new Sprite("User_info_backGround"));
-
         int Font_Size = 12;
 
         ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("save/players/"+player.getUsername()+"/profile.png"));
+        System.out.print("Loaded");
         this.playerProfile.setSprite(new Sprite(player.getUsername()));
 
         this.player_name = new Text(player.getUsername()+"_Played", "null", new Font("黑体", Font.PLAIN, Font_Size));
