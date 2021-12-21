@@ -9,13 +9,10 @@ import net.sf.json.JSONObject;
 import newData.Operation;
 import newData.Vct;
 import newData.intVct;
+import object.*;
 import object.GUI.Buttons.MenuButton;
 import object.GUI.Buttons.NormalButton;
 import object.GUI.Buttons.SelectModeButton;
-import object.Game;
-import object.OthelloObject;
-import object.Player;
-import object.PlayerManager;
 import object.inGame.BoardIndex;
 import object.inGame.OperationManager;
 import stage.GameStage;
@@ -42,6 +39,8 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
     private Shape canvas;
     private OthelloObject background;
+//    private OthelloObject playerinfow;
+//    private OthelloObject playerinfob;
 
     private ArrayList<Player> playerList;
     private Map<Integer, Player> idMap;
@@ -52,6 +51,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private Game game;
     public static boolean isReadyForOperate;
     private BoardIndex boardIndex;
+    private PlayerInfoInGame playerInfow;
+    private PlayerInfoInGame playerInfob;
+
 
     private boolean gameOver;
     private boolean gameOverState;
@@ -82,6 +84,15 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         this.Board.resizeTo(new Vct(BoardSize, BoardSize));
 
+        //玩家信息
+//        this.playerinfow = new OthelloObject("PlayerInfow",new Sprite("profile"));//white
+//        this.addObj(this.playerinfow);
+//        this.playerinfow.setPosition(176,200);
+//        this.playerinfow.resizeTo(new Vct(160,160));
+//        this.playerinfob = new OthelloObject("PlayerInfob",new Sprite("profile"));//black
+//        this.addObj(this.playerinfob);
+//        this.playerinfob.setPosition(0,100);
+
         //本地游戏管理器
         this.game = new Game(User, Competitor);
         this.operationManager = new OperationManager(this.game);
@@ -92,9 +103,19 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.boardIndex.setVisibility(true);
         this.Board.addObj(this.boardIndex);
 
+        this.playerInfob = new PlayerInfoInGame(this.game.getPlayer(1));
+        this.Board.addObj(this.playerInfob);
+        this.playerInfob.setPosition(465,-80);
+
+
+        this.playerInfow = new PlayerInfoInGame(this.game.getPlayer(-1));
+        this.Board.addObj(this.playerInfow);
+        this.playerInfow.setPosition(-465,-80);
+
         this.game.start();
         totalTime = 0;
         isReadyForOperate =true;
+
     }
 
 

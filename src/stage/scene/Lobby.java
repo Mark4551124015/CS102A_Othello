@@ -2,7 +2,6 @@ package stage.scene;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import jdk.vm.ci.meta.Local;
 import main.mainApp;
 import newData.Vct;
 import object.GUI.Buttons.MenuButton;
