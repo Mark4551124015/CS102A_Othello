@@ -227,6 +227,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
         }
 
         if (this.level == AILevel.Easy) {
+
             DiskManager_AI AIDisks = new DiskManager_AI();
             AIDisks.loadDisks(this.game.getGrid().Disks);
             ArrayList<Integer> flipPoints = new ArrayList<>();
@@ -235,6 +236,8 @@ public class Othello_AI extends OthelloObject implements GameStage {
 
 
             ArrayList<intVct> load =  this.game.getGrid().validBP(AI);
+            ArrayList<intVct> load_User;
+
 
             for (int i=0; i < load.size(); i++) {
                 int point = 0;
@@ -243,12 +246,42 @@ public class Othello_AI extends OthelloObject implements GameStage {
                 if (load.get(i).r == 0 || load.get(i).r == 7 || load.get(i).c == 0 || load.get(i).c == 7) {
                     point += 20;
                 }
+                if (load.get(i).c == 0 || load.get(i).c == 7) {
+                    point += 20;
+                }
+
                 flipPoints.add(point);
             }
 
             for (int i=0; i < load.size(); i++) {
                 AIDisks.SetDisk(load.get(i),AI);
-                UserValidPoints.add(AIDisks.validBP(User).size()*(-5));
+                int point = 0;
+                if (AIDisks.checkWinner(User, AI)!=null) {
+                    if (AIDisks.checkWinner(User, AI).getUsername() == AI.getUsername()) {
+                        point += 1000;
+                    }
+                    if (AIDisks.checkWinner(User, AI).getUsername() == User.getUsername()) {
+                        point -= 1000;
+                    }
+                }
+                load_User = AIDisks.validBP(User);
+
+                for (int a=0; a < load_User.size(); a++) {
+                    intVct index = load_User.get(a);
+                    point += this.game.getGrid().check(index,User, DiskManager.checkPurpose.Flip).size() * -1;
+                    if (load_User.get(a).r == 0 || load_User.get(a).r == 7 ) {
+                        point -= 20;
+                    }
+                    if (load_User.get(a).c == 0 || load_User.get(a).c == 7 ) {
+                        point -= 20;
+                    }
+
+                }
+
+
+
+                point += AIDisks.validBP(User).size()*(-10);
+                UserValidPoints.add(point);
                 AIDisks.recallLastDisk();
             }
 
@@ -299,6 +332,10 @@ public class Othello_AI extends OthelloObject implements GameStage {
                 if (load.get(i).r == 0 || load.get(i).r == 7 || load.get(i).c == 0 || load.get(i).c == 7) {
                     point += 20;
                 }
+                if (load.get(i).c == 0 || load.get(i).c == 7) {
+                    point += 20;
+                }
+
                 flipPoints.add(point);
             }
 
@@ -318,9 +355,13 @@ public class Othello_AI extends OthelloObject implements GameStage {
                 for (int a=0; a < load_User.size(); a++) {
                     intVct index = load_User.get(a);
                     point += this.game.getGrid().check(index,User, DiskManager.checkPurpose.Flip).size() * -1;
-                    if (load_User.get(a).r == 0 || load_User.get(a).r == 7 || load_User.get(a).c == 0 || load_User.get(a).c == 7) {
+                    if (load_User.get(a).r == 0 || load_User.get(a).r == 7 ) {
                         point -= 20;
                     }
+                    if (load_User.get(a).c == 0 || load_User.get(a).c == 7 ) {
+                        point -= 20;
+                    }
+
                 }
 
 

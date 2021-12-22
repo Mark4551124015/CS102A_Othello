@@ -26,7 +26,7 @@ public class NormalButton extends ButtonBase {
     public static final double PopOutDuration = 0.08;
     public static final double PopInDuration = 0.12;
     public static final Vct NormalButtonSize = new Vct(110,50);
-
+    private static int ButtonCnt = 0;
 
     private Text text;
 
@@ -38,9 +38,9 @@ public class NormalButton extends ButtonBase {
     private boolean clicked;
 
 
-    public NormalButton(String id) {
-        super(id, new Sprite("NormalButton"));
-        this.text = new Text(this.id + "_text", "", new Font("黑体", Font.BOLD, 18));
+    public NormalButton(String Text) {
+        super("NormalButton_" + ButtonCnt, new Sprite("NormalButton"));
+        this.text = new Text(this.id + "_text", Text, new Font("黑体", Font.BOLD, 18));
         this.addObj(this.text);
         this.resizeTo(NormalButtonSize);
         this.amt_v = new Animator(1.0);
