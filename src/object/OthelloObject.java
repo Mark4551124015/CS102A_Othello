@@ -93,6 +93,10 @@ public class OthelloObject {
         this.parentObject = object;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setSize(Vct size) {
         this.size = size;
     }

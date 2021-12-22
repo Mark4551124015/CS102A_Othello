@@ -12,6 +12,7 @@ public class Player extends OthelloObject{
     private int played;
     private boolean Ready;
     private int color;
+    private int reCalledTime;
 
 //    private boolean isOnline;
 //    private boolean isLocal;
@@ -34,11 +35,12 @@ public class Player extends OthelloObject{
         this.color = 0;
         this.winCnt = 0;
         this.played = 0;
+        this.reCalledTime = 0;
         this.type = type;
     }
 
     public Player(JSONObject json) {
-        this(json.getString("username"), json.getString("playerName"), fromString(json.getString("Type")) );
+        this(json.getString("username"), json.getString("playerName"), local );
         this.winCnt = json.getInt("winCnt");
         this.played = json.getInt("roundPlayed");
     }
@@ -122,6 +124,13 @@ public class Player extends OthelloObject{
 
     public void resetForGame() {
         this.Ready = false;
+    }
 
+    public void reCalled(){
+        ++this.reCalledTime;
+    }
+
+    public int getReCalledTime(){
+        return this.reCalledTime;
     }
 }

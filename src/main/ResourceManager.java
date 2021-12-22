@@ -82,6 +82,7 @@ public class ResourceManager {
         addList(fullList, "User_info_backGround");
         addList(fullList, "Ready");
         addList(fullList, "NormalButton");
+        addList(fullList, "Hinter");
         addList(fullList, "attention_yellow","attention.png",new Color(0xE8BF0F));
         addList(fullList, "attention_red","attention.png",new Color(0xE80F21));
         addList(fullList, "attention_green","attention.png",new Color(0x07BB09));

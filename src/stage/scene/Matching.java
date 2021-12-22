@@ -5,21 +5,19 @@ import graphics.Sprite;
 import input.Controller;
 import main.mainApp;
 import newData.Vct;
-import newData.intVct;
 import object.GUI.Buttons.NormalButton;
 import object.OthelloObject;
 import object.Player;
-import object.PlayerInfo;
+import object.GUI.PlayerInfo;
 import object.inGame.BoardIndex;
 import object.inGame.DiskManager;
 import util.FontLibrary;
 
 import java.awt.*;
-import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static object.PlayerManager.User;
+import static main.PlayerManager.User;
 
 
 public class Matching extends OthelloObject implements stage.GameStage {

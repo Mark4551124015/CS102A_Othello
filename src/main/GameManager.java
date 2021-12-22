@@ -1,14 +1,6 @@
 package main;
 
 
-import javafx.stage.Stage;
-import object.Game;
-import object.Player;
-import object.PlayerManager;
-
-import static object.Player.playerType.local;
-import static object.PlayerManager.User;
-
 import stage.GameStage;
 import stage.GameStage.GameStageID;
 import stage.scene.*;
@@ -17,6 +9,8 @@ import stage.transition.FadeInTransition;
 import input.Controller;
 import stage.transition.FadeOutTransition;
 import java.awt.*;
+
+import static main.PlayerManager.User;
 
 public class GameManager implements Runnable {
     public static final int FPS = 144;
@@ -30,7 +24,7 @@ public class GameManager implements Runnable {
 
     public void start() {
         playerManager.readAll();
-        System.out.println(playerManager.getPlayersName());
+        User = playerManager.getPlayer("Mark455");
         Thread GMThread = new Thread(this);
         GMThread.start();
     }
@@ -57,7 +51,7 @@ public class GameManager implements Runnable {
                 System.exit(0);
 
             if (((Lobby)stage).ChosenLocal()) {
-                this.stageContainer.enterStage(new Othello_Local(), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
+                this.stageContainer.enterStage(new Othello_AI(Othello_AI.AILevel.Hard), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
             }
             if (((Lobby)stage).isHelping()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
