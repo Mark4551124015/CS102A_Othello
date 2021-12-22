@@ -4,6 +4,7 @@ import graphics.Sprite;
 import graphics.Text;
 import javafx.scene.control.Button;
 import main.ResourceManager;
+import object.GUI.Buttons.MenuButton;
 import object.GUI.Buttons.NormalButton;
 
 import java.awt.*;
@@ -19,6 +20,10 @@ public class PlayerInfoInGame extends OthelloObject{
 
         this.playerProfile = new OthelloObject("Player Profile");
         this.setSprite(new Sprite("User_info_backGround"));
+        this.Recall = new NormalButton("Recall");
+        this.Recall.addObj(this.Recall);
+        this.Surrender = new NormalButton("Surrender");
+        this.Surrender.addObj(this.Surrender);
         int Font_Size = 12;
 
         ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("save/players/"+player.getUsername()+"/profile.png"));
