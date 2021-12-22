@@ -31,7 +31,7 @@ public class PlayerInfo extends OthelloObject {
 
         this.Player_Ready = new OthelloObject( "isReady", new Sprite("Ready"));
 
-        ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("Resources/Players/"+player.getUsername()+".png"));
+        ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("save/players/"+player.getUsername()+"/profile.png"));
 
         try {
             this.Player_profile = new OthelloObject(player.getUsername() + "_profile", new Sprite(player.getUsername()));

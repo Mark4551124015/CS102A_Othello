@@ -11,6 +11,7 @@ public class main {
     static Game game;
     static OperationManager operationManager;
     public static void main(String[] args) {
+
         pm.readAll();
         PlayerManager.User = pm.getPlayer("Jerry");
         PlayerManager.Competitor = pm.getPlayer("Mark455");
@@ -19,7 +20,5 @@ public class main {
         game.getPlayer(-1).winCntPlus(1);
 
         System.out.println(pm.User.getWinCnt());
-
-
     }
 }
