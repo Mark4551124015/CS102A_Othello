@@ -14,7 +14,7 @@ public class intVct {
     }
 
     public Vct toPosition() {
-        return new Vct(((this.c+1)*BoardSize/8-BoardSize/16)-BoardSize/2,((this.r+1)*BoardSize/8-BoardSize/16)-BoardSize/2);
+        return new Vct(((this.c+1)*BoardSize/8-BoardSize/16)-BoardSize/2 ,((this.r+1)*BoardSize/8-BoardSize/16)-BoardSize/2);
     }
 
     public intVct() {

@@ -1,15 +1,17 @@
-package object;
+package object.GUI;
 
 import graphics.Sprite;
 import graphics.Text;
 import main.ResourceManager;
 import newData.Vct;
+import object.OthelloObject;
+import object.Player;
 
 import java.awt.*;
 
 
 
-public class PlayerInfo extends OthelloObject{
+public class PlayerInfo extends OthelloObject {
 
     private OthelloObject Player_profile;
     private OthelloObject Player_Ready;
@@ -21,7 +23,7 @@ public class PlayerInfo extends OthelloObject{
     private static Vct UserInfoSize = new Vct(240,360);
 
     public PlayerInfo(Player player) {
-        super("User_info");
+        super("Player_info_"+player.getUsername());
         this.player = player;
         this.setSprite(new Sprite("User_info_backGround"));
 
@@ -56,11 +58,11 @@ public class PlayerInfo extends OthelloObject{
 
         this.Player_profile.setPosition(0,-75);
         this.Player_profile.resizeTo(UserInfoSize.x/2, UserInfoSize.x/2);
-        this.Player_Ready.setScale(UserInfoSize.x/this.Player_Ready.sprite.getUnitSize().x);
+        this.Player_Ready.setScale(UserInfoSize.x/this.Player_Ready.getSprite().getUnitSize().x);
         this.Player_Name.setPosition(0,20);
-        this.Player_Played.setPosition(0,this.Player_Name.trans.position.y + Font_Size + Letter_Space);
-        this.Player_WinRate.setPosition(0,this.Player_Played.trans.position.y + Font_Size + Letter_Space);
-        this.Player_Ready.setPosition(0,this.Player_WinRate.trans.position.y + Font_Size + Letter_Space);
+        this.Player_Played.setPosition(0,this.Player_Name.getTrans().position.y + Font_Size + Letter_Space);
+        this.Player_WinRate.setPosition(0,this.Player_Played.getTrans().position.y + Font_Size + Letter_Space);
+        this.Player_Ready.setPosition(0,this.Player_WinRate.getTrans().position.y + Font_Size + Letter_Space);
     }
 
     @Override

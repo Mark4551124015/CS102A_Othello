@@ -1,30 +1,25 @@
 package object.inGame;
 
-import graphics.Sprite;
-import newData.Vct;
 import newData.direction;
 import newData.intVct;
-import object.*;
+import object.OthelloObject;
+import object.Player;
 import util.Tools;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import static object.Game.switchRound;
-import static stage.StageContainer.DiskSize;
 import static util.Tools.cleanArray;
 
-public class DiskManager extends OthelloObject {
-    public Disk[][] Disks = new Disk[8][8];
+public class DiskManager_AI extends OthelloObject {
+    private Disk[][] Disks = new Disk[8][8];
     private final direction direction = new direction();
-    public static int ReadyForNextOperation;
     private Disk lastDisk;
     private ArrayList<intVct> lastFlippedDisks;
     private static int DMCnt=0;
 
     //创建64个棋
-    public DiskManager(){
-        super("DiskManager_"+DMCnt,null);
+    public DiskManager_AI(){
+        super("DiskManager_AI_"+DMCnt,null);
         initBoard();
         ++DMCnt;
     }
@@ -34,17 +29,16 @@ public class DiskManager extends OthelloObject {
             for (int c = 0; c < 8; c++) {
                 this.Disks[r][c] = new Disk(new intVct(r,c));
                 this.addObj(this.Disks[r][c]);
-                this.Disks[r][c].setPosition(new intVct(r,c).toPosition());
             }
         }
-        this.Disks[3][4].setVisibility(true);
+
         this.Disks[3][4].setStatus(-1);
-        this.Disks[4][3].setVisibility(true);
+
         this.Disks[4][3].setStatus(-1);
 
-        this.Disks[3][3].setVisibility(true);
+
         this.Disks[3][3].setStatus(1);
-        this.Disks[4][4].setVisibility(true);
+
         this.Disks[4][4].setStatus(1);
 
         this.lastFlippedDisks = new ArrayList<>(0);
@@ -55,27 +49,21 @@ public class DiskManager extends OthelloObject {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 this.Disks[r][c].setStatus(0);
-                this.Disks[r][c].setVisibility(false);
             }
         }
-        this.Disks[3][4].setVisibility(true);
         this.Disks[3][4].setStatus(-1);
-        this.Disks[4][3].setVisibility(true);
         this.Disks[4][3].setStatus(-1);
-
-        this.Disks[3][3].setVisibility(true);
         this.Disks[3][3].setStatus(1);
-        this.Disks[4][4].setVisibility(true);
         this.Disks[4][4].setStatus(1);
 
     }
 
     public void flipDisk(intVct bP) {
-        this.Disks[bP.r][bP.c].flip();
+        this.Disks[bP.r][bP.c].simpleFlip();
     }
 
     public void recallDisk(intVct bP){
-        this.Disks[bP.r][bP.c].recall();
+        this.Disks[bP.r][bP.c].setStatus(0);
     }
 
     //检查某个位置可否下棋子
@@ -102,7 +90,7 @@ public class DiskManager extends OthelloObject {
             }
         }   //获得所有当前玩家的棋子位置
         for (intVct bp : playerDisks) {
-            for (intVct index : check(bp, player, checkPurpose.valid)){
+            for (intVct index : check(bp, player, checkPurpose_AI.valid)){
                 validBP.add(index);
             }
         }
@@ -116,8 +104,7 @@ public class DiskManager extends OthelloObject {
         this.lastDisk = Disks[bp.r][bp.c];
         if (checkDisk(bp, player)) {
                 forceSetDisk(bp, player.getColor());
-                switchRound();
-                for (intVct index : check(bp, player, checkPurpose.Flip)) {
+                for (intVct index : check(bp, player, checkPurpose_AI.Flip)) {
                     this.lastFlippedDisks.add(index);
                     this.flipDisk(index);
                 }
@@ -158,10 +145,10 @@ public class DiskManager extends OthelloObject {
     }
 
     //查找
-    public ArrayList<intVct> check(intVct disk, Player player, checkPurpose purpose){
+    public ArrayList<intVct> check(intVct disk, Player player, checkPurpose_AI purpose){
         ArrayList<intVct> num = new ArrayList<>();
         //查找目的是翻棋子
-        if(purpose == checkPurpose.Flip) {
+        if(purpose == checkPurpose_AI.Flip) {
             int alongStatus = player.getColor()*-1;
             int targetStatus = player.getColor();
             for (intVct index : direction.list) {
@@ -194,7 +181,7 @@ public class DiskManager extends OthelloObject {
             }
         }
         //查找目的是找合理的落子点
-        else if(purpose == checkPurpose.valid) {
+        else if(purpose == checkPurpose_AI.valid) {
             int alongStatus = player.getColor()*-1;
             int targetStatus = 0;
             for (intVct index : direction.list) {
@@ -229,7 +216,7 @@ public class DiskManager extends OthelloObject {
         return num;
     }
 
-    public enum checkPurpose{
+    public enum checkPurpose_AI {
         Flip,valid
     }
 
@@ -249,38 +236,6 @@ public class DiskManager extends OthelloObject {
         }else{
             return null;
         }
-    }
-
-    //同步棋盘
-    @Override
-    public void update(double dt) {
-        int index =0;
-        for(int r=0; r<8 ; r++) {
-            for(int c=0; c< 8; c++){
-                index += this.Disks[r][c].getFlippingState();
-                index += this.Disks[r][c].getSttingState();
-                if (this.Disks[r][c].getFlippingState() != 1) {
-                    if (this.Disks[r][c].getStatus() == -1) {
-                        this.Disks[r][c].getRoot().setSprite(new Sprite("Black_Disk"));
-                    } else if (this.Disks[r][c].getStatus() == 1) {
-                        this.Disks[r][c].getRoot().setSprite(new Sprite("White_Disk"));
-                    }
-                }
-                if (this.Disks[r][c].getSize() != new Vct(DiskSize,DiskSize)) {
-                    this.Disks[r][c].resizeTo(new Vct(DiskSize,DiskSize));
-                }
-            }
-        }
-
-        ReadyForNextOperation = index;
-        super.update(dt);
-    }
-
-    public static boolean isReadyForNextOperation() {
-        if(ReadyForNextOperation != 0){
-            return false;
-        }
-        return true;
     }
 
     public void recallLastDisk(){

@@ -1,7 +1,9 @@
-package object;
+package main;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import object.OthelloObject;
+import object.Player;
 import util.Tools;
 
 import java.io.*;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import static object.Player.playerType.*;
 import static util.Tools.*;
 
-public class PlayerManager extends OthelloObject{
+public class PlayerManager extends OthelloObject {
     private ArrayList<Player> players;
     private ArrayList<String> playersName;
 

@@ -48,7 +48,7 @@ public class OperationManager extends OthelloObject {
                 this.game.setWinner(this.game.getPlayer(1));
             }
             this.operationList.add(operation);
-        }if (operation.type == MadeInHeaven) {
+        } else if (operation.type == MadeInHeaven) {
             this.game.getGrid().forceSetDisk(operation.position, operator.getColor());
             this.operationList.add(operation);
         } else if (operator.getColor() == this.game.getCurrentSide()) {

@@ -1,6 +1,5 @@
 package stage.scene;
 
-import component.animation.Animator;
 import graphics.Shape;
 import graphics.Sprite;
 import input.Controller;
@@ -9,13 +8,9 @@ import net.sf.json.JSONObject;
 import newData.Operation;
 import newData.Vct;
 import newData.intVct;
-import object.GUI.Buttons.MenuButton;
-import object.GUI.Buttons.NormalButton;
-import object.GUI.Buttons.SelectModeButton;
 import object.Game;
 import object.OthelloObject;
 import object.Player;
-import object.PlayerManager;
 import object.inGame.BoardIndex;
 import object.inGame.OperationManager;
 import stage.GameStage;
@@ -31,8 +26,8 @@ import static newData.Operation.Operation_Type.SetDisk;
 import static object.Game.gameInfoName;
 import static object.Game.gamePath;
 import static object.Player.playerType.local;
-import static object.PlayerManager.Competitor;
-import static object.PlayerManager.User;
+import static main.PlayerManager.Competitor;
+import static main.PlayerManager.User;
 import static object.inGame.DiskManager.isReadyForNextOperation;
 import static stage.StageContainer.BoardSize;
 import static util.Tools.getStringFromFile;
@@ -61,7 +56,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private OthelloObject Board;
 
     public Othello_Local() {
-        super("scene_Game");
+        super("Othello_Local");
     }
 
     @Override
@@ -96,6 +91,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.game.start();
         totalTime = 0;
         isReadyForOperate =true;
+
     }
 
 
@@ -138,8 +134,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
         if (!isReadyForOperate) {
             controller.cleanClick();
         }
+
         if (isReadyForOperate && isReadyForNextOperation()) {
-            OperationCheck();
+            SetDiskCheck();
         }
         super.update(dt);
 
@@ -151,7 +148,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
             pos.transform(this.Board.getAbsoluteTransform().createInverse());
         } catch (NoninvertibleTransformException ignored) {}
 
-        intVct intPosition = new intVct((int) Math.floor(pos.x / (BoardSize / 8)) + 4, (int) Math.floor(pos.y / (BoardSize / 8)) + 4);
+        intVct intPosition = new intVct((int) Math.floor(pos.y / (BoardSize / 8)) + 4, (int) Math.floor(pos.x / (BoardSize / 8)) + 4);
         if (intPosition.r > 7 || intPosition.r < 0 || intPosition.c > 7 || intPosition.c < 0 ) {
             mouseIsOnboard = false;
         } else {
@@ -159,7 +156,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
         }
     }
 
-    public void OperationCheck(){
+    public void SetDiskCheck(){
         Player operator = this.game.getPlayer(this.game.getCurrentSide());
         if (controller.isClicked() && mouseIsOnboard){
             this.operationManager.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c,mouseBP().r), SetDisk));
@@ -197,12 +194,14 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private void cleanInComingOperations() {
         if (!this.operationManager.getIncomingOperations().isEmpty()) {
             isReadyForOperate = false;
-            if (((int)totalTime*2) % 1 == 0) {
+            if (totalTime*2>1.2) {
+                totalTime = 0;
                 this.operationManager.OperationHandler((Operation) this.operationManager.getIncomingOperations().get(0));
                 this.operationManager.deleteFirstOperation();
             }
         } else {
             isReadyForOperate = true;
+            totalTime = 0;
         }
     }
 }

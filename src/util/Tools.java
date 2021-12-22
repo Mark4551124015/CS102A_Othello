@@ -127,6 +127,25 @@ public class Tools {
         }
     }
 
+    public static int getGreatestIndex(ArrayList<Integer> arrayList){
+        int greatest = 0;
+        for (int index = 0; index < arrayList.size();++index) {
+            if (arrayList.get(index) > arrayList.get(greatest)) {
+                greatest = index;
+            }
+        }
+        return greatest;
+    }
+
+    public static int getSmallestIndex(ArrayList<Integer> arrayList){
+        int smallest = 0;
+        for (int index = 0; index < arrayList.size();++index) {
+            if (arrayList.get(index) < arrayList.get(smallest)) {
+                smallest = index;
+            }
+        }
+        return smallest;
+    }
 
 
 }

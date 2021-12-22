@@ -11,8 +11,8 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static object.PlayerManager.Competitor;
-import static object.PlayerManager.User;
+import static main.PlayerManager.Competitor;
+import static main.PlayerManager.User;
 
 public class Client_Room extends OthelloObject {
     public final static int RoomCapacity = 2;
