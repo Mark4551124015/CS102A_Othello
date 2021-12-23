@@ -59,11 +59,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private PlayerInfoInGame playerInfoUser;
     private PlayerInfoInGame playerInfoCompetitor;
     private GameResult VictoryScene;
-//    private GameResult DefearScene;
+////    private GameResult DefearScene;
     private boolean ExitToLobby;
-    private NormalButton Back;
-    private boolean wantBack;
-
+//    private NormalButton Restart;
 
     private boolean gameOver;
     private boolean gameOverState;
@@ -127,7 +125,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
             this.playerInfoCompetitor.setPosition(-465,-80);
         }
 
-        this.VictoryScene = new GameResult();
+        this.VictoryScene = new GameResult(User,Competitor);
         this.Board.addObj(this.VictoryScene);
         this.VictoryScene.setAlpha(0);
         this.VictoryScene.setPosition(10000,10000);
@@ -135,15 +133,13 @@ public class Othello_Local extends OthelloObject implements GameStage {
 //        this.Board.addObj(this.DefearScene);
 //        this.DefearScene.setAlpha(0);
 //        this.DefearScene.setPosition(0,0);
+        this.VictoryScene.setPosition(0,0);
+        this.VictoryScene.EndingButton_setActive(false);
 
         this.game.start();
         totalTime = 0;
         isReadyForOperate =true;
 
-        this.Back = new NormalButton("Back");
-        this.Board.addObj(this.Back);
-        this.Back.setPosition(-1000,500);
-        this.Back.resizeTo(120,50);
     }
 
     public intVct mouseBP() {
@@ -191,20 +187,19 @@ public class Othello_Local extends OthelloObject implements GameStage {
         }
         super.update(dt);
 
-
-
         if(this.VictoryScene.isWantRestart()){
             reStart();
         }
+
         if(this.VictoryScene.isWantExitToLobby()){
             this.ExitToLobby = true;
             System.out.println("dian");
         }
 
-        if(this.Back.isClicked()){
-            this.wantBack = true;
+        if(game.gameEnd()){
+            this.VictoryScene.setVictoryMenu(1);
+            this.VictoryScene.EndingButton_setActive(true);
         }
-
 
         recallCheck();
 
@@ -276,11 +271,6 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
     public boolean isExitToLobby(){
         return this.ExitToLobby;
-    }
-
-
-    public boolean isWantBack(){
-        return this.wantBack;
     }
 
     public void recallCheck() {

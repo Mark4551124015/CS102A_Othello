@@ -74,6 +74,7 @@ public class NormalButton extends ButtonBase {
             this.setPosition(10000,10000);
         }
 
+
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
@@ -154,7 +155,6 @@ public class NormalButton extends ButtonBase {
         if (button == 1 && this.isHovering() && this.active) {
             this.clicked = true;
             AudioManager.Play("click");
-            System.out.println("fuck");
         }
     }
 

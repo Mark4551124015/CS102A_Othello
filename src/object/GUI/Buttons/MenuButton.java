@@ -87,6 +87,9 @@ public class MenuButton extends ButtonBase {
             this.setPosition(10000,10000);
         }
 
+        super.update(dt);
+
+
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);

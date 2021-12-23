@@ -63,6 +63,7 @@ public class SelectModeButton extends ButtonBase {
 
         this.amt_v = new Animator(1.0);
         this.addComponent(this.amt_v);
+
     }
 
     public void setFont(Font font) {
@@ -92,6 +93,7 @@ public class SelectModeButton extends ButtonBase {
         if(!this.Visibility || this.alpha == 0){
             this.setPosition(10000,10000);
         }
+
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
