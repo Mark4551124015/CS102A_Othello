@@ -53,17 +53,15 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
             if (((Lobby)stage).ChosenLocal()) {
-                this.stageContainer.enterStage(new Othello_Local(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0, OthelloTransition.TransitionType.IN));
+                this.stageContainer.enterStage(new Othello_Local(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
             }
             if (((Lobby)stage).ChosenOnline()) {
                 this.stageContainer.enterStage(new Matching(), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
             }
 
+
             if (((Lobby)stage).ChosenAi()) {
                 this.stageContainer.enterStage(new Othello_AI(Othello_AI.AILevel.Hard), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
-            }
-            if (((Lobby)stage).ChosenLocal()) {
-                this.stageContainer.enterStage(new Othello_Local(), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
             }
             if (((Lobby)stage).isHelping()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
