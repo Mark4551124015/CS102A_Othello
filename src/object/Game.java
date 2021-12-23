@@ -68,6 +68,7 @@ public class Game extends OthelloObject{
 
     public void renew(){
         this.Grid.renewBoard();
+        CurrentSide = 1;
     }
 
     public void update(double dt) {

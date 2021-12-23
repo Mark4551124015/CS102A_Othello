@@ -59,6 +59,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private BoardIndex boardIndex;
     private PlayerInfoInGame playerInfow;
     private PlayerInfoInGame playerInfob;
+    private GameResult VictoryScene;
+//    private GameResult DefearScene;
+    private boolean ExitToLobby;
 
 
     private boolean gameOver;
@@ -118,6 +121,15 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.Board.addObj(this.playerInfow);
         this.playerInfow.setPosition(-465,-80);
 
+        this.VictoryScene = new GameResult();
+        this.Board.addObj(this.VictoryScene);
+        this.VictoryScene.setAlpha(0);
+        this.VictoryScene.setPosition(0,0);
+//        this.DefearScene = new GameResult();
+//        this.Board.addObj(this.DefearScene);
+//        this.DefearScene.setAlpha(0);
+//        this.DefearScene.setPosition(0,0);
+
         this.game.start();
         totalTime = 0;
         isReadyForOperate =true;
@@ -170,6 +182,22 @@ public class Othello_Local extends OthelloObject implements GameStage {
         }
         super.update(dt);
 
+        if(playerInfob.isWantSurrender() || playerInfow.isWantSurrender()){
+            reStart();
+            playerInfob.setSurrender(false);
+            playerInfow.setSurrender(false);
+        }
+        if(playerInfow.isWantRecall() || playerInfob.isWantRecall()){
+            playerInfow.setRecall(false);
+            playerInfob.setRecall(false);
+        }
+        if(VictoryScene.isWantRestart()){
+            reStart();
+        }
+        if(this.VictoryScene.isWantExitToLobby()){
+            this.ExitToLobby = true;
+            System.out.println("dian");
+        }
     }
 
     public void checkMouseOnBoard() {
@@ -201,6 +229,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
     public void reStart(){
         this.game.renew();
         this.operationManager.renew();
+
     }
 
     public boolean loadGame(String gameName){
@@ -234,4 +263,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
             totalTime = 0;
         }
     }
+
+    public boolean isExitToLobby(){
+        return this.ExitToLobby;
+    }
+
 }

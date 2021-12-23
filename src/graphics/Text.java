@@ -100,7 +100,7 @@ public class Text extends OthelloObject {
         tmpG.setFont(big);
         fm = tmpG.getFontMetrics();
         tmpG.setColor(this.color);
-        tmpG.drawString(this.text, 5, fm.getAscent());
+        tmpG.drawString(this.text, 10, fm.getAscent());
         tmpG.dispose();
 
         if (this.sprite != null)

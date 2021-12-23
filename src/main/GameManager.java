@@ -1,6 +1,7 @@
 package main;
 
 
+import object.PlayerInfoInGame;
 import stage.GameStage;
 import stage.GameStage.GameStageID;
 import stage.scene.*;
@@ -50,8 +51,11 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
 
-            if (((Lobby)stage).ChosenLocal()) {
+            if (((Lobby)stage).ChosenAi()) {
                 this.stageContainer.enterStage(new Othello_AI(Othello_AI.AILevel.Hard), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
+            }
+            if (((Lobby)stage).ChosenLocal()) {
+                this.stageContainer.enterStage(new Othello_Local(), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
             }
             if (((Lobby)stage).isHelping()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
@@ -59,6 +63,7 @@ public class GameManager implements Runnable {
             if (((Lobby)stage).isOptions()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
             }
+        }else if (stage.getGameStageID() == GameStageID.Othello_Local) {
         }
     }
 

@@ -40,7 +40,7 @@ public class NormalButton extends ButtonBase {
 
     public NormalButton(String Text) {
         super("NormalButton_" + ButtonCnt, new Sprite("NormalButton"));
-        this.text = new Text(this.id + "_text", Text, new Font("黑体", Font.BOLD, 18));
+        this.text = new Text(this.id + "_text", Text, new Font("黑体", Font.PLAIN, 18));
         this.addObj(this.text);
         this.resizeTo(NormalButtonSize);
         this.amt_v = new Animator(1.0);
@@ -123,21 +123,21 @@ public class NormalButton extends ButtonBase {
     public void toggleHoverZoom(boolean flag) {
         if (flag && !this.hoverState) {
             this.hoverState = true;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.05, PopOutDuration, true));
+            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.024, PopOutDuration, true));
         } else if (!flag && this.hoverState){
             this.hoverState = false;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.0, PopOutDuration, false));
+            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.98, PopOutDuration, false));
         }
     }
 
     public void togglePressedZoom(boolean flag) {
         if (flag && !this.pressedState) {
             this.pressedState = true;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.95, PopOutDuration, true));
+            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.98, PopOutDuration, true));
 
         } else if (!flag && this.pressedState){
             this.pressedState = false;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.0, PopInDuration, false));
+            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.024, PopInDuration, false));
         }
     }
 

@@ -266,7 +266,7 @@ public class Lobby extends OthelloObject implements GameStage {
         this.button_SelectMode_local.setText("Local");
         this.button_SelectMode_online.setText("Online");
         this.button_SelectMode_ai.setText("Ai");
-        this.button_SelectMode_back.setText(" Back");
+        this.button_SelectMode_back.setText("Back");
 
         this.button_SelectMode_local.setTextColor(new Color(212, 212, 212));
         this.button_SelectMode_online.setTextColor(new Color(212, 212, 212));
