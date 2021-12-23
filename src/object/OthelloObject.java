@@ -1,6 +1,6 @@
 package object;
 
-import graphics.Sprite;
+import graphics.Image;
 import newData.Vct;
 import newData.Trans;
 import component.Component;
@@ -20,14 +20,14 @@ public class OthelloObject {
     protected Vct size;
     protected OthelloObject parentObject;
     protected ArrayList<OthelloObject> subObject;
-    protected Sprite sprite;
+    protected Image image;
     private ArrayList<Component> components;
     protected double alpha;
     private double renderPriority;
     private boolean absoluteTransform;
 
 
-    public OthelloObject(String id, Sprite sprite) {
+    public OthelloObject(String id, Image image) {
         //有id
         this.id = id;
         //关系树
@@ -41,9 +41,9 @@ public class OthelloObject {
         //大小
         this.size = null;
         //贴图
-        this.sprite = sprite;
-        if (this.sprite != null) {
-            this.size = this.sprite.getUnitSize();
+        this.image = image;
+        if (this.image != null) {
+            this.size = this.image.getUnitSize();
         }
 
         this.renderPriority = 0.0;
@@ -106,7 +106,7 @@ public class OthelloObject {
     }
 
     public void setColor(Color color) {
-        this.sprite.setColor(color);
+        this.image.setColor(color);
     }
 
     public void setScale(Vct scale) {
@@ -123,8 +123,8 @@ public class OthelloObject {
 
     public void resizeTo(Vct rect) {
         this.size = rect;
-        if (this.sprite != null)
-            this.sprite.resizeTo(rect);
+        if (this.image != null)
+            this.image.resizeTo(rect);
     }
 
     public void resizeTo(double x, double y) {
@@ -204,21 +204,21 @@ public class OthelloObject {
     }
 
     //Sprite 贴图
-    public void setSprite(Sprite sprite) {
-        if (this.sprite != null) {
-            this.sprite = sprite;
-            if (this.sprite != null) {
-                this.sprite.resizeTo(this.size);
+    public void setSprite(Image image) {
+        if (this.image != null) {
+            this.image = image;
+            if (this.image != null) {
+                this.image.resizeTo(this.size);
             }
         } else {
-            this.sprite = sprite;
-            if (this.sprite != null)
-                this.size = this.sprite.getUnitSize();
+            this.image = image;
+            if (this.image != null)
+                this.size = this.image.getUnitSize();
         }
     }
 
-    public Sprite getSprite() {
-        return this.sprite;
+    public Image getSprite() {
+        return this.image;
     }
 
     public void addComponent(Component component){
@@ -235,8 +235,8 @@ public class OthelloObject {
 
     public void setAlpha(double a) {
         this.alpha = a;
-        if (this.sprite != null) {
-            this.sprite.setColor(new Color(255, 255, 255, (int)(Math.round(a * 255))));
+        if (this.image != null) {
+            this.image.setColor(new Color(255, 255, 255, (int)(Math.round(a * 255))));
         }
     }
 
@@ -261,8 +261,8 @@ public class OthelloObject {
         for (OthelloObject gameObject : list)
             gameObject.render(g2d, at, alpha);
 
-        if (this.sprite != null)
-            this.sprite.draw(g2d, at, this.trans.scale, alpha);
+        if (this.image != null)
+            this.image.draw(g2d, at, this.trans.scale, alpha);
 
         list.clear();
         for (OthelloObject gameObject : this.subObject) {

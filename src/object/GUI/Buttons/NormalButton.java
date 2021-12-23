@@ -7,12 +7,11 @@ package object.GUI.Buttons;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Sprite;
+import graphics.Image;
 import graphics.Text;
 import input.Controller;
 import main.AudioManager;
 import newData.Vct;
-import object.OthelloObject;
 
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
@@ -39,7 +38,7 @@ public class NormalButton extends ButtonBase {
 
 
     public NormalButton(String Text) {
-        super("NormalButton_" + ButtonCnt, new Sprite("NormalButton"));
+        super("NormalButton_" + ButtonCnt, new Image("NormalButton"));
         this.text = new Text(this.id + "_text", Text, new Font("黑体", Font.PLAIN, 18));
         this.addObj(this.text);
         this.resizeTo(NormalButtonSize);

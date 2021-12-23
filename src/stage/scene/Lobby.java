@@ -10,7 +10,7 @@ import object.GUI.Buttons.SelectModeButton;
 import stage.GameStage;
 
 import object.OthelloObject;
-import graphics.Sprite;
+import graphics.Image;
 import util.FontLibrary;
 
 import java.awt.*;
@@ -70,7 +70,7 @@ public class Lobby extends OthelloObject implements GameStage {
     @Override
     public void init() {
         //背景布部分
-        this.background = new OthelloObject("background", new Sprite("background"));
+        this.background = new OthelloObject("background", new Image("background"));
         this.addObj(this.background);
         this.background.resizeTo(mainApp.WinSize);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
@@ -235,11 +235,11 @@ public class Lobby extends OthelloObject implements GameStage {
         this.addObj(this.menu_SelectMode);
         this.menu_SelectMode.setPosition(MainManuButtonsPivot);
 
-        this.button_SelectMode_local = new SelectModeButton("menu_SelectMode_local", new Sprite("popo"));
+        this.button_SelectMode_local = new SelectModeButton("menu_SelectMode_local", new Image("popo"));
         this.menu_SelectMode.addObj(this.button_SelectMode_local);
-        this.button_SelectMode_online = new SelectModeButton("menu_SelectMode_online", new Sprite("popo"));
+        this.button_SelectMode_online = new SelectModeButton("menu_SelectMode_online", new Image("popo"));
         this.menu_SelectMode.addObj(this.button_SelectMode_online);
-        this.button_SelectMode_ai = new SelectModeButton("menu__SelectMode_ai", new Sprite("popo"));
+        this.button_SelectMode_ai = new SelectModeButton("menu__SelectMode_ai", new Image("popo"));
         this.menu_SelectMode.addObj(this.button_SelectMode_ai);
         this.button_SelectMode_back = new NormalButton("menu_SelectMode_exitMenu");
         this.menu_SelectMode.addObj(this.button_SelectMode_back);

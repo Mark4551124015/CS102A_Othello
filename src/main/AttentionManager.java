@@ -1,6 +1,6 @@
 package main;
 
-import graphics.Sprite;
+import graphics.Image;
 import object.GUI.Attention;
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,15 +23,15 @@ public class AttentionManager {
     }
 
     public static void showErrorMessage(String msg, double last) {
-        messages.add(new Attention(msg, new Sprite("attention_red"), last));
+        messages.add(new Attention(msg, new Image("attention_red"), last));
     }
 
     public static void showWarnMessage(String msg, double last) {
-        messages.add(new Attention(msg, new Sprite("attention_yellow"), last));
+        messages.add(new Attention(msg, new Image("attention_yellow"), last));
     }
 
     public static void showGoodMessage(String msg, double last) {
-        messages.add(new Attention(msg, new Sprite("attention_green"), last));
+        messages.add(new Attention(msg, new Image("attention_green"), last));
     }
 
     public static void update(double dt) {

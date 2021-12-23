@@ -1,6 +1,6 @@
 package object.GUI.Buttons;
 
-import graphics.Sprite;
+import graphics.Image;
 import input.Controller;
 import input.InputCallback;
 import object.OthelloObject;
@@ -13,8 +13,8 @@ public abstract class ButtonBase extends OthelloObject implements InputCallback 
     protected boolean active;
     protected boolean lock;
 
-    public ButtonBase(String id, Sprite sprite) {
-        super(id,sprite);
+    public ButtonBase(String id, Image image) {
+        super(id, image);
         Controller.registerCallback(this);
         this.active = true;
     }

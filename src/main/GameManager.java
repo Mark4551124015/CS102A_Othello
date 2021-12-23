@@ -1,7 +1,6 @@
 package main;
 
 
-import object.PlayerInfoInGame;
 import stage.GameStage;
 import stage.GameStage.GameStageID;
 import stage.scene.*;

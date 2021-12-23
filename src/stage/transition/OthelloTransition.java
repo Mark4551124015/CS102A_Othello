@@ -2,8 +2,7 @@ package stage.transition;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Shape;
-import graphics.Sprite;
+import graphics.Image;
 import main.mainApp;
 import object.OthelloObject;
 
@@ -22,9 +21,9 @@ public class OthelloTransition implements Transition{
 
 
     public OthelloTransition(double fadeTime, double delay, TransitionType type){
-        this.TransitionLeft = new OthelloObject("Transition-left", new Sprite("Transition-left"));
-        this.TransitionRight = new OthelloObject("Transition-right", new Sprite("Transition-right"));
-        this.TransitionLOGO = new OthelloObject("Transition-LOGO", new Sprite("LOGO_Big"));
+        this.TransitionLeft = new OthelloObject("Transition-left", new Image("Transition-left"));
+        this.TransitionRight = new OthelloObject("Transition-right", new Image("Transition-right"));
+        this.TransitionLOGO = new OthelloObject("Transition-LOGO", new Image("LOGO_Big"));
 
         if (type == TransitionType.OUT) {
             this.TransitionLeft.setAlpha(1);

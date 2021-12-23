@@ -1,10 +1,7 @@
 package object;
 
-import graphics.Sprite;
 import net.sf.json.JSONObject;
-import newData.Vct;
 import newData.intVct;
-import object.inGame.Disk;
 import object.inGame.DiskManager;
 import object.inGame.Hinter;
 
@@ -16,7 +13,6 @@ import java.util.Date;
 import static main.PlayerManager.Competitor;
 import static main.PlayerManager.User;
 import static object.inGame.DiskManager.ReadyForNextOperation;
-import static stage.StageContainer.DiskSize;
 import static util.Tools.saveDataToFile;
 
 public class Game extends OthelloObject{
@@ -46,8 +42,8 @@ public class Game extends OthelloObject{
         this.blackPlayer=black;
         this.Grid = new DiskManager();
         this.addObj(Grid);
-        this.whitePlayer.setColor(1);
-        this.blackPlayer.setColor(-1);
+        white.setColor(1);
+        black.setColor(-1);
         this.Hint = true;
         hinted = false;
         CurrentSide = 1;
@@ -183,6 +179,14 @@ public class Game extends OthelloObject{
 
     }
 
+    public int getBlackCnt() {
+        return this.Grid.getBlackCnt();
+    }
+
+    public int getWhiteCnt() {
+        return this.Grid.getWhiteCnt();
+    }
+
     public void setWinner(Player player) {
         this.winner = player;
     }
@@ -202,19 +206,25 @@ public class Game extends OthelloObject{
         }
     }
 
-    public void playerRecall(Player player){
-        if (player.getReCalledTime() >= 3){
+    public void playerRecall(Player player) {
+        if (player.getReCalledTime() >= 3) {
             System.out.println("Recalled Too much");
             return;
         }
-        if (this.Grid.getLastDisk()!=null) {
-            if(player.getColor() == this.Grid.getLastDisk().getStatus()){
+        if (this.Grid.getLastDisk() != null) {
+            if (player.getColor() == this.Grid.getLastDisk().getStatus()) {
                 this.Grid.recallLastDisk();
                 player.reCalled();
                 CurrentSide = player.getColor();
+                return;
             }
         }
+        System.out.println("Too late");
+
     }
 
+    public void setHinted(boolean flag) {
+        hinted = flag;
+    }
 
 }

@@ -47,6 +47,6 @@ public class Shape extends OthelloObject {
                 g.fillOval(0, 0, w, h);
         }
         g.dispose();
-        this.sprite = new Sprite(img);
+        this.image = new Image(img);
     }
 }

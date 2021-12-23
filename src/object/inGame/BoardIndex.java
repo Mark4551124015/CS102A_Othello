@@ -2,7 +2,7 @@ package object.inGame;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Sprite;
+import graphics.Image;
 import newData.Vct;
 import object.OthelloObject;
 
@@ -26,7 +26,7 @@ public class BoardIndex extends OthelloObject {
     private Animator amt_a;
 
     public BoardIndex(){
-        super("boardIndex",new Sprite("BoardIndex"));
+        super("boardIndex",new Image("BoardIndex"));
         this.resizeTo(new Vct(DiskSize*0.8, DiskSize*0.8));
         this.setVisibility(false);
         this.amt_hx = new Animator(0);

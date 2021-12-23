@@ -1,6 +1,6 @@
 package object.GUI;
 
-import graphics.Sprite;
+import graphics.Image;
 import graphics.Text;
 import main.ResourceManager;
 import newData.Vct;
@@ -25,16 +25,16 @@ public class PlayerInfo extends OthelloObject {
     public PlayerInfo(Player player) {
         super("Player_info_"+player.getUsername());
         this.player = player;
-        this.setSprite(new Sprite("User_info_backGround"));
+        this.setSprite(new Image("User_info_backGround"));
 
         int Font_Size = 12;
 
-        this.Player_Ready = new OthelloObject( "isReady", new Sprite("Ready"));
+        this.Player_Ready = new OthelloObject( "isReady", new Image("Ready"));
 
         ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("save/players/"+player.getUsername()+"/profile.png"));
 
         try {
-            this.Player_profile = new OthelloObject(player.getUsername() + "_profile", new Sprite(player.getUsername()));
+            this.Player_profile = new OthelloObject(player.getUsername() + "_profile", new Image(player.getUsername()));
         } catch (Throwable e){
             this.Player_profile = new OthelloObject(player.getUsername() + "_profile");
         }

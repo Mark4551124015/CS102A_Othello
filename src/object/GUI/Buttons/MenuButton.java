@@ -9,14 +9,13 @@ import main.AudioManager;
 import component.animation.Animation;
 import component.animation.Animator;
 
-import graphics.Sprite;
+import graphics.Image;
 import graphics.Text;
 import input.Controller;
 import newData.Vct;
 import object.OthelloObject;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
@@ -42,8 +41,8 @@ public class MenuButton extends ButtonBase {
     private boolean clicked;
 
 
-    public MenuButton(String id, Sprite sprite) {
-        super(id, sprite);
+    public MenuButton(String id, Image image) {
+        super(id, image);
 
         this.root = new OthelloObject(this.id + "_root");
         this.addObj(this.root);

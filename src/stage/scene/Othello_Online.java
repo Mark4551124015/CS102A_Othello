@@ -1,7 +1,7 @@
 package stage.scene;
 
 import graphics.Shape;
-import graphics.Sprite;
+import graphics.Image;
 import input.Controller;
 import main.mainApp;
 import network.Client_Room;
@@ -47,7 +47,7 @@ public class Othello_Online extends OthelloObject implements stage.GameStage {
     @Override
     public void init() {
         //背景
-        this.background = new OthelloObject("Game_bg", new Sprite("Game_BackGround"));
+        this.background = new OthelloObject("Game_bg", new Image("Game_BackGround"));
         this.addObj(background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
 
@@ -57,7 +57,7 @@ public class Othello_Online extends OthelloObject implements stage.GameStage {
 
     public void init_Game() {
         //棋盘
-        this.Board = new OthelloObject("Board", new Sprite("Board"));
+        this.Board = new OthelloObject("Board", new Image("Board"));
         this.background.addObj(this.Board);
         this.Board.resizeTo(new Vct(BoardSize, BoardSize));
         this.Board.setPosition(0, 0);

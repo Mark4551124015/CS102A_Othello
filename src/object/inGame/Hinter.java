@@ -2,7 +2,7 @@ package object.inGame;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Sprite;
+import graphics.Image;
 import newData.Vct;
 import object.OthelloObject;
 
@@ -14,7 +14,7 @@ public class Hinter extends OthelloObject {
     private Animator amt_s;
     private boolean isEmerged;
     public Hinter(){
-        super("Hinter" + hinterCnt,new Sprite("Hinter"));
+        super("Hinter" + hinterCnt,new Image("Hinter"));
         this.setAlpha(0);
         ++hinterCnt;
         this.setSize(new Vct(DiskSize/2, DiskSize/2));
