@@ -244,10 +244,10 @@ public class Othello_AI extends OthelloObject implements GameStage {
                 intVct index = load.get(i);
                 point += this.game.getGrid().check(index,AI, DiskManager.checkPurpose.Flip).size() * 10;
                 if (load.get(i).r == 0 || load.get(i).r == 7 || load.get(i).c == 0 || load.get(i).c == 7) {
-                    point += 20;
+                    point += 100;
                 }
                 if (load.get(i).c == 0 || load.get(i).c == 7) {
-                    point += 20;
+                    point += 100;
                 }
 
                 flipPoints.add(point);
@@ -270,10 +270,10 @@ public class Othello_AI extends OthelloObject implements GameStage {
                     intVct index = load_User.get(a);
                     point += this.game.getGrid().check(index,User, DiskManager.checkPurpose.Flip).size() * -1;
                     if (load_User.get(a).r == 0 || load_User.get(a).r == 7 ) {
-                        point -= 20;
+                        point -= 100;
                     }
                     if (load_User.get(a).c == 0 || load_User.get(a).c == 7 ) {
-                        point -= 20;
+                        point -= 100;
                     }
 
                 }
@@ -330,10 +330,10 @@ public class Othello_AI extends OthelloObject implements GameStage {
                 intVct index = load.get(i);
                 point += this.game.getGrid().check(index,AI, DiskManager.checkPurpose.Flip).size() * 10;
                 if (load.get(i).r == 0 || load.get(i).r == 7 || load.get(i).c == 0 || load.get(i).c == 7) {
-                    point += 20;
+                    point += 100;
                 }
                 if (load.get(i).c == 0 || load.get(i).c == 7) {
-                    point += 20;
+                    point += 100;
                 }
 
                 flipPoints.add(point);
@@ -356,10 +356,10 @@ public class Othello_AI extends OthelloObject implements GameStage {
                     intVct index = load_User.get(a);
                     point += this.game.getGrid().check(index,User, DiskManager.checkPurpose.Flip).size() * -1;
                     if (load_User.get(a).r == 0 || load_User.get(a).r == 7 ) {
-                        point -= 20;
+                        point -= 100;
                     }
                     if (load_User.get(a).c == 0 || load_User.get(a).c == 7 ) {
-                        point -= 20;
+                        point -= 100;
                     }
 
                 }
