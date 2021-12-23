@@ -3,7 +3,7 @@ package main;
 
 
 import object.Game;
-import object.PlayerInfoInGame;
+import object.GUI.PlayerInfoInGame;
 
 import stage.GameStage;
 import stage.GameStage.GameStageID;

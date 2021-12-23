@@ -9,6 +9,7 @@ import newData.Operation;
 import newData.Vct;
 import newData.intVct;
 
+import object.GUI.Buttons.NormalButton;
 import object.GUI.PlayerInfoInGame;
 import object.Game;
 import object.OthelloObject;
@@ -305,5 +306,5 @@ public class Othello_Local extends OthelloObject implements GameStage {
             this.game.setHinted(false);
         }
     }
-    
+
 }
