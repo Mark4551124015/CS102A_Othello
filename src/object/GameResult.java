@@ -1,9 +1,7 @@
 package object;
 
-import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Sprite;
-import graphics.Text;
+import graphics.Image;
 import object.GUI.Buttons.NormalButton;
 
 public class GameResult extends OthelloObject{
@@ -20,11 +18,11 @@ public class GameResult extends OthelloObject{
         super("GameEnding");
 
         this.VictoryMenu = new OthelloObject("VictoryMenu");
-        this.setSprite(new Sprite("popo"));
+        this.setSprite(new Image("popo"));
 //        this.VictoryMenu.setPosition(MainManuButtonsPivot);
         this.VictoryMenu.setAlpha(0);
         this.DefeatMenu = new OthelloObject("DefeatMenu");
-        this.setSprite(new Sprite("popo"));
+        this.setSprite(new Image("popo"));
 //        this.DefeatMenu.setPosition(MainManuButtonsPivot);
         this.DefeatMenu.setAlpha(0);
         this.Restart = new NormalButton("Restart");

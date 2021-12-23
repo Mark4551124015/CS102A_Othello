@@ -1,7 +1,7 @@
 package stage.scene;
 
 import graphics.Shape;
-import graphics.Sprite;
+import graphics.Image;
 import input.Controller;
 import main.mainApp;
 import net.sf.json.JSONObject;
@@ -9,14 +9,12 @@ import newData.Operation;
 import newData.Vct;
 import newData.intVct;
 
+import object.GUI.PlayerInfoInGame;
 import object.Game;
 import object.OthelloObject;
 import object.Player;
 
 import object.*;
-import object.GUI.Buttons.MenuButton;
-import object.GUI.Buttons.NormalButton;
-import object.GUI.Buttons.SelectModeButton;
 
 import object.inGame.BoardIndex;
 import object.inGame.OperationManager;
@@ -57,8 +55,8 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private Game game;
     public static boolean isReadyForOperate;
     private BoardIndex boardIndex;
-    private PlayerInfoInGame playerInfow;
-    private PlayerInfoInGame playerInfob;
+    private PlayerInfoInGame playerInfoUser;
+    private PlayerInfoInGame playerInfoCompetitor;
     private GameResult VictoryScene;
 //    private GameResult DefearScene;
     private boolean ExitToLobby;
@@ -79,7 +77,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
     @Override
     public void init() {
         //背景
-        this.background = new OthelloObject("Game_bg", new Sprite("Game_BackGround"));
+        this.background = new OthelloObject("Game_bg", new Image("Game_BackGround"));
         this.addObj(background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         init_local_Game();
@@ -90,7 +88,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
         Competitor = new Player("Jerry","Jerry",local);
 
         //棋盘
-        this.Board = new OthelloObject("Board", new Sprite("Board"));
+        this.Board = new OthelloObject("Board", new Image("Board"));
         this.addObj(this.Board);
         this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         this.Board.resizeTo(new Vct(BoardSize, BoardSize));
@@ -114,14 +112,19 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.boardIndex.setVisibility(true);
         this.Board.addObj(this.boardIndex);
 
-        this.playerInfob = new PlayerInfoInGame(this.game.getPlayer(1));
-        this.Board.addObj(this.playerInfob);
-        this.playerInfob.setPosition(465,-80);
+        this.playerInfoCompetitor = new PlayerInfoInGame(Competitor);
+        this.Board.addObj(this.playerInfoCompetitor);
 
+        this.playerInfoUser = new PlayerInfoInGame(User);
+        this.Board.addObj(this.playerInfoUser);
 
-        this.playerInfow = new PlayerInfoInGame(this.game.getPlayer(-1));
-        this.Board.addObj(this.playerInfow);
-        this.playerInfow.setPosition(-465,-80);
+        if (User.getColor() == 1) {
+            this.playerInfoUser.setPosition(-465,-80);
+            this.playerInfoCompetitor.setPosition(465,-80);
+        } else if (User.getColor() == -1) {
+            this.playerInfoUser.setPosition(465,-80);
+            this.playerInfoCompetitor.setPosition(-465,-80);
+        }
 
         this.VictoryScene = new GameResult();
         this.Board.addObj(this.VictoryScene);
@@ -141,7 +144,6 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.Back.setPosition(-1000,500);
         this.Back.resizeTo(120,50);
     }
-
 
     public intVct mouseBP() {
         Vct pos = Controller.getMousePos();
@@ -188,25 +190,23 @@ public class Othello_Local extends OthelloObject implements GameStage {
         }
         super.update(dt);
 
-        if(playerInfob.isWantSurrender() || playerInfow.isWantSurrender()){
-            reStart();
-            playerInfob.setSurrender(false);
-            playerInfow.setSurrender(false);
-        }
-        if(playerInfow.isWantRecall() || playerInfob.isWantRecall()){
-            playerInfow.setRecall(false);
-            playerInfob.setRecall(false);
-        }
-        if(VictoryScene.isWantRestart()){
+
+
+        if(this.VictoryScene.isWantRestart()){
             reStart();
         }
         if(this.VictoryScene.isWantExitToLobby()){
             this.ExitToLobby = true;
             System.out.println("dian");
         }
+
         if(this.Back.isClicked()){
             this.wantBack = true;
         }
+
+
+        recallCheck();
+
     }
 
     public void checkMouseOnBoard() {
@@ -277,7 +277,33 @@ public class Othello_Local extends OthelloObject implements GameStage {
         return this.ExitToLobby;
     }
 
+
     public boolean isWantBack(){
         return this.wantBack;
     }
+
+    public void recallCheck() {
+        if(this.playerInfoCompetitor.isWantSurrender()){
+            this.game.setWinner(User);
+        }
+        if(this.playerInfoUser.isWantSurrender()){
+            this.game.setWinner(Competitor);
+        }
+
+        if(this.playerInfoUser.isWantRecall()){
+            this.game.playerRecall(User);
+            this.playerInfoUser.setRecalled(User.getReCalledTime());
+            this.playerInfoUser.setRecall(false);
+            this.playerInfoUser.setRecall(false);
+            this.game.setHinted(false);
+        }
+        if(this.playerInfoCompetitor.isWantRecall()){
+            this.game.playerRecall(Competitor);
+            this.playerInfoCompetitor.setRecalled(Competitor.getReCalledTime());
+            this.playerInfoCompetitor.setRecall(false);
+            this.playerInfoCompetitor.setRecall(false);
+            this.game.setHinted(false);
+        }
+    }
+    
 }

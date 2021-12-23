@@ -1,6 +1,6 @@
 package object.inGame;
 
-import graphics.Sprite;
+import graphics.Image;
 import newData.Vct;
 import newData.direction;
 import newData.intVct;
@@ -8,7 +8,6 @@ import object.*;
 import util.Tools;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static object.Game.switchRound;
 import static stage.StageContainer.DiskSize;
@@ -21,6 +20,8 @@ public class DiskManager extends OthelloObject {
     private Disk lastDisk;
     private ArrayList<intVct> lastFlippedDisks;
     private static int DMCnt=0;
+    private int BlackCnt;
+    private int WhiteCnt;
 
     //创建64个棋
     public DiskManager(){
@@ -255,22 +256,38 @@ public class DiskManager extends OthelloObject {
     @Override
     public void update(double dt) {
         int index =0;
+        int blacks = 0;
+        int whites = 0;
         for(int r=0; r<8 ; r++) {
             for(int c=0; c< 8; c++){
+
                 index += this.Disks[r][c].getFlippingState();
                 index += this.Disks[r][c].getSttingState();
                 if (this.Disks[r][c].getFlippingState() != 1) {
                     if (this.Disks[r][c].getStatus() == -1) {
-                        this.Disks[r][c].getRoot().setSprite(new Sprite("Black_Disk"));
+                        this.Disks[r][c].getRoot().setSprite(new Image("Black_Disk"));
                     } else if (this.Disks[r][c].getStatus() == 1) {
-                        this.Disks[r][c].getRoot().setSprite(new Sprite("White_Disk"));
+                        this.Disks[r][c].getRoot().setSprite(new Image("White_Disk"));
                     }
                 }
                 if (this.Disks[r][c].getSize() != new Vct(DiskSize,DiskSize)) {
                     this.Disks[r][c].resizeTo(new Vct(DiskSize,DiskSize));
                 }
+
+                if (this.Disks[r][c].getStatus() == 1) {
+                    ++whites;
+                } else if (this.Disks[r][c].getStatus() == -1) {
+                    ++blacks;
+                }
+
+                this.BlackCnt = blacks;
+                this.WhiteCnt = whites;
             }
         }
+
+
+
+
 
         ReadyForNextOperation = index;
         super.update(dt);
@@ -303,5 +320,11 @@ public class DiskManager extends OthelloObject {
         }
     }
 
+    public int getBlackCnt() {
+        return this.BlackCnt;
+    }
 
+    public int getWhiteCnt() {
+        return this.WhiteCnt;
+    }
 }

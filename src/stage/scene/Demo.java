@@ -3,7 +3,7 @@ package stage.scene;
 import main.mainApp;
 import stage.GameStage;
 import object.OthelloObject;
-import graphics.Sprite;
+import graphics.Image;
 
 public class Demo extends OthelloObject implements GameStage {
     public OthelloObject panel;
@@ -17,7 +17,7 @@ public class Demo extends OthelloObject implements GameStage {
     public void init() {
         this.panel = new OthelloObject("panel");
         this.addObj(this.panel);
-        this.test = new OthelloObject("test", new Sprite("test"));
+        this.test = new OthelloObject("test", new Image("test"));
         this.panel.addObj(this.test);
         this.panel.setPosition(mainApp.WinSize.x/2,mainApp.WinSize.y/2);
         this.test.resizeTo(100,100);

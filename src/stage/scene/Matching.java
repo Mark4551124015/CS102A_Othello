@@ -1,7 +1,7 @@
 package stage.scene;
 
 import graphics.Shape;
-import graphics.Sprite;
+import graphics.Image;
 import input.Controller;
 import main.mainApp;
 import newData.Vct;
@@ -57,7 +57,7 @@ public class Matching extends OthelloObject implements stage.GameStage {
 
 
         //背景
-        this.background = new OthelloObject("Matching_bg", new Sprite("Matching_bg"));
+        this.background = new OthelloObject("Matching_bg", new Image("Matching_bg"));
         this.addObj(this.background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         //
@@ -77,7 +77,7 @@ public class Matching extends OthelloObject implements stage.GameStage {
 
     public void init_left() {
         //左侧面板
-        this.Left = new OthelloObject("Left_Panel", new Sprite("Left_Panel"));
+        this.Left = new OthelloObject("Left_Panel", new Image("Left_Panel"));
         this.background.addObj(this.Left);
         this.Left.resizeTo(new Vct(mainApp.Width, mainApp.Height/2));
         this.Left.setPosition(0, 0);
@@ -93,7 +93,7 @@ public class Matching extends OthelloObject implements stage.GameStage {
     }
     public void init_right() {
         //右侧面板
-        this.Right = new OthelloObject("Right_Panel", new Sprite("Right_Panel"));
+        this.Right = new OthelloObject("Right_Panel", new Image("Right_Panel"));
         this.background.addObj(this.Right);
         this.Right.resizeTo(new Vct(mainApp.Width, mainApp.Height/2));
         this.Right.setPosition(0, 0);

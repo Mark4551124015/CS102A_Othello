@@ -7,7 +7,7 @@ package object.GUI.Buttons;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Sprite;
+import graphics.Image;
 import graphics.Text;
 import input.Controller;
 import main.AudioManager;
@@ -41,18 +41,18 @@ public class SelectModeButton extends ButtonBase {
     private boolean clicked;
 
 
-    public SelectModeButton(String id, Sprite sprite) {
+    public SelectModeButton(String id, Image image) {
         super(id, null);
 
         this.root = new OthelloObject(this.id + "_root");
         this.addObj(this.root);
 
-        this.base = new OthelloObject(this.id + "_base", new Sprite("popo"));
+        this.base = new OthelloObject(this.id + "_base", new Image("popo"));
         this.base.setColor(new Color(255, 255, 255, 20));
-        this.base.resizeTo(sprite.getUnitSize());
+        this.base.resizeTo(image.getUnitSize());
         this.root.addObj(this.base);
 
-        this.surface = new OthelloObject(this.id + "_surface", sprite);
+        this.surface = new OthelloObject(this.id + "_surface", image);
         this.surface.setColor(Color.white);
         this.root.addObj(this.surface);
 

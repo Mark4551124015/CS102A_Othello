@@ -69,7 +69,7 @@ public class ResourceManager {
 
     public static void init() {
         addList(basicList, "background");
-        addList(basicList,"popo");
+        addList(basicList, "popo");
 
         addList(fullList, "Black_Disk");
         addList(fullList, "White_Disk");
@@ -86,7 +86,9 @@ public class ResourceManager {
         addList(fullList, "profile");
         addList(fullList, "Transition-left");
         addList(fullList, "Transition-right");
-        addList(fullList,"LOGO_Big");
+        addList(fullList, "LOGO_Big");
+        addList(fullList, "recallCnt");
+
 
 
         addList(fullList, "attention_yellow","attention.png",new Color(0xE8BF0F));

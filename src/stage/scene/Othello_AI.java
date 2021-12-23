@@ -1,9 +1,8 @@
 package stage.scene;
 
 import graphics.Shape;
-import graphics.Sprite;
+import graphics.Image;
 import input.Controller;
-import main.PlayerManager;
 import main.mainApp;
 import net.sf.json.JSONObject;
 import newData.Operation;
@@ -29,10 +28,8 @@ import static main.mainApp.controller;
 import static newData.Operation.Operation_Type.SetDisk;
 import static object.Game.gameInfoName;
 import static object.Game.gamePath;
-import static object.Player.playerType.local;
 import static main.PlayerManager.Competitor;
 import static main.PlayerManager.User;
-import static object.inGame.DiskManager.ReadyForNextOperation;
 import static object.inGame.DiskManager.isReadyForNextOperation;
 import static stage.StageContainer.BoardSize;
 import static util.Tools.*;
@@ -73,7 +70,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
     @Override
     public void init() {
         //背景
-        this.background = new OthelloObject("Game_bg", new Sprite("Game_BackGround"));
+        this.background = new OthelloObject("Game_bg", new Image("Game_BackGround"));
         this.addObj(background);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         init_AI_Game();
@@ -84,7 +81,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
         Competitor = AI;
 
         //棋盘
-        this.Board = new OthelloObject("Board", new Sprite("Board"));
+        this.Board = new OthelloObject("Board", new Image("Board"));
         this.addObj(this.Board);
         this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         this.Board.resizeTo(new Vct(BoardSize, BoardSize));

@@ -1,7 +1,7 @@
 package object.inGame;
 import component.animation.Animation;
 import component.animation.Animator;
-import graphics.Sprite;
+import graphics.Image;
 import object.OthelloObject;
 import newData.Vct;
 import newData.intVct;
@@ -95,7 +95,7 @@ public class Disk extends OthelloObject {
             if (this.isFlipping && this.status == -1) {
                 if (this.index > 0) {
                     --index;
-                    this.root.setSprite(new Sprite(index + ""));
+                    this.root.setSprite(new Image(index + ""));
                 } else {
                     this.status = 1;
                     this.index = 0;
@@ -107,7 +107,7 @@ public class Disk extends OthelloObject {
             if (this.isFlipping && this.status == 1) {
                 if (this.index < 8) {
                     ++index;
-                    this.root.setSprite(new Sprite(index + ""));
+                    this.root.setSprite(new Image(index + ""));
                 } else {
                     this.status = -1;
                     this.index = 8;

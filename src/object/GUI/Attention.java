@@ -8,7 +8,7 @@ package object.GUI;
 import component.animation.Animation;
 import component.animation.Animator;
 import util.FontLibrary;
-import graphics.Sprite;
+import graphics.Image;
 import graphics.Text;
 import main.mainApp;
 import main.AudioManager;
@@ -27,8 +27,8 @@ public class Attention extends OthelloObject {
     private Animator amt_verticalPos;
 
 
-    public Attention(String msg, Sprite sprite, double lastTime) {
-        super("attention", sprite);
+    public Attention(String msg, Image image, double lastTime) {
+        super("attention", image);
 
         this.text = new Text("attention_text", msg, FontLibrary.GetAttentionFont(12));
         this.text.setColor(new Color(212, 212, 212));

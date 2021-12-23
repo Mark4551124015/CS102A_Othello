@@ -103,10 +103,10 @@ public class Text extends OthelloObject {
         tmpG.drawString(this.text, 10, fm.getAscent());
         tmpG.dispose();
 
-        if (this.sprite != null)
-            this.sprite.setImage(img);
+        if (this.image != null)
+            this.image.setImage(img);
         else
-            this.sprite = new Sprite(img);
+            this.image = new Image(img);
         this.setSize(r_width, r_height);
     }
 

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 
-public class Sprite {
+public class Image {
 
     private int width, height;
     private Vct baseScale;
@@ -18,7 +18,7 @@ public class Sprite {
     protected boolean visibility;
 
 
-    public Sprite(String imgName) {
+    public Image(String imgName) {
         this.color = new Color(255, 255, 255, 255);
         this.baseScale = new Vct(1.0,1.0);
         this.visibility = true;
@@ -26,7 +26,7 @@ public class Sprite {
     }
 
 
-    public Sprite(BufferedImage img) {
+    public Image(BufferedImage img) {
         this.color = new Color(255, 255, 255, 255);
         this.baseScale = new Vct(1.0, 1.0);
         this.visibility = true;
@@ -34,7 +34,7 @@ public class Sprite {
     }
 
 
-    public Sprite(String imgName, Vct minSize) {
+    public Image(String imgName, Vct minSize) {
         this(imgName);
         if (this.width < minSize.x || this.height < minSize.y) {
             double scale = Math.max(minSize.x / this.width, minSize.y / this.height);
@@ -98,8 +98,8 @@ public class Sprite {
         this.resizeTo(new Vct(width,height));
     }
 
-    public Sprite subImage(Vct pos, Vct size) {
-        Sprite res = new Sprite(this.img.getSubimage(
+    public Image subImage(Vct pos, Vct size) {
+        Image res = new Image(this.img.getSubimage(
                 (int)Math.round(pos.x / this.baseScale.x),
                 (int)Math.round(pos.y / this.baseScale.y),
                 (int)Math.round(size.x / this.baseScale.x),
