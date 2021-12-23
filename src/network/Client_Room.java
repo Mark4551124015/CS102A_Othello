@@ -15,8 +15,6 @@ import static main.PlayerManager.Competitor;
 import static main.PlayerManager.User;
 
 public class Client_Room extends OthelloObject {
-    public final static int RoomCapacity = 2;
-
     private Client client;
 
     private Text serverAddress;
@@ -122,16 +120,14 @@ public class Client_Room extends OthelloObject {
             case "room_player_join_success":   //玩家加入
                 this.serverCallback_playerJoined(
                         new Player(JSONObject.fromObject(msg.getInt("Player"))),
-                        msg.getString("session_id"),
-                        msg.getString("ip"),
                         msg.getBoolean("need_announcement")
                 );
                 break;
             case "room_player_join_fail":
                 AttentionManager.showWarnMessage("Sorry, the room is full!");
                 break;
-            case "room_player_joined":
-                this.serverCallback_playerQuit(JSONObject.fromObject(msg.getString("Player")).getString("username"));
+            case "room_player_quit":
+                this.serverCallback_playerQuit(msg.getString("username"));
                 break;
             case "room_server_shutdown":
                 this.client_onServerShutdown();
@@ -166,7 +162,7 @@ public class Client_Room extends OthelloObject {
         this.client.send(msg);
     }
 
-    private void serverCallback_playerJoined(Player player, String session_id, String ip, boolean needAnnouncement) {
+    private void serverCallback_playerJoined(Player player, boolean needAnnouncement) {
         if (player.getUsername() != User.getUsername()) {
             Competitor = player;
             if ( needAnnouncement) {
@@ -188,11 +184,10 @@ public class Client_Room extends OthelloObject {
                 Competitor.setReady(bool);
             }
         }
+
         if (User.getUsername() == username) {
             User.setReady(bool);
         }
-
-
 
     }
 
@@ -204,7 +199,7 @@ public class Client_Room extends OthelloObject {
     public void client_toggleReady(boolean flag) {
         JSONObject msg = new JSONObject();
         msg.put("event_type", "room_player_toggle_ready");
-        msg.put("session_id", this.client.getSession_id());
+        msg.put("username", User.getUsername());
         msg.put("flag", flag);
         this.client.send(msg);
     }
@@ -232,7 +227,6 @@ public class Client_Room extends OthelloObject {
     public boolean getShutdownHandled() {
         return this.shutdownHandled;
     }
-
 
     public boolean isDead() {
         return this.getClientInitState() == 2 || this.syncEnded;

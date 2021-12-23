@@ -1,12 +1,10 @@
 package stage.scene;
 
-import component.animation.Animation;
 import graphics.Shape;
 import graphics.Sprite;
 import input.Controller;
-import input.InputCallback;
-import main.AudioManager;
 import main.mainApp;
+import network.Client_Room;
 import newData.*;
 
 import object.OthelloObject;
@@ -18,11 +16,10 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static input.Controller.MouseKeyStatus;
 import static stage.StageContainer.BoardSize;
 
 
-public class Othello extends OthelloObject implements stage.GameStage {
+public class Othello_Online extends OthelloObject implements stage.GameStage {
     private Shape canvas;
     private OthelloObject background;
 
@@ -43,8 +40,8 @@ public class Othello extends OthelloObject implements stage.GameStage {
 
     private OthelloObject Board;
 
-    public Othello() {
-        super("scene_Game");
+    public Othello_Online(Client_Room room) {
+        super("Othello_Online");
     }
 
     @Override

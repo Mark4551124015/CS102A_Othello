@@ -84,6 +84,10 @@ public class ResourceManager {
         addList(fullList, "NormalButton");
         addList(fullList, "Hinter");
         addList(fullList, "profile");
+        addList(fullList, "Transition-left");
+        addList(fullList, "Transition-right");
+        addList(fullList,"LOGO_Big");
+
 
         addList(fullList, "attention_yellow","attention.png",new Color(0xE8BF0F));
         addList(fullList, "attention_red","attention.png",new Color(0xE80F21));
