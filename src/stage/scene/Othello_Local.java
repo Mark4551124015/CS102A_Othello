@@ -130,7 +130,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.VictoryScene = new GameResult();
         this.Board.addObj(this.VictoryScene);
         this.VictoryScene.setAlpha(0);
-        this.VictoryScene.setPosition(0,0);
+        this.VictoryScene.setPosition(10000,10000);
 //        this.DefearScene = new GameResult();
 //        this.Board.addObj(this.DefearScene);
 //        this.DefearScene.setAlpha(0);

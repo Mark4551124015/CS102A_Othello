@@ -131,6 +131,9 @@ public class OthelloObject {
         this.resizeTo(new Vct(x, y));
     }
 
+    public void resizeTo(double scalar) {
+        this.resizeTo(this.size.x*scalar,this.size.y*scalar);
+    }
     //动作特征
     public void move(Vct movement) {
         this.trans.translate(movement);

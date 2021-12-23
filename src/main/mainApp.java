@@ -36,16 +36,17 @@ public class mainApp extends JFrame {
         gm = new GameManager();
         controller = new Controller();
         gm.start();
-//        Runtime.getRuntime().addShutdownHook(new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//                SLManager.FlushWriteQueue();
-//            }
-//        });
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                gm.playerManager.save();
+            }
+        });
+
         app.init();
         app.setVisible(true);
-
     }
 
 

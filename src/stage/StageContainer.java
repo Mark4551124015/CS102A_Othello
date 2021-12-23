@@ -2,6 +2,8 @@ package stage;
 
 import main.AttentionManager;
 import main.mainApp;
+import object.GUI.Buttons.ButtonBase;
+import object.OthelloObject;
 import stage.scene.Empty;
 import stage.transition.EmptyTransition;
 import stage.transition.Transition;
@@ -86,6 +88,7 @@ public class StageContainer extends JPanel {
         }
         nextStage.init();
         this.preventStage = this.currentStage;
+
         this.currentStage = nextStage;
         if (leaveTransition == null)
             leaveTransition = new EmptyTransition();

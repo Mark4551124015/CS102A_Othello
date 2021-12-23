@@ -68,8 +68,11 @@ public class ResourceManager {
         }
 
     public static void init() {
+        addList(basicList, "LOGO_Big");
         addList(basicList, "background");
         addList(basicList, "popo");
+
+
 
         addList(fullList, "Black_Disk");
         addList(fullList, "White_Disk");
@@ -86,7 +89,6 @@ public class ResourceManager {
         addList(fullList, "profile");
         addList(fullList, "Transition-left");
         addList(fullList, "Transition-right");
-        addList(fullList, "LOGO_Big");
         addList(fullList, "recallCnt");
 
 
@@ -136,5 +138,7 @@ public class ResourceManager {
     public static BufferedImage getImage(String name) {
         return imgs.get(name);
     }
+
+
 }
 

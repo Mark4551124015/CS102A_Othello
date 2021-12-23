@@ -89,10 +89,8 @@ public class SelectModeButton extends ButtonBase {
     @Override
     public void update(double dt) {
         super.update(dt);
-        if (!this.getVisibility()) {
-            this.setActive(false);
-        } else {
-            this.setActive(true);
+        if(!this.Visibility || this.alpha == 0){
+            this.setPosition(10000,10000);
         }
         if (this.active) {
             if (isHovering()) {

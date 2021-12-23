@@ -1,6 +1,7 @@
-package network;
+package main;
 
 import net.sf.json.JSONObject;
+import network.Server;
 import object.OthelloObject;
 import object.Player;
 
@@ -8,16 +9,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class OthelloServer extends OthelloObject implements Runnable {
+public class OthelloServer {
     public final static int RoomCapacity = 2;
     private Server server;
+    private int port;
     private boolean serverReadyEvent;
     Queue<JSONObject> serverMsgQueue;
     private Thread serverSyncThread;
-
     public final static int SleepWhenNoMsg = 20;
-
-
 
     private boolean inGame;
     private boolean syncEnded;
@@ -26,21 +25,7 @@ public class OthelloServer extends OthelloObject implements Runnable {
     private JSONObject clients;
 
     public OthelloServer(int port){
-        super("OthelloServer");
-        this.server = new Server(port);
-        this.serverMsgQueue = new LinkedList<>();
-        this.serverReadyEvent = false;
-        this.inGame = false;
-        this.players = new ArrayList<>();
-        this.clients = new JSONObject();
-        // exit handler
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                shutdown();
-            }
-        });
+        this.port = port;
     }
 
     private void initServerSyncThread() {
@@ -65,7 +50,6 @@ public class OthelloServer extends OthelloObject implements Runnable {
         };
         this.serverSyncThread.start();
     }
-
 
     private void serverSync(JSONObject msg) {
         switch(msg.getString("event_type")) {
@@ -175,6 +159,7 @@ public class OthelloServer extends OthelloObject implements Runnable {
         this.server.sendAll(msg);
         // [end]
     }
+
     public boolean isDead() {
         return (this.getServerInitState() == 2) || this.syncEnded;
     }
@@ -205,14 +190,28 @@ public class OthelloServer extends OthelloObject implements Runnable {
         this.server.sendAll(msg);
     }
 
-    @Override
-    public void run() {
-
+    public void init() {
+        this.server = new Server(this.port);
+        this.serverMsgQueue = new LinkedList<>();
+        this.serverReadyEvent = false;
+        this.inGame = false;
+        this.players = new ArrayList<>();
+        this.clients = new JSONObject();
+        // exit handler
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                shutdown();
+            }
+        });
     }
 
-    public void init(int port) {
+
+    public static void main(String[] args) {
+        OthelloServer server = new OthelloServer(14514);
+        server.init();
 
     }
-
 
 }

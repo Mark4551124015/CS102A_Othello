@@ -49,7 +49,6 @@ public class Game extends OthelloObject{
         CurrentSide = 1;
     }
 
-
     public String getName() {
         return this.name;
     }
@@ -70,6 +69,7 @@ public class Game extends OthelloObject{
     public void update(double dt) {
         super.update(dt);
         this.Hint();
+
         if ((this.winner == null || !this.gameEnd() )) {
             if (this.Grid.validBP(this.whitePlayer).isEmpty()) {
                 CurrentSide = -1;
@@ -78,6 +78,7 @@ public class Game extends OthelloObject{
                 CurrentSide = 1;
             }
         }
+
 
     }
 

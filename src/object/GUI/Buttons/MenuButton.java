@@ -73,7 +73,7 @@ public class MenuButton extends ButtonBase {
     }
 
     public boolean isClicked() {
-        if (this.clicked) {
+        if (this.clicked && this.active) {
             this.clicked = false;
             return true;
         } else {
@@ -83,12 +83,10 @@ public class MenuButton extends ButtonBase {
 
     @Override
     public void update(double dt) {
-        super.update(dt);
-        if (!this.getVisibility()) {
-            this.setActive(false);
-        } else {
-            this.setActive(true);
+        if(!this.Visibility || this.alpha == 0){
+            this.setPosition(10000,10000);
         }
+
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
@@ -106,6 +104,7 @@ public class MenuButton extends ButtonBase {
 
         this.root.setPosition(this.amt_h.val(), 0);
         this.setScale(this.amt_v.val(), this.amt_v.val());
+        super.update(dt);
     }
 
     @Override
@@ -162,7 +161,7 @@ public class MenuButton extends ButtonBase {
 
     @Override
     public void onClicked(int button) {
-        if (button == 1 && this.isHovering() && this.active ) {
+        if (button == 1 && this.isHovering()) {
             this.clicked = true;
             AudioManager.Play("click");
         }

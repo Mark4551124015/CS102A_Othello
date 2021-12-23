@@ -78,7 +78,7 @@ public class Lobby extends OthelloObject implements GameStage {
         initMainMenu();
         initModeMenu();
 
-        this.menu_main_setActive(false);
+        this.menu_main_setActive(true);
 //        this.menu_SelectMode_setActive(true);
 //        this.menuState = MenuState.SelectMode;
 //        this.menu_SelectMode_popOut(0);
@@ -137,6 +137,7 @@ public class Lobby extends OthelloObject implements GameStage {
     public GameStageID getGameStageID() {
         return GameStageID.Lobby;
     }
+
 
 
     //主界面开始
@@ -278,6 +279,9 @@ public class Lobby extends OthelloObject implements GameStage {
         this.menu_SelectMode_alphaAnimator = new Animator(0);
         this.menu_SelectMode.addComponent(this.menu_SelectMode_animator);
         this.menu_SelectMode.addComponent(this.menu_SelectMode_alphaAnimator);
+
+        this.menu_SelectMode_setActive(false);
+
     }
 
     private void menu_SelectMode_popOut(double delay) {

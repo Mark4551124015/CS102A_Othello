@@ -21,11 +21,9 @@ public class EmptyTransition implements Transition {
     }
 
     public void update(double dt) {
-
     }
 
     public void render(Graphics2D g2d) {
-
     }
 
     public boolean isFinished() {

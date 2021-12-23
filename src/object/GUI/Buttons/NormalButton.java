@@ -59,7 +59,7 @@ public class NormalButton extends ButtonBase {
     }
 
     public boolean isClicked() {
-        if (this.clicked) {
+        if (this.clicked && this.active) {
             this.clicked = false;
             return true;
         } else {
@@ -70,11 +70,10 @@ public class NormalButton extends ButtonBase {
     @Override
     public void update(double dt) {
         super.update(dt);
-        if (!this.getVisibility()) {
-            this.setActive(false);
-        } else {
-            this.setActive(true);
+        if(!this.Visibility || this.alpha == 0){
+            this.setPosition(10000,10000);
         }
+
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
@@ -155,6 +154,7 @@ public class NormalButton extends ButtonBase {
         if (button == 1 && this.isHovering() && this.active) {
             this.clicked = true;
             AudioManager.Play("click");
+            System.out.println("fuck");
         }
     }
 

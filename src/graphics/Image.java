@@ -86,8 +86,6 @@ public class Image {
         this.visibility=flag;
     }
 
-
-
     public void resizeTo(Vct rect) {
         this.unitSize = rect;
         this.baseScale.x = rect.x / this.width;
