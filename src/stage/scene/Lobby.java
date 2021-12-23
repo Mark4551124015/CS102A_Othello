@@ -191,6 +191,8 @@ public class Lobby extends OthelloObject implements GameStage {
         this.menu_main_alphaAnimator = new Animator(0);
         this.addComponent(this.menu_main_animator);
         this.addComponent(this.menu_main_alphaAnimator);
+
+        this.menu_main_setActive(true);
     }
 
     private void menu_main_popOut(double delay) {

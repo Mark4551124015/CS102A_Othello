@@ -76,9 +76,6 @@ public class GameManager implements Runnable {
             if(((Othello_Local)stage).isExitToLobby()){
                 this.stageContainer.enterStage(new Lobby(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
             }
-            if(((Othello_Local)stage).isWantBack()){
-                this.stageContainer.enterStage(new Lobby(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
-            }
         }
     }
 

@@ -70,11 +70,6 @@ public class NormalButton extends ButtonBase {
     @Override
     public void update(double dt) {
         super.update(dt);
-        if (!this.getVisibility()) {
-            this.setActive(false);
-        } else {
-            this.setActive(true);
-        }
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
@@ -155,6 +150,7 @@ public class NormalButton extends ButtonBase {
         if (button == 1 && this.isHovering() && this.active) {
             this.clicked = true;
             AudioManager.Play("click");
+            System.out.println("clicked");
         }
     }
 

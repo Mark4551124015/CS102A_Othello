@@ -16,7 +16,7 @@ public abstract class ButtonBase extends OthelloObject implements InputCallback 
     public ButtonBase(String id, Image image) {
         super(id, image);
         Controller.registerCallback(this);
-        this.active = true;
+        this.active = false;
     }
 
     public abstract boolean isHovering();

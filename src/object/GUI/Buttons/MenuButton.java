@@ -84,11 +84,7 @@ public class MenuButton extends ButtonBase {
     @Override
     public void update(double dt) {
         super.update(dt);
-        if (!this.getVisibility()) {
-            this.setActive(false);
-        } else {
-            this.setActive(true);
-        }
+
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
