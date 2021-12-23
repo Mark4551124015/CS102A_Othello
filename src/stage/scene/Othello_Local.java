@@ -62,6 +62,8 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private GameResult VictoryScene;
 //    private GameResult DefearScene;
     private boolean ExitToLobby;
+    private NormalButton Back;
+    private boolean wantBack;
 
 
     private boolean gameOver;
@@ -134,6 +136,10 @@ public class Othello_Local extends OthelloObject implements GameStage {
         totalTime = 0;
         isReadyForOperate =true;
 
+        this.Back = new NormalButton("Back");
+        this.Board.addObj(this.Back);
+        this.Back.setPosition(-1000,500);
+        this.Back.resizeTo(120,50);
     }
 
 
@@ -197,6 +203,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
         if(this.VictoryScene.isWantExitToLobby()){
             this.ExitToLobby = true;
             System.out.println("dian");
+        }
+        if(this.Back.isClicked()){
+            this.wantBack = true;
         }
     }
 
@@ -268,4 +277,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
         return this.ExitToLobby;
     }
 
+    public boolean isWantBack(){
+        return this.wantBack;
+    }
 }

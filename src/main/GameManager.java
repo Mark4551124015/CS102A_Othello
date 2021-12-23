@@ -1,6 +1,7 @@
 package main;
 
 
+import object.Game;
 import object.PlayerInfoInGame;
 import stage.GameStage;
 import stage.GameStage.GameStageID;
@@ -61,7 +62,7 @@ public class GameManager implements Runnable {
 
 
             if (((Lobby)stage).ChosenAi()) {
-                this.stageContainer.enterStage(new Othello_AI(Othello_AI.AILevel.Hard), new FadeOutTransition(Color.black, 0.3, 0.3), new FadeInTransition(Color.black, 1, 0));
+                this.stageContainer.enterStage(new Othello_AI(Othello_AI.AILevel.Hard),new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
             }
             if (((Lobby)stage).isHelping()) {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
@@ -70,6 +71,12 @@ public class GameManager implements Runnable {
                 this.stageContainer.enterStage(new Empty(), new FadeOutTransition(Color.black,0.3,0), new FadeInTransition(Color.black, 0.3, 0));
             }
         }else if (stage.getGameStageID() == GameStageID.Othello_Local) {
+            if(((Othello_Local)stage).isExitToLobby()){
+                this.stageContainer.enterStage(new Lobby(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
+            }
+            if(((Othello_Local)stage).isWantBack()){
+                this.stageContainer.enterStage(new Lobby(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
+            }
         }
     }
 

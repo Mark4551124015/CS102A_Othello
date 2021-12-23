@@ -37,6 +37,9 @@ public class GameResult extends OthelloObject{
         this.VictoryMenu.addObj(this.BackToLobby);
         this.DefeatMenu.addObj(this.BackToLobby);
 
+        this.Restart.setPosition(50,50);
+        this.BackToLobby.setPosition(50,100);
+
         this.EndingMenu = new Animator(0);
         this.EndingMenuA = new Animator(0);
         this.addComponent(this.EndingMenu);
