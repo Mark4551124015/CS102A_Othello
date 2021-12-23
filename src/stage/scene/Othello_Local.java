@@ -3,6 +3,7 @@ package stage.scene;
 import graphics.Shape;
 import graphics.Image;
 import input.Controller;
+import main.PlayerManager;
 import main.mainApp;
 import net.sf.json.JSONObject;
 import newData.Operation;
@@ -83,8 +84,6 @@ public class Othello_Local extends OthelloObject implements GameStage {
     }
 
     public void init_local_Game() {
-        User = new Player("Mark455","Mark455",local);
-        Competitor = new Player("Jerry","Jerry",local);
 
         //棋盘
         this.Board = new OthelloObject("Board", new Image("Board"));
@@ -128,7 +127,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.VictoryScene = new GameResult(User,Competitor);
         this.Board.addObj(this.VictoryScene);
         this.VictoryScene.setAlpha(0);
-        this.VictoryScene.setPosition(10000,10000);
+//        this.VictoryScene.setPosition(10000,10000);
 //        this.DefearScene = new GameResult();
 //        this.Board.addObj(this.DefearScene);
 //        this.DefearScene.setAlpha(0);

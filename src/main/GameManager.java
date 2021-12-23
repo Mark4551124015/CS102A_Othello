@@ -13,6 +13,7 @@ import stage.transition.OthelloTransition;
 
 import java.awt.*;
 
+import static main.PlayerManager.Competitor;
 import static main.PlayerManager.User;
 
 public class GameManager implements Runnable {
@@ -28,6 +29,7 @@ public class GameManager implements Runnable {
     public void start() {
         playerManager.readAll();
         User = playerManager.getPlayer("Mark455");
+        Competitor = playerManager.getPlayer("Jerry");
 
         Thread GMThread = new Thread(this);
         GMThread.start();

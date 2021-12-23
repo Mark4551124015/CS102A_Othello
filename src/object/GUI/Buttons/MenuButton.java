@@ -164,7 +164,7 @@ public class MenuButton extends ButtonBase {
 
     @Override
     public void onClicked(int button) {
-        if (button == 1 && this.isHovering()) {
+        if (button == 1 && this.isHovering()&&this.active) {
             this.clicked = true;
             AudioManager.Play("click");
         }
