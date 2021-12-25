@@ -352,4 +352,6 @@ public class Lobby extends OthelloObject implements GameStage {
         this.menuState = nextState;
 
     }
+
+
 }

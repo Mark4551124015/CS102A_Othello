@@ -53,7 +53,7 @@ public class GameManager implements Runnable {
             }
         } else if (stage.getGameStageID() == GameStageID.Launching) {
             if (((Launching)stage).getTotalTime() >= 2 && ResourceManager.getLoadState() == 2) {
-                this.stageContainer.enterStage(new Lobby(), new FadeOutTransition(Color.black, 0.3), new FadeInTransition(Color.black, 0.3));
+                this.stageContainer.enterStage(new Login(), new FadeOutTransition(Color.black, 0.3), new FadeInTransition(Color.black, 0.3));
 //                AudioManager.initBGM();
 //                AudioManager.playBGM();
             }
