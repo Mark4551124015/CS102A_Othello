@@ -206,8 +206,8 @@ public class OthelloObject {
         this.absoluteTransform = flag;
     }
 
-    //Sprite 贴图
-    public void setSprite(Image image) {
+    // 贴图
+    public void setImage(Image image) {
         if (this.image != null) {
             this.image = image;
             if (this.image != null) {
@@ -220,7 +220,7 @@ public class OthelloObject {
         }
     }
 
-    public Image getSprite() {
+    public Image getImage() {
         return this.image;
     }
 

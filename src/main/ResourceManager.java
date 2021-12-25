@@ -71,6 +71,9 @@ public class ResourceManager {
         addList(basicList, "LOGO_Big");
         addList(basicList, "background");
         addList(basicList, "popo");
+        addList(basicList, "LoginBG");
+        addList(basicList, "InputBG");
+
 
 
 

@@ -34,13 +34,13 @@ public class GameResult extends OthelloObject{
         super("GameEnding");
 
         this.VictoryMenu = new OthelloObject("VictoryMenu");
-        this.setSprite(new Image("User_info_backGround"));
+        this.setImage(new Image("User_info_backGround"));
         this.setSize(850,500);
 
         //        this.VictoryMenu.setPosition(MainManuButtonsPivot);
         this.VictoryMenu.setAlpha(0);
         this.DefeatMenu = new OthelloObject("DefeatMenu");
-        this.setSprite(new Image("User_info_backGround"));
+        this.setImage(new Image("User_info_backGround"));
 
         //        this.DefeatMenu.setPosition(MainManuButtonsPivot);
         this.DefeatMenu.setAlpha(0);
@@ -56,23 +56,23 @@ public class GameResult extends OthelloObject{
 
         this.UserProfile = new OthelloObject("UserProfile");
         ResourceManager.imgs.put(User.getUsername(),ResourceManager.loadImage("save/players/"+User.getUsername()+"/profile.png"));
-        this.UserProfile.setSprite(new Image(User.getUsername()));
+        this.UserProfile.setImage(new Image(User.getUsername()));
         this.UserProfile.resizeTo(120,120);
         this.UserProfile.setPosition(-250,-140);
 
         this.CompetitorProfile = new OthelloObject("CompetitorProfile");
         ResourceManager.imgs.put(Competitor.getUsername(),ResourceManager.loadImage("save/players/"+Competitor.getUsername()+"/profile.png"));
-        this.CompetitorProfile.setSprite(new Image(Competitor.getUsername()));
+        this.CompetitorProfile.setImage(new Image(Competitor.getUsername()));
         this.CompetitorProfile.resizeTo(120,120);
         this.CompetitorProfile.setPosition(250,-140);
 
         this.White = new OthelloObject("White");
-        this.White.setSprite(new Image("White_Disk"));
+        this.White.setImage(new Image("White_Disk"));
         this.White.resizeTo(150,150);
         this.White.setPosition(-250,0);
 
         this.Black = new OthelloObject("Black");
-        this.Black.setSprite(new Image("Black_Disk"));
+        this.Black.setImage(new Image("Black_Disk"));
         this.Black.resizeTo(150,150);
         this.Black.setPosition(250,0);
 

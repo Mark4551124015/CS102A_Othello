@@ -25,7 +25,7 @@ public class PlayerInfo extends OthelloObject {
     public PlayerInfo(Player player) {
         super("Player_info_"+player.getUsername());
         this.player = player;
-        this.setSprite(new Image("User_info_backGround"));
+        this.setImage(new Image("User_info_backGround"));
 
         int Font_Size = 12;
 
@@ -58,7 +58,7 @@ public class PlayerInfo extends OthelloObject {
 
         this.Player_profile.setPosition(0,-75);
         this.Player_profile.resizeTo(UserInfoSize.x/2, UserInfoSize.x/2);
-        this.Player_Ready.setScale(UserInfoSize.x/this.Player_Ready.getSprite().getUnitSize().x);
+        this.Player_Ready.setScale(UserInfoSize.x/this.Player_Ready.getImage().getUnitSize().x);
         this.Player_Name.setPosition(0,20);
         this.Player_Played.setPosition(0,this.Player_Name.getTrans().position.y + Font_Size + Letter_Space);
         this.Player_WinRate.setPosition(0,this.Player_Played.getTrans().position.y + Font_Size + Letter_Space);

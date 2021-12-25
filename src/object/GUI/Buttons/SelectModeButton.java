@@ -120,7 +120,7 @@ public class SelectModeButton extends ButtonBase {
 
     @Override
     public boolean isHovering() {
-        Vct size = this.base.getSprite().getUnitSize();
+        Vct size = this.base.getImage().getUnitSize();
         Vct pos = Controller.getMousePos();
         try {
             pos.transform(this.getAbsoluteTransform().createInverse());

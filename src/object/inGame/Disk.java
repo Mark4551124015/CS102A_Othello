@@ -95,7 +95,7 @@ public class Disk extends OthelloObject {
             if (this.isFlipping && this.status == -1) {
                 if (this.index > 0) {
                     --index;
-                    this.root.setSprite(new Image(index + ""));
+                    this.root.setImage(new Image(index + ""));
                 } else {
                     this.status = 1;
                     this.index = 0;
@@ -107,7 +107,7 @@ public class Disk extends OthelloObject {
             if (this.isFlipping && this.status == 1) {
                 if (this.index < 8) {
                     ++index;
-                    this.root.setSprite(new Image(index + ""));
+                    this.root.setImage(new Image(index + ""));
                 } else {
                     this.status = -1;
                     this.index = 8;

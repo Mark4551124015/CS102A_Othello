@@ -265,9 +265,9 @@ public class DiskManager extends OthelloObject {
                 index += this.Disks[r][c].getSttingState();
                 if (this.Disks[r][c].getFlippingState() != 1) {
                     if (this.Disks[r][c].getStatus() == -1) {
-                        this.Disks[r][c].getRoot().setSprite(new Image("Black_Disk"));
+                        this.Disks[r][c].getRoot().setImage(new Image("Black_Disk"));
                     } else if (this.Disks[r][c].getStatus() == 1) {
-                        this.Disks[r][c].getRoot().setSprite(new Image("White_Disk"));
+                        this.Disks[r][c].getRoot().setImage(new Image("White_Disk"));
                     }
                 }
                 if (this.Disks[r][c].getSize() != new Vct(DiskSize,DiskSize)) {

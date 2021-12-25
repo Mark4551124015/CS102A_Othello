@@ -19,6 +19,12 @@ public abstract class ButtonBase extends OthelloObject implements InputCallback 
         this.active = false;
     }
 
+    public ButtonBase(String id) {
+        this(id,null);
+    }
+
+
+
     public abstract boolean isHovering();
 
     public abstract void onClicked(int button);

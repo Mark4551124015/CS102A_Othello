@@ -61,7 +61,7 @@ public class OthelloTransition implements Transition{
 
             this.alphaAnimator.append(Animation.GetSmooth(1, 0, fadeTime, delay));
         }
-        this.TransitionLOGO.setScale((mainApp.Width)/this.TransitionLOGO.getSprite().getUnitSize().x);
+        this.TransitionLOGO.setScale((mainApp.Width)/this.TransitionLOGO.getImage().getUnitSize().x);
 
         this.right.setActive(false);
         this.left.setActive(false);

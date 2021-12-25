@@ -31,7 +31,7 @@ public class PlayerInfoInGame extends OthelloObject {
         super("User_inGame_info"+player.getUsername());
 
         this.playerProfile = new OthelloObject("Player Profile");
-        this.setSprite(new Image("User_info_backGround"));
+        this.setImage(new Image("User_info_backGround"));
         this.Recall = new NormalButton("Recall");
         this.Surrender = new NormalButton("Surrender");
         int Font_Size = 16;
@@ -42,7 +42,7 @@ public class PlayerInfoInGame extends OthelloObject {
 
         ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("save/players/"+player.getUsername()+"/profile.png"));
         System.out.print("Loaded");
-        this.playerProfile.setSprite(new Image(player.getUsername()));
+        this.playerProfile.setImage(new Image(player.getUsername()));
 
         this.player_name = new Text(player.getUsername()+"_Played", player.getName(), new Font("黑体", Font.PLAIN, Font_Size));
         this.Recall1 = new OthelloObject(this.getId()+"_Recall1", new Image("recallCnt"));

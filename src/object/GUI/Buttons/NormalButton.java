@@ -101,7 +101,7 @@ public class NormalButton extends ButtonBase {
 
     @Override
     public boolean isHovering() {
-        Vct size = this.getSprite().getUnitSize();
+        Vct size = this.getImage().getUnitSize();
         Vct pos = Controller.getMousePos();
         try {
             pos.transform(this.getAbsoluteTransform().createInverse());
