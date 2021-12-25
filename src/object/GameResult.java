@@ -160,6 +160,10 @@ public class GameResult extends OthelloObject{
         return this.wantBackToLobby;
     }
 
+    public void setRestart(boolean flag){
+        this.wantRestart = flag;
+    }
+
     @Override
     public void update(double dt){
         if(this.Restart.isClicked()){

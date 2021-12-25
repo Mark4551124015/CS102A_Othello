@@ -189,6 +189,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
         if(this.VictoryScene.isWantRestart()){
             reStart();
+            this.VictoryScene.setAlpha(0);
+            this.VictoryScene.EndingButton_setActive(false);
+            this.VictoryScene.setRestart(false);
         }
 
         if(this.VictoryScene.isWantExitToLobby()){
@@ -198,9 +201,13 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
         if(game.gameEnd()){
             this.VictoryScene.setVictoryMenu(1);
+            this.VictoryScene.setAlpha(1);
             this.VictoryScene.EndingButton_setActive(true);
         }
 
+        if(playerInfoUser.isWantSurrender() || playerInfoCompetitor.isWantSurrender()){
+            game.gameEnd();
+        }
         recallCheck();
 
     }
