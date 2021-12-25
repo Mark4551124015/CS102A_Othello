@@ -8,20 +8,21 @@ import net.sf.json.JSONObject;
 import newData.Operation;
 import newData.Vct;
 import newData.intVct;
-import object.Game;
-import object.OthelloObject;
-import object.Player;
+import object.*;
+import object.GUI.PlayerInfoInGame;
 import object.inGame.BoardIndex;
 import object.inGame.DiskManager;
 import object.inGame.DiskManager_AI;
 import object.inGame.OperationManager;
 import stage.GameStage;
 
+import java.awt.event.KeyEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
+import static input.Controller.isKeyDown;
 import static input.Controller.mouseIsOnboard;
 import static java.lang.Thread.sleep;
 import static main.mainApp.controller;
@@ -52,12 +53,19 @@ public class Othello_AI extends OthelloObject implements GameStage {
     private Game game;
     public static boolean isReadyForOperate;
     private BoardIndex boardIndex;
+    private PlayerInfoInGame playerInfoUser;
+    private PlayerInfoInGame playerInfoCompetitor;
+    private GameResult VictoryScene;
+    private boolean ExitToLobby;
+    private object.EscMenu EscMenu;
 
     private boolean gameOver;
     private boolean gameOverState;
     private boolean isProcessing;
     double totalTime = 0;
     double AITotalTime =0;
+
+
 
 
     private OthelloObject Board;
@@ -95,6 +103,36 @@ public class Othello_AI extends OthelloObject implements GameStage {
         this.boardIndex = new BoardIndex();
         this.boardIndex.setVisibility(true);
         this.Board.addObj(this.boardIndex);
+
+        this.playerInfoCompetitor = new PlayerInfoInGame(Competitor);
+        this.Board.addObj(this.playerInfoCompetitor);
+
+        this.playerInfoUser = new PlayerInfoInGame(User);
+        this.Board.addObj(this.playerInfoUser);
+
+        if (User.getColor() == 1) {
+            this.playerInfoUser.setPosition(-465,-80);
+            this.playerInfoCompetitor.setPosition(465,-80);
+        } else if (User.getColor() == -1) {
+            this.playerInfoUser.setPosition(465,-80);
+            this.playerInfoCompetitor.setPosition(-465,-80);
+        }
+
+        this.VictoryScene = new GameResult(User,Competitor);
+        this.Board.addObj(this.VictoryScene);
+        this.VictoryScene.setAlpha(0);
+//        this.VictoryScene.setPosition(10000,10000);
+//        this.DefearScene = new GameResult();
+//        this.Board.addObj(this.DefearScene);
+//        this.DefearScene.setAlpha(0);
+//        this.DefearScene.setPosition(0,0);
+        this.VictoryScene.setPosition(0,0);
+        this.VictoryScene.EndingButton_setActive(false);
+
+        this.EscMenu = new EscMenu();
+        this.background.addObj(this.EscMenu);
+        this.EscMenu.setPosition(0,0);
+        this.EscMenu.setAlpha(0);
 
         this.game.start();
         totalTime = 0;
@@ -143,6 +181,57 @@ public class Othello_AI extends OthelloObject implements GameStage {
         }
         if (isReadyForOperate && isReadyForNextOperation()) {
             OperationCheck();
+        }
+
+        if(this.VictoryScene.isWantRestart()){
+            reStart();
+            this.VictoryScene.setAlpha(0);
+            this.VictoryScene.EndingButton_setActive(false);
+            this.VictoryScene.setRestart(false);
+        }
+
+        if(this.VictoryScene.isWantExitToLobby()){
+            this.ExitToLobby = true;
+            System.out.println("dian");
+        }
+
+        if(game.gameEnd()){
+            this.VictoryScene.setVictoryMenu(1);
+            this.VictoryScene.setAlpha(1);
+            this.VictoryScene.EndingButton_setActive(true);
+        }
+
+        if(playerInfoUser.isWantSurrender() || playerInfoCompetitor.isWantSurrender()){
+            game.gameEnd();
+        }
+
+        if(isKeyDown(KeyEvent.VK_ESCAPE)){
+            this.EscMenu.setAlpha(1);
+            this.EscMenu.setEscMenuActive(true);
+            this.Board.setPosition(10000,10000);
+        }
+
+        if(EscMenu.isWantBack()){
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+            this.EscMenu.setBack(false);
+        }
+
+        if(EscMenu.isWantRestart()){
+            reStart();
+            this.EscMenu.setRestart(false);
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+        }
+
+        if(EscMenu.isWantSave()){
+            saveGame();
+            this.EscMenu.setEscSave(false);
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         }
 
         this.AIProcess();
@@ -382,7 +471,37 @@ public class Othello_AI extends OthelloObject implements GameStage {
 
 
 
+
     }
+
+    public boolean isExitToLobby(){
+        return this.ExitToLobby;
+    }
+
+    public void recallCheck() {
+        if(this.playerInfoCompetitor.isWantSurrender()){
+            this.game.setWinner(User);
+        }
+        if(this.playerInfoUser.isWantSurrender()){
+            this.game.setWinner(Competitor);
+        }
+
+        if(this.playerInfoUser.isWantRecall()){
+            this.game.playerRecall(User);
+            this.playerInfoUser.setRecalled(User.getReCalledTime());
+            this.playerInfoUser.setRecall(false);
+            this.playerInfoUser.setRecall(false);
+            this.game.setHinted(false);
+        }
+        if(this.playerInfoCompetitor.isWantRecall()){
+            this.game.playerRecall(Competitor);
+            this.playerInfoCompetitor.setRecalled(Competitor.getReCalledTime());
+            this.playerInfoCompetitor.setRecall(false);
+            this.playerInfoCompetitor.setRecall(false);
+            this.game.setHinted(false);
+        }
+    }
+
 
     public enum AILevel{
         Easy,Normal,Hard

@@ -22,11 +22,13 @@ import object.inGame.BoardIndex;
 import object.inGame.OperationManager;
 import stage.GameStage;
 
+import java.awt.event.KeyEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
+import static input.Controller.isKeyDown;
 import static input.Controller.mouseIsOnboard;
 import static main.mainApp.controller;
 import static newData.Operation.Operation_Type.SetDisk;
@@ -63,6 +65,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
 ////    private GameResult DefearScene;
     private boolean ExitToLobby;
 //    private NormalButton Restart;
+    private EscMenu EscMenu;
 
     private boolean gameOver;
     private boolean gameOverState;
@@ -135,6 +138,12 @@ public class Othello_Local extends OthelloObject implements GameStage {
         this.VictoryScene.setPosition(0,0);
         this.VictoryScene.EndingButton_setActive(false);
 
+        this.EscMenu = new EscMenu();
+        this.background.addObj(this.EscMenu);
+        this.EscMenu.setPosition(0,0);
+        this.EscMenu.setAlpha(0);
+
+
         this.game.start();
         totalTime = 0;
         isReadyForOperate =true;
@@ -188,6 +197,9 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
         if(this.VictoryScene.isWantRestart()){
             reStart();
+            this.VictoryScene.setAlpha(0);
+            this.VictoryScene.EndingButton_setActive(false);
+            this.VictoryScene.setRestart(false);
         }
 
         if(this.VictoryScene.isWantExitToLobby()){
@@ -197,7 +209,41 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
         if(game.gameEnd()){
             this.VictoryScene.setVictoryMenu(1);
+            this.VictoryScene.setAlpha(1);
             this.VictoryScene.EndingButton_setActive(true);
+        }
+
+        if(playerInfoUser.isWantSurrender() || playerInfoCompetitor.isWantSurrender()){
+            game.gameEnd();
+        }
+
+        if(isKeyDown(KeyEvent.VK_ESCAPE)){
+            this.EscMenu.setAlpha(1);
+            this.EscMenu.setEscMenuActive(true);
+            this.Board.setPosition(10000,10000);
+        }
+
+        if(EscMenu.isWantBack()){
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+            this.EscMenu.setBack(false);
+        }
+
+        if(EscMenu.isWantRestart()){
+            reStart();
+            this.EscMenu.setRestart(false);
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+        }
+
+        if(EscMenu.isWantSave()){
+            saveGame();
+            this.EscMenu.setEscSave(false);
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
         }
 
         recallCheck();
