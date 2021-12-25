@@ -9,11 +9,13 @@ public class EscMenu extends OthelloObject{
     private NormalButton Back;
     private NormalButton Save;
     private NormalButton Reload;
+    private NormalButton Restart;
     private Animator EscMenuA;
     private Animator EscMenuB;
     private boolean wantBack;
     private boolean wantSave;
     private boolean wantReload;
+    private boolean wantRestart;
 
     public EscMenu(){
         super("GamePause");
@@ -25,20 +27,25 @@ public class EscMenu extends OthelloObject{
 
         this.Back = new NormalButton("Back");
         this.Back.setActive(false);
-        this.Back.setPosition(0,100);
+        this.Back.setPosition(0,120);
 
         this.Save = new NormalButton("Sav3");
         this.Save.setActive(false);
-        this.Save.setPosition(0,0);
+        this.Save.setPosition(0,40);
 
         this.Reload = new NormalButton("Reload");
         this.Reload.setActive(false);
-        this.Reload.setPosition(0,-100);
+        this.Reload.setPosition(0,-40);
+
+        this.Restart = new NormalButton("Restart");
+        this.Restart.setActive(false);
+        this.Restart.setPosition(0,-120);
 
         this.addObj(this.EscMenu);
         this.addObj(this.Back);
         this.addObj(this.Save);
         this.addObj(this.Reload);
+        this.addObj(this.Restart);
 
         this.EscMenuA = new Animator(0);
         this.EscMenuB = new Animator(0);
@@ -54,6 +61,7 @@ public class EscMenu extends OthelloObject{
         this.Back.setActive(flag);
         this.Save.setActive(flag);
         this.Reload.setActive(flag);
+        this.Restart.setActive(flag);
     }
 
     public boolean isWantBack(){
@@ -68,8 +76,24 @@ public class EscMenu extends OthelloObject{
         return this.wantReload;
     }
 
+    public boolean isWantRestart(){
+        return this.wantRestart;
+    }
+
     public void setBack(boolean flag){
         this.wantBack = flag;
+    }
+
+    public void setEscSave(boolean flag){
+        this.wantSave = flag;
+    }
+
+    public void setReload(boolean flag){
+        this.wantReload = flag;
+    }
+
+    public void setRestart(boolean flag){
+        this.wantRestart = flag;
     }
 
     @Override
@@ -77,6 +101,15 @@ public class EscMenu extends OthelloObject{
         super.update(dt);
         if(this.Back.isClicked()){
             this.wantBack = true;
+        }
+        if(this.Save.isClicked()){
+            this.wantSave = true;
+        }
+        if(this.Reload.isClicked()){
+            this.wantReload = true;
+        }
+        if(this.Restart.isClicked()){
+            this.wantRestart = true;
         }
     }
 }

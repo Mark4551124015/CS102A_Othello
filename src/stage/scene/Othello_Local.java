@@ -230,6 +230,23 @@ public class Othello_Local extends OthelloObject implements GameStage {
             this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
             this.EscMenu.setBack(false);
         }
+
+        if(EscMenu.isWantRestart()){
+            reStart();
+            this.EscMenu.setRestart(false);
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+        }
+
+        if(EscMenu.isWantSave()){
+            saveGame();
+            this.EscMenu.setEscSave(false);
+            this.EscMenu.setAlpha(0);
+            this.EscMenu.setEscMenuActive(false);
+            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+        }
+
         recallCheck();
 
     }
