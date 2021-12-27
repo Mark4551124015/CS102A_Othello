@@ -11,7 +11,7 @@ import object.Player;
 import object.GUI.PlayerInfo;
 import object.inGame.BoardIndex;
 import object.inGame.DiskManager;
-import util.FontLibrary;
+import util.FontLib;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Matching extends OthelloObject implements stage.GameStage {
 
     @Override
     public void init() {
-        Font font = FontLibrary.GetNormalButtonFont(4);
+        Font font = FontLib.GetNormalButtonFont(4);
 
 
         //背景

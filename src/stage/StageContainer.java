@@ -1,11 +1,8 @@
 package stage;
 
-import main.AttentionManager;
 import main.mainApp;
-import object.GUI.Buttons.ButtonBase;
-import object.OthelloObject;
 import stage.scene.Empty;
-import stage.transition.EmptyTransition;
+import stage.transition.DirectTransition;
 import stage.transition.Transition;
 import graphics.Camera;
 
@@ -50,13 +47,11 @@ public class StageContainer extends JPanel {
             this.leaveTransition.render(g2d);
         if (this.enterTransition != null)
             this.enterTransition.render(g2d);
-        AttentionManager.render(g2d);
     }
 
 
     public void update(double dt) {
         Camera.update(dt);
-        AttentionManager.update(dt);
 
         if (this.leaveTransition != null) {
             if (this.leaveTransition.isFinished()) {
@@ -91,9 +86,9 @@ public class StageContainer extends JPanel {
 
         this.currentStage = nextStage;
         if (leaveTransition == null)
-            leaveTransition = new EmptyTransition();
+            leaveTransition = new DirectTransition();
         if (enterTransition == null)
-            enterTransition = new EmptyTransition();
+            enterTransition = new DirectTransition();
         this.leaveTransition = leaveTransition;
         this.leaveTransition.init();
         this.enterTransition = enterTransition;

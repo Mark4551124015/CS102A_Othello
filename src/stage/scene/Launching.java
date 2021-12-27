@@ -23,7 +23,7 @@ public class Launching extends OthelloObject implements GameStage {
 
     @Override
     public void init() {
-        this.empty = new Shape(this.id + "_empty", Color.black, Shape.Type.Rect, mainApp.WinSize);
+        this.empty = new Shape(this.id + "_empty", Color.black, Shape.Type.Rectangle, mainApp.WinSize);
         this.addObj(this.empty);
         this.empty.setPosition(mainApp.WinSize.x/2, mainApp.WinSize.y/2);
         this.empty.resizeTo(mainApp.WinSize.x,mainApp.WinSize.y);
@@ -32,15 +32,14 @@ public class Launching extends OthelloObject implements GameStage {
         this.logo.resizeTo(0.35);
         this.amt_logo_scale_1 = new Animator(1.0);
         this.logo.addComponent(this.amt_logo_scale_1);
-        this.amt_logo_scale_1.append(Animation.GetLinear(1.0, 1.5, 20));
+        this.amt_logo_scale_1.append(Animation.GetSmooth(1.0, 3, 20));
         this.totalTime = 0;
     }
 
     @Override
     public void update(double dt) {
-
         this.totalTime += dt;
-        if (totalTime < 0.3) {
+        if (totalTime < 1) {
             this.logo.setScale(this.amt_logo_scale_1.val());
         }
         super.update(dt);

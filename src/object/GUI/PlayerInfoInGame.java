@@ -6,7 +6,7 @@ import main.ResourceManager;
 import object.GUI.Buttons.NormalButton;
 import object.OthelloObject;
 import object.Player;
-import util.FontLibrary;
+import util.FontLib;
 
 import java.awt.*;
 
@@ -38,7 +38,7 @@ public class PlayerInfoInGame extends OthelloObject {
         int Font_Size = 16;
 
         this.player = player;
-        Font font = FontLibrary.GetMenuButtonFont(10);
+        Font font = FontLib.GetMenuButtonFont(10);
         this.Surrender.setFont(font);
         this.Recall.setFont(font);
 

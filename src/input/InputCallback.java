@@ -1,7 +1,3 @@
-/**
- * @Author: RogerDTZ
- * @FileName: InputCallback.java
- */
 
 package input;
 

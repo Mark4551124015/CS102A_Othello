@@ -2,7 +2,7 @@ package stage.scene;
 
 import component.animation.Animation;
 import component.animation.Animator;
-import main.AttentionManager;
+import input.Controller;
 import main.PlayerManager;
 import main.mainApp;
 import newData.Vct;
@@ -14,10 +14,11 @@ import stage.GameStage;
 
 import object.OthelloObject;
 import graphics.Image;
-import util.FontLibrary;
+import util.FontLib;
 
 import java.awt.*;
 
+import static java.awt.event.KeyEvent.VK_ESCAPE;
 import static main.GameManager.playerManager;
 
 public class Lobby extends OthelloObject implements GameStage {
@@ -35,7 +36,7 @@ public class Lobby extends OthelloObject implements GameStage {
     private boolean local;
     private boolean online;
     private boolean ai;
-    private boolean back;
+    private int Level;
 
 //数据部分结束
 
@@ -45,7 +46,7 @@ public class Lobby extends OthelloObject implements GameStage {
 
 
     private enum MenuState {
-        Main, SelectMode, SelectCom, Connect, Help, Room, Empty
+        Main, SelectMode, SelectCom, Connect, Help, Room, Empty, SelectAI
     }
 
     private MenuState menuState;
@@ -73,6 +74,16 @@ public class Lobby extends OthelloObject implements GameStage {
     private Animator menu_ChooseCom_animator;
     private Animator menu_ChooseCom_alphaAnimator;
 
+    //ChooseAi
+    private OthelloObject menu_ChooseAI;
+    private SelectModeButton button_ChooseAI_Easy;
+    private SelectModeButton button_ChooseAI_Normal;
+    private SelectModeButton button_ChooseAI_Hard;
+    private Animator menu_ChooseAI_animator;
+    private Animator menu_ChooseAI_alphaAnimator;
+
+    private boolean isReadyForEsc;
+
     public Lobby() {
         super("scene_lobby");
     }
@@ -87,14 +98,13 @@ public class Lobby extends OthelloObject implements GameStage {
 
         this.initMainMenu();
         this.initModeMenu();
+        this.initAIMenu();
         this.initChoosingMenu();
         this.menu_main_setActive(true);
-//        this.menu_SelectMode_setActive(true);
-//        this.menuState = MenuState.SelectMode;
-//        this.menu_SelectMode_popOut(0);
         this.menu_main_popOut(0);
-
+        isReadyForEsc=true;
         this.menuState = MenuState.Main;
+        this.Level = -1;
     }
 
     @Override
@@ -103,6 +113,7 @@ public class Lobby extends OthelloObject implements GameStage {
         this.menu_main_update(dt);
         this.menu_SelectMode_update(dt);
         this.menu_ChooseCom_update(dt);
+        this.setMenu_ChooseAI_update(dt);
 
         if (this.menuState == MenuState.Main) { // MainTest
             if (this.button_main_start.isClicked()) {
@@ -128,10 +139,29 @@ public class Lobby extends OthelloObject implements GameStage {
                 this.online = true;
             }
             if(this.button_SelectMode_ai.isClicked()){
-                this.ai = true;
+                this.changeMenuState(MenuState.SelectAI);
             }
-            if(this.button_SelectMode_back.isClicked()){
+            if(this.button_SelectMode_back.isClicked() || (Controller.isKeyDown(VK_ESCAPE) && isReadyForEsc)){
                 this.changeMenuState(MenuState.Main);
+                isReadyForEsc=false;
+            }
+        }
+        if(this.menuState == MenuState.SelectAI){
+            if(this.button_ChooseAI_Easy.isClicked()){
+                this.ai = true;
+                this.Level = 1;
+            }
+            if(this.button_ChooseAI_Normal.isClicked()){
+                this.ai = true;
+                this.Level = 2;
+            }
+            if(this.button_ChooseAI_Hard.isClicked()){
+                this.ai = true;
+                this.Level = 3;
+            }
+            if(Controller.isKeyDown(VK_ESCAPE) && isReadyForEsc){
+                this.changeMenuState(MenuState.SelectMode);
+                isReadyForEsc=false;
             }
         }
 
@@ -144,15 +174,22 @@ public class Lobby extends OthelloObject implements GameStage {
                         PlayerManager.Competitor = playerManager.getPlayer(this.choosingMenu.getResult());
                         this.local = true;
                     } catch (Exception e) {
-                        AttentionManager.showWarnMessage("Invalid Player");
+                        System.out.println("Invalid Player");
                         this.choosingMenu.setSubmitted(false);
                     }
                 }
+            }
+            if(Controller.isKeyDown(VK_ESCAPE)){
+                this.changeMenuState(MenuState.SelectMode);
+                isReadyForEsc=false;
             }
 
             if(this.button_SelectMode_back.isClicked()){
                 this.changeMenuState(MenuState.SelectMode);
             }
+        }
+        if(!Controller.isKeyDown(VK_ESCAPE)&& !isReadyForEsc){
+            isReadyForEsc=true;
         }
         super.update(dt);
 
@@ -200,9 +237,9 @@ public class Lobby extends OthelloObject implements GameStage {
 
 
         //文字显示
-        Font font1 = FontLibrary.GetMenuButtonFont(30);
+        Font font1 = FontLib.GetMenuButtonFont(30);
         this.button_main_start.setFont(font1);
-        Font font2 = FontLibrary.GetMenuButtonFont(15);
+        Font font2 = FontLib.GetMenuButtonFont(15);
         this.button_main_help.setFont(font2);
         this.button_main_options.setFont(font2);
         this.button_main_exit.setFont(font2);
@@ -264,6 +301,59 @@ public class Lobby extends OthelloObject implements GameStage {
     }
 
 
+    public void initAIMenu() {
+        this.menu_ChooseAI = new OthelloObject("menu_ChooseAI");
+        this.addObj(this.menu_ChooseAI);
+        this.menu_ChooseAI.setPosition(mainApp.Width/2,mainApp.Height/2);
+
+        this.button_ChooseAI_Easy = new SelectModeButton("button_ChooseAI_Easy", new Image("popo"));
+        this.menu_ChooseAI.addObj(this.button_ChooseAI_Easy);
+        this.button_ChooseAI_Normal = new SelectModeButton("button_ChooseAI_Normal", new Image("popo"));
+        this.menu_ChooseAI.addObj(this.button_ChooseAI_Normal);
+        this.button_ChooseAI_Hard = new SelectModeButton("button_ChooseAI_Hard", new Image("popo"));
+        this.menu_ChooseAI.addObj(this.button_ChooseAI_Hard);
+
+        //大小
+        this.button_ChooseAI_Easy.resizeTo(MenuButtonWidth, MenuButtonHeight);
+        this.button_ChooseAI_Normal.resizeTo(MenuButtonWidth, MenuButtonHeight);
+        this.button_ChooseAI_Hard.resizeTo(MenuButtonWidth, MenuButtonHeight);
+
+        //位置
+        this.button_ChooseAI_Easy.setPosition(-300, 0);
+        this.button_ChooseAI_Normal.setPosition(0, 0);
+        this.button_ChooseAI_Hard.setPosition(300, 0);
+
+        //文字显示
+        Font font1 = FontLib.GetMenuButtonFont(30);
+        this.button_ChooseAI_Easy.setFont(font1);
+        this.button_ChooseAI_Normal.setFont(font1);
+        this.button_ChooseAI_Hard.setFont(font1);
+
+
+        this.button_ChooseAI_Easy.setText("Easy");
+        this.button_ChooseAI_Normal.setText("Normal");
+        this.button_ChooseAI_Hard.setText("Hard");
+
+        this.button_ChooseAI_Easy.setTextColor(new Color(212, 212, 212));
+        this.button_ChooseAI_Normal.setTextColor(new Color(212, 212, 212));
+        this.button_ChooseAI_Hard.setTextColor(new Color(212, 212, 212));
+
+
+        this.menu_ChooseAI_animator = new Animator(0);
+        this.menu_ChooseAI_alphaAnimator = new Animator(0);
+        this.menu_ChooseAI.addComponent(this.menu_ChooseAI_animator);
+        this.menu_ChooseAI.addComponent(this.menu_ChooseAI_alphaAnimator);
+
+        this.menu_ChooseAI_setActive(false);
+
+    }
+    public void menu_ChooseAI_setActive(boolean flag){
+        this.button_ChooseAI_Easy.setActive(flag);
+        this.button_ChooseAI_Normal.setActive(flag);
+        this.button_ChooseAI_Hard.setActive(flag);
+    }
+
+
 
     public void initModeMenu() {
         this.menu_SelectMode = new OthelloObject("menu_SelectMode");
@@ -291,11 +381,11 @@ public class Lobby extends OthelloObject implements GameStage {
         this.button_SelectMode_back.setPosition(0, 400);
 
         //文字显示
-        Font font1 = FontLibrary.GetMenuButtonFont(30);
+        Font font1 = FontLib.GetMenuButtonFont(30);
         this.button_SelectMode_local.setFont(font1);
         this.button_SelectMode_online.setFont(font1);
         this.button_SelectMode_ai.setFont(font1);
-        Font font2 = FontLibrary.GetMenuButtonFont(15);
+        Font font2 = FontLib.GetMenuButtonFont(15);
         this.button_SelectMode_back.setFont(font2);
 
         this.button_SelectMode_local.setText("Local");
@@ -340,6 +430,22 @@ public class Lobby extends OthelloObject implements GameStage {
         this.button_SelectMode_back.setActive(flag);
     }
 
+    private void  setMenu_ChooseAI_update(double dt) {
+        this.menu_ChooseAI.setPosition(mainApp.Width/2, this.menu_ChooseAI_animator.val());
+        this.menu_ChooseAI.setAlpha(this.menu_ChooseAI_alphaAnimator.val());
+    }
+
+    private void menu_ChooseAI_popOut(double delay) {
+        this.menu_ChooseAI_animator.forceAppend(Animation.GetSmooth(-MenuShift, mainApp.Height/2, PopOutDuration, delay));
+        this.menu_ChooseAI_alphaAnimator.forceAppend(Animation.GetSmooth(this.menu_ChooseAI_alphaAnimator.val(), 1, PopOutDuration, delay));
+    }
+
+    private void menu_ChooseAI_popBack(double delay) {
+        this.menu_ChooseAI_animator.forceAppend(Animation.GetSmooth(this.menu_ChooseAI_animator.val(), -MenuShift, PopBackDuration, delay));
+        this.menu_ChooseAI_alphaAnimator.forceAppend(Animation.GetSmooth(this.menu_ChooseAI_alphaAnimator.val(), 0, PopBackDuration, delay));
+    }
+
+
     public boolean ChosenLocal() {
         return this.local;
     }
@@ -352,9 +458,6 @@ public class Lobby extends OthelloObject implements GameStage {
         return this.ai;
     }
 
-    public boolean Back() {
-        return this.back;
-    }
 
 
     public void initChoosingMenu(){
@@ -418,6 +521,9 @@ public class Lobby extends OthelloObject implements GameStage {
             case SelectCom:
                 this.menu_ChooseCom_popBack(PopBackDuration);
                 this.menu_ChooseCom_setActive(false);
+            case SelectAI:
+                this.menu_ChooseAI_popBack(PopBackDuration);
+                this.menu_ChooseAI_setActive(false);
             case Help:
                 break;
         }
@@ -434,6 +540,9 @@ public class Lobby extends OthelloObject implements GameStage {
                 this.menu_ChooseCom_popOut(PopOutDuration);
                 this.menu_ChooseCom_setActive(true);
                 break;
+            case SelectAI:
+                this.menu_ChooseAI_popOut(PopOutDuration);
+                this.menu_ChooseAI_setActive(true);
             case Help:
                 break;
         }
@@ -443,6 +552,9 @@ public class Lobby extends OthelloObject implements GameStage {
 
         this.menuState = nextState;
 
+    }
+    public int getAi(){
+        return this.Level;
     }
 
 

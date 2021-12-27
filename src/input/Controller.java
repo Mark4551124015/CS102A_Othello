@@ -1,7 +1,3 @@
-/**
- * @Author: RogerDTZ
- * @FileName: Controller.java
- */
 
 package input;
 

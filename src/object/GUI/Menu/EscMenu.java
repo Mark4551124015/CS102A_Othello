@@ -1,12 +1,13 @@
-package object;
+package object.GUI.Menu;
 
 import component.animation.Animator;
 import graphics.Image;
 import object.GUI.Buttons.NormalButton;
+import object.OthelloObject;
 
-public class EscMenu extends OthelloObject{
+public class EscMenu extends OthelloObject {
     private OthelloObject EscMenu;
-    private NormalButton Back;
+    private NormalButton Quit;
     private NormalButton Save;
     private NormalButton Load;
     private NormalButton Restart;
@@ -25,9 +26,9 @@ public class EscMenu extends OthelloObject{
         this.setSize(500,150);
         this.EscMenu.setAlpha(0);
 
-        this.Back = new NormalButton("Back");
-        this.Back.setActive(false);
-        this.Back.setPosition(0,120);
+        this.Quit = new NormalButton("Quit");
+        this.Quit.setActive(false);
+        this.Quit.setPosition(0,120);
 
         this.Save = new NormalButton("Save");
         this.Save.setActive(false);
@@ -42,7 +43,7 @@ public class EscMenu extends OthelloObject{
         this.Restart.setPosition(0,-120);
 
         this.addObj(this.EscMenu);
-        this.addObj(this.Back);
+        this.addObj(this.Quit);
         this.addObj(this.Save);
         this.addObj(this.Load);
         this.addObj(this.Restart);
@@ -58,7 +59,7 @@ public class EscMenu extends OthelloObject{
     }
 
     public void setEscMenuActive(boolean flag){
-        this.Back.setActive(flag);
+        this.Quit.setActive(flag);
         this.Save.setActive(flag);
         this.Load.setActive(flag);
         this.Restart.setActive(flag);
@@ -80,7 +81,7 @@ public class EscMenu extends OthelloObject{
         return this.wantRestart;
     }
 
-    public void setBack(boolean flag){
+    public void setQuit(boolean flag){
         this.wantBack = flag;
     }
 
@@ -99,7 +100,7 @@ public class EscMenu extends OthelloObject{
     @Override
     public void update(double dt) {
         super.update(dt);
-        if(this.Back.isClicked()){
+        if(this.Quit.isClicked()){
             this.wantBack = true;
         }
         if(this.Save.isClicked()){

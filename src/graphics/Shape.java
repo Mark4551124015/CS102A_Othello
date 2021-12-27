@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Shape extends OthelloObject {
     public enum Type {
-        Rect, Circle, Others
+        Rectangle, Circle, Others
     }
 
     private Color color;
@@ -40,7 +40,7 @@ public class Shape extends OthelloObject {
         Graphics2D g = img.createGraphics();
         g.setColor(this.color);
         switch(this.type) {
-            case Rect:
+            case Rectangle:
                 g.fillRect(0, 0, w, h);
                 break;
             case Circle:

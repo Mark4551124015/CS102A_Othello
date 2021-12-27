@@ -47,11 +47,11 @@ public class Image {
     public void draw(Graphics2D g2d, AffineTransform at, Vct scale, double setAlpha) {
         if (!this.visibility)
             return;
-        AffineTransform localAt = (AffineTransform) at.clone();
-        localAt.scale(this.baseScale.x * scale.x, this.baseScale.y * scale.y);
-        localAt.translate(- this.width / 2.0, - this.height / 2.0);
+        AffineTransform At = (AffineTransform) at.clone();
+        At.scale(this.baseScale.x * scale.x, this.baseScale.y * scale.y);
+        At.translate(- this.width / 2.0, - this.height / 2.0);
         g2d.setComposite(AlphaComposite.SrcOver.derive((float)(this.color.getAlpha() * setAlpha / 255.0)));
-        g2d.drawImage(this.img, localAt, null);
+        g2d.drawImage(this.img, At, null);
     }
 
 

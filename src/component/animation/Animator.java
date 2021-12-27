@@ -1,7 +1,3 @@
-/**
- * @Author: RogerDTZ
- * @FileName: Animator.java
- */
 
 package component.animation;
 

@@ -9,6 +9,7 @@ import newData.Operation;
 import newData.Vct;
 import newData.intVct;
 import object.*;
+import object.GUI.Menu.EscMenu;
 import object.GUI.PlayerInfoInGame;
 import object.inGame.BoardIndex;
 import object.inGame.DiskManager;
@@ -19,7 +20,6 @@ import stage.GameStage;
 import java.awt.event.KeyEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 import static input.Controller.isKeyDown;
@@ -56,7 +56,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
     private PlayerInfoInGame playerInfoCompetitor;
     private GameResult VictoryScene;
     private boolean ExitToLobby;
-    private object.EscMenu EscMenu;
+    private object.GUI.Menu.EscMenu EscMenu;
 
     private boolean gameOver;
     private boolean gameOverState;
@@ -210,7 +210,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
             this.EscMenu.setAlpha(0);
             this.EscMenu.setEscMenuActive(false);
             this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
-            this.EscMenu.setBack(false);
+            this.EscMenu.setQuit(false);
         }
 
         if(EscMenu.isWantRestart()){
@@ -444,9 +444,6 @@ public class Othello_AI extends OthelloObject implements GameStage {
                     }
 
                 }
-
-
-
                 point += AIDisks.validBP(User).size()*(-10);
                 UserValidPoints.add(point);
                 AIDisks.recallLastDisk();

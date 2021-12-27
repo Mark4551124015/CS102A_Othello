@@ -12,7 +12,7 @@ public class Empty extends OthelloObject implements GameStage {
 
     public Empty() {
         super("scene_empty",null);
-        this.empty = new Shape(this.id + "_empty", Color.black, Shape.Type.Rect, mainApp.WinSize);
+        this.empty = new Shape(this.id + "_empty", Color.black, Shape.Type.Rectangle, mainApp.WinSize);
         this.addObj(this.empty);
         this.empty.setPosition(mainApp.WinSize.x/2, mainApp.WinSize.y/2);
         }

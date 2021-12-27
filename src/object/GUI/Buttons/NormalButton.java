@@ -122,21 +122,21 @@ public class NormalButton extends ButtonBase {
     public void toggleHoverZoom(boolean flag) {
         if (flag && !this.hoverState) {
             this.hoverState = true;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.024, PopOutDuration, true));
+            this.amt_v.forceAppend(Animation.GetSmooth(this.amt_v.val(), 1.024, PopOutDuration, 0));
         } else if (!flag && this.hoverState){
             this.hoverState = false;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.98, PopOutDuration, false));
+            this.amt_v.forceAppend(Animation.GetSmooth(this.amt_v.val(), 0.98, PopOutDuration, 0));
         }
     }
 
     public void togglePressedZoom(boolean flag) {
         if (flag && !this.pressedState) {
             this.pressedState = true;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 0.98, PopOutDuration, true));
+            this.amt_v.forceAppend(Animation.GetSmooth(this.amt_v.val(), 0.98, PopOutDuration, 0));
 
         } else if (!flag && this.pressedState){
             this.pressedState = false;
-            this.amt_v.forceAppend(Animation.GetTanh(this.amt_v.val(), 1.024, PopInDuration, false));
+            this.amt_v.forceAppend(Animation.GetSmooth(this.amt_v.val(), 1.024, PopInDuration, 0));
         }
     }
 

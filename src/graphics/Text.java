@@ -1,7 +1,4 @@
-/**
- * @Author: RogerDTZ
- * @FileName: Text.java
- */
+
 
 package graphics;
 

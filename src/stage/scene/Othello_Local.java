@@ -11,6 +11,7 @@ import newData.intVct;
 import object.*;
 import object.GUI.Buttons.NormalButton;
 import object.GUI.InputBox;
+import object.GUI.Menu.EscMenu;
 import object.GUI.PlayerInfoInGame;
 import object.inGame.BoardIndex;
 import object.inGame.OperationManager;
@@ -19,12 +20,10 @@ import stage.GameStage;
 
 import java.awt.event.KeyEvent;
 import java.awt.geom.NoninvertibleTransformException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static input.Controller.isKeyDown;
 import static input.Controller.mouseIsOnboard;
-import static java.awt.image.ImageObserver.ABORT;
 import static main.PlayerManager.Competitor;
 import static main.PlayerManager.User;
 import static main.mainApp.controller;
@@ -54,7 +53,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
 ///    private GameResult DefearScene;
     private boolean ExitToLobby;
 //    private NormalButton Restart;
-    private EscMenu EscMenu;
+    private object.GUI.Menu.EscMenu EscMenu;
     private boolean isReadyForNextCode;
     private boolean isReadyForNextEsc;
 
@@ -237,7 +236,8 @@ public class Othello_Local extends OthelloObject implements GameStage {
                 this.EscMenu.setVisibility(false);
                 this.EscMenu.setEscMenuActive(false);
                 this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
-                this.EscMenu.setBack(false);
+                this.EscMenu.setQuit(false);
+                this.ExitToLobby = true;
                 this.setGameLoaderActive(false);
             }
 
@@ -312,7 +312,13 @@ public class Othello_Local extends OthelloObject implements GameStage {
     public void SetDiskCheck(){
         Player operator = this.game.getPlayer(this.game.getCurrentSide());
         if (controller.isClicked() && mouseIsOnboard){
-            this.operationManager.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c,mouseBP().r), SetDisk));
+            if (this.game.getPlayer(this.game.getCurrentSide()).isCheating()) {
+                this.operationManager.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c, mouseBP().r), MadeInHeaven));
+            } else {
+                this.operationManager.OperationHandler(new Operation(operator.getUsername(), new intVct(mouseBP().c, mouseBP().r), SetDisk));
+            }
+
+
         }
     }
 
@@ -525,6 +531,7 @@ public class Othello_Local extends OthelloObject implements GameStage {
             if (this.TheWorld >= 5) {
                 this.KeysCnt = 0;
                 this.TheWorld = 0;
+                this.game.getPlayer(this.game.getCurrentSide()).setCheating(false);
             }
         }
 

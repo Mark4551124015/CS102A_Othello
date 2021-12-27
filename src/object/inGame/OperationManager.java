@@ -1,7 +1,5 @@
 package object.inGame;
 
-import main.AttentionManager;
-import main.PlayerManager;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import newData.Operation;
@@ -11,7 +9,6 @@ import object.Player;
 
 import java.util.ArrayList;
 
-import static main.PlayerManager.User;
 import static newData.Operation.Operation_Type.*;
 import static object.Game.gamePath;
 import static util.Tools.getStringFromFile;
@@ -68,7 +65,7 @@ public class OperationManager extends OthelloObject {
                     this.operationList.add(operation);
                 }
             } else if (operator.getColor() != this.game.getCurrentSide()) {
-                AttentionManager.showWarnMessage("Not you round");
+                System.out.println("Not you round");
             }
         }
     }

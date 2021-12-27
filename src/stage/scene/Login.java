@@ -1,7 +1,6 @@
 package stage.scene;
 
 import graphics.Image;
-import main.AttentionManager;
 import main.PlayerManager;
 import main.mainApp;
 import newData.Vct;
@@ -45,7 +44,7 @@ public class Login extends OthelloObject implements GameStage {
                 PlayerManager.User = playerManager.getPlayer(this.choosingMenu.getResult());
                 this.logged = true;
             }catch (Exception e) {
-                AttentionManager.showWarnMessage("Invalid Player");
+                System.out.println("Invalid Player");
                 this.choosingMenu.setSubmitted(false);
             }
         }
