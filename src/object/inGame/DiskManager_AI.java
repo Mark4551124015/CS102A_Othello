@@ -20,7 +20,7 @@ public class DiskManager_AI extends OthelloObject {
     //创建64个棋
     public DiskManager_AI(){
         super("DiskManager_AI_"+DMCnt,null);
-        initBoard();
+        this.initBoard();
         ++DMCnt;
     }
 
@@ -84,7 +84,7 @@ public class DiskManager_AI extends OthelloObject {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c<8; c++) {
-                if (this.Disks[r][c].getVisibility() && this.Disks[r][c].getStatus() == player.getColor()){
+                if (this.Disks[r][c].isVisible() && this.Disks[r][c].getStatus() == player.getColor()){
                     playerDisks.add(new intVct(r,c));
                 }
             }
@@ -130,7 +130,7 @@ public class DiskManager_AI extends OthelloObject {
         System.out.println();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (this.Disks[r][c].getVisibility()){
+                if (this.Disks[r][c].isVisible()){
                     if (this.getDiskStatus(new intVct(r, c))==-1) {
                         System.out.print(" "+ -1);
                     }else{

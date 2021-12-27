@@ -28,9 +28,6 @@ public class GameManager implements Runnable {
 
     public void start() {
         playerManager.readAll();
-        User = playerManager.getPlayer("Mark455");
-        Competitor = playerManager.getPlayer("Jerry");
-
         Thread GMThread = new Thread(this);
         GMThread.start();
 
@@ -53,11 +50,15 @@ public class GameManager implements Runnable {
             }
         } else if (stage.getGameStageID() == GameStageID.Launching) {
             if (((Launching)stage).getTotalTime() >= 2 && ResourceManager.getLoadState() == 2) {
-                this.stageContainer.enterStage(new Login(), new FadeOutTransition(Color.black, 0.3), new FadeInTransition(Color.black, 0.3));
+                this.stageContainer.enterStage(new Login(), new FadeOutTransition(Color.black, 0.5), new FadeInTransition(Color.black, 0.5));
 //                AudioManager.initBGM();
 //                AudioManager.playBGM();
             }
-        }else if (stage.getGameStageID() == GameStageID.Lobby) {
+        }else if (stage.getGameStageID() == GameStageID.Login) {
+            if (((Login) stage).isLogged()) {
+                this.stageContainer.enterStage(new Lobby(), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.OUT), new OthelloTransition(1, 0.3, OthelloTransition.TransitionType.IN));
+            }
+            } else if (stage.getGameStageID() == GameStageID.Lobby) {
             if (((Lobby)stage).isExiting())
                 System.exit(0);
             if (((Lobby)stage).ChosenLocal()) {

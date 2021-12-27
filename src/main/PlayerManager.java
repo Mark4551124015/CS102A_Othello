@@ -32,6 +32,15 @@ public class PlayerManager extends OthelloObject {
     }
 
     public void createPlayer(String username, String name) {
+        if (this.players.size() >= 4) {
+            return;
+        }
+        for (String index : this.playersName) {
+            if (index.equals(username)) {
+                return;
+            }
+        }
+
         try{
             File file = new File("./save/"+playerPath + username);
             file.mkdir();

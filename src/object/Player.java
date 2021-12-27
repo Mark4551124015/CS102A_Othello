@@ -13,6 +13,7 @@ public class Player extends OthelloObject{
     private boolean Ready;
     private int color;
     private int reCalledTime;
+    private boolean Cheating;
 
 //    private boolean isOnline;
 //    private boolean isLocal;
@@ -37,6 +38,7 @@ public class Player extends OthelloObject{
         this.played = 0;
         this.reCalledTime = 0;
         this.type = type;
+        this.Cheating = false;
     }
 
     public Player(JSONObject json) {
@@ -133,4 +135,20 @@ public class Player extends OthelloObject{
     public int getReCalledTime(){
         return this.reCalledTime;
     }
+
+    public void renewReCalledTime(){
+        this.reCalledTime = 0;
+    }
+
+    public void setCheating(boolean flag) {
+        this.Cheating = flag;
+    }
+    public boolean isCheating() {
+        return this.Cheating;
+    }
+
+    public void played(){
+        ++this.played;
+    }
 }
+

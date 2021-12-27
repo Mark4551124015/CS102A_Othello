@@ -1,42 +1,36 @@
 package stage.scene;
 
-import graphics.Shape;
 import graphics.Image;
+import graphics.Shape;
 import input.Controller;
-import main.PlayerManager;
 import main.mainApp;
 import net.sf.json.JSONObject;
 import newData.Operation;
 import newData.Vct;
 import newData.intVct;
-
-import object.GUI.Buttons.NormalButton;
-import object.GUI.PlayerInfoInGame;
-import object.Game;
-import object.OthelloObject;
-import object.Player;
-
 import object.*;
-
+import object.GUI.Buttons.NormalButton;
+import object.GUI.InputBox;
+import object.GUI.PlayerInfoInGame;
 import object.inGame.BoardIndex;
 import object.inGame.OperationManager;
 import stage.GameStage;
 
+
 import java.awt.event.KeyEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 import static input.Controller.isKeyDown;
 import static input.Controller.mouseIsOnboard;
-import static main.mainApp.controller;
-import static newData.Operation.Operation_Type.SetDisk;
-import static object.Game.gameInfoName;
-import static object.Game.gamePath;
-import static object.Player.playerType.local;
+import static java.awt.image.ImageObserver.ABORT;
 import static main.PlayerManager.Competitor;
 import static main.PlayerManager.User;
+import static main.mainApp.controller;
+import static newData.Operation.Operation_Type.*;
+import static object.Game.gameInfoName;
+import static object.Game.gamePath;
 import static object.inGame.DiskManager.isReadyForNextOperation;
 import static stage.StageContainer.BoardSize;
 import static util.Tools.getStringFromFile;
@@ -47,11 +41,6 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
     private Shape canvas;
     private OthelloObject background;
-//    private OthelloObject playerinfow;
-//    private OthelloObject playerinfob;
-
-    private ArrayList<Player> playerList;
-    private Map<Integer, Player> idMap;
 
     private OperationManager operationManager;
 
@@ -62,13 +51,21 @@ public class Othello_Local extends OthelloObject implements GameStage {
     private PlayerInfoInGame playerInfoUser;
     private PlayerInfoInGame playerInfoCompetitor;
     private GameResult VictoryScene;
-////    private GameResult DefearScene;
+///    private GameResult DefearScene;
     private boolean ExitToLobby;
 //    private NormalButton Restart;
     private EscMenu EscMenu;
+    private boolean isReadyForNextCode;
+    private boolean isReadyForNextEsc;
 
-    private boolean gameOver;
-    private boolean gameOverState;
+    private OthelloObject GameLoader;
+    private InputBox gameNameInput;
+    private NormalButton Save;
+    private NormalButton Load;
+
+    private int KeysCnt;
+    private double TheWorld;
+    private double CoolDown;
     double totalTime = 0;
 
     private OthelloObject Board;
@@ -127,7 +124,8 @@ public class Othello_Local extends OthelloObject implements GameStage {
             this.playerInfoCompetitor.setPosition(-465,-80);
         }
 
-        this.VictoryScene = new GameResult(User,Competitor);
+
+        this.VictoryScene = new GameResult(User,Competitor,this.game);
         this.Board.addObj(this.VictoryScene);
         this.VictoryScene.setAlpha(0);
 //        this.VictoryScene.setPosition(10000,10000);
@@ -140,14 +138,31 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
         this.EscMenu = new EscMenu();
         this.background.addObj(this.EscMenu);
-        this.EscMenu.setPosition(0,0);
-        this.EscMenu.setAlpha(0);
+        this.EscMenu.setPosition(320,0);
+        this.EscMenu.setVisibility(false);
+
+        this.GameLoader = new OthelloObject("GameLoader");
+        this.background.addObj(this.GameLoader);
+        this.GameLoader.setPosition(0,0);
+        this.gameNameInput = new InputBox(new Vct(250, 60), "GameName",10);
+        this.gameNameInput.setActive(false);
+        this.Save = new NormalButton("Save");
+        this.Load = new NormalButton("Load");
+        this.GameLoader.addObj(this.Save);
+        this.GameLoader.addObj(this.Load);
+        this.Save.setPosition(-60,80);
+        this.Load.setPosition(60,80);
+
+        this.GameLoader.addObj(this.gameNameInput);
+        this.gameNameInput.setPosition(0,0);
+        this.GameLoader.setVisibility(false);
 
 
         this.game.start();
         totalTime = 0;
         isReadyForOperate =true;
-
+        isReadyForNextEsc=true;
+        this.KeysCnt = 0;
     }
 
     public intVct mouseBP() {
@@ -180,73 +195,103 @@ public class Othello_Local extends OthelloObject implements GameStage {
 
     @Override
     public void update(double dt) {
-        checkMouseOnBoard();
+        if (this.game.getGameEndingState()==0) {
+            checkCheat(dt);
+            checkMouseOnBoard();
 //        System.out.println(mouseBP().c + "" + mouseBP().r);
 
-        this.boardIndex.traceMouse(this.game.getGrid().Disks[mouseBP().c][mouseBP().r].getTrans().position);
+            this.boardIndex.traceMouse(this.game.getGrid().Disks[mouseBP().c][mouseBP().r].getTrans().position);
 
-        totalTime += dt;
-        if (!isReadyForOperate) {
-            controller.cleanClick();
+            totalTime += dt;
+            if (!isReadyForOperate) {
+                controller.cleanClick();
+            }
+
+            if (isReadyForOperate && isReadyForNextOperation()) {
+                SetDiskCheck();
+            }
+
+            if (isKeyDown(KeyEvent.VK_ESCAPE) && isReadyForNextEsc) {
+                isReadyForNextEsc=false;
+                if (!this.EscMenu.isVisible()) {
+                    System.out.println("esc");
+                    this.EscMenu.setVisibility(true);
+                    this.EscMenu.setEscMenuActive(true);
+                    this.GameLoader.setVisibility(true);
+                    this.setGameLoaderActive(true);
+                    this.Board.setPosition(10000, 10000);
+                }else if (this.EscMenu.isVisible()) {
+                    System.out.println("esced");
+                    this.EscMenu.setVisibility(false);
+                    this.EscMenu.setEscMenuActive(false);
+                    this.GameLoader.setVisibility(false);
+                    this.setGameLoaderActive(false);
+                    this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+                }
+            }
+            if (!isKeyDown(KeyEvent.VK_ESCAPE) && !isReadyForNextEsc) {
+                isReadyForNextEsc=true;
+            }
+
+            if (EscMenu.isWantBack()) {
+                this.EscMenu.setVisibility(false);
+                this.EscMenu.setEscMenuActive(false);
+                this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+                this.EscMenu.setBack(false);
+                this.setGameLoaderActive(false);
+            }
+
+            if (EscMenu.isWantRestart()) {
+                this.reStart();
+                this.EscMenu.setRestart(false);
+                this.EscMenu.setVisibility(false);
+                this.EscMenu.setEscMenuActive(false);
+                this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+            }
+
+            if (EscMenu.isWantSave()) {
+                this.saveGame();
+                this.EscMenu.setEscSave(false);
+                this.EscMenu.setAlpha(0);
+                this.EscMenu.setEscMenuActive(false);
+                this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
+            }
+
+            if (EscMenu.isWantReload()) {
+                this.EscMenu.setPosition(320, 0);
+                this.EscMenu.setLoad(false);
+                this.GameLoader.setVisibility(true);
+                this.setGameLoaderActive(true);
+            }
+            if (this.Save.isClicked()) {
+                if (this.gameNameInput.getResult()!=null) {
+                    this.game.setName(this.gameNameInput.getResult());
+                    this.saveGame();
+                }
+            }
+            if (this.Load.isClicked()) {
+                if (this.gameNameInput.getResult()!=null) {
+                    this.loadGame(this.gameNameInput.getResult());
+                }
+            }
+
+
+            this.cleanInComingOperations();
+            this.recallCheck();
+            this.surrenderCheck();
         }
-
-        if (isReadyForOperate && isReadyForNextOperation()) {
-            SetDiskCheck();
-        }
-        super.update(dt);
-
-        if(this.VictoryScene.isWantRestart()){
-            reStart();
+        if (this.VictoryScene.isWantRestart()) {
+            this.reStart();
             this.VictoryScene.setAlpha(0);
             this.VictoryScene.EndingButton_setActive(false);
             this.VictoryScene.setRestart(false);
         }
 
-        if(this.VictoryScene.isWantExitToLobby()){
+        if (this.VictoryScene.isWantExitToLobby()) {
             this.ExitToLobby = true;
-            System.out.println("dian");
         }
-
-        if(game.gameEnd()){
-            this.VictoryScene.setVictoryMenu(1);
-            this.VictoryScene.setAlpha(1);
-            this.VictoryScene.EndingButton_setActive(true);
-        }
-
-        if(playerInfoUser.isWantSurrender() || playerInfoCompetitor.isWantSurrender()){
-            game.gameEnd();
-        }
-
-        if(isKeyDown(KeyEvent.VK_ESCAPE)){
-            this.EscMenu.setAlpha(1);
-            this.EscMenu.setEscMenuActive(true);
-            this.Board.setPosition(10000,10000);
-        }
-
-        if(EscMenu.isWantBack()){
-            this.EscMenu.setAlpha(0);
-            this.EscMenu.setEscMenuActive(false);
-            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
-            this.EscMenu.setBack(false);
-        }
-
-        if(EscMenu.isWantRestart()){
-            reStart();
-            this.EscMenu.setRestart(false);
-            this.EscMenu.setAlpha(0);
-            this.EscMenu.setEscMenuActive(false);
-            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
-        }
-
-        if(EscMenu.isWantSave()){
-            saveGame();
-            this.EscMenu.setEscSave(false);
-            this.EscMenu.setAlpha(0);
-            this.EscMenu.setEscMenuActive(false);
-            this.Board.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
-        }
-
-        recallCheck();
+        this.gameEnding();
+        super.update(dt);
 
     }
 
@@ -279,25 +324,30 @@ public class Othello_Local extends OthelloObject implements GameStage {
     public void reStart(){
         this.game.renew();
         this.operationManager.renew();
-
+        this.game.setGameEndingState(0);
     }
 
-    public boolean loadGame(String gameName){
-        String gameInfoJsonStr = getStringFromFile(gamePath+gameName+gameInfoName);
-        JSONObject gameInfoJson = JSONObject.fromObject(gameInfoJsonStr);
-        if (!Objects.equals(User.getUsername(), gameInfoJson.getString("white_Player")))
+    public void setGameLoaderActive(boolean flag){
+        this.gameNameInput.setActive(flag);
+        this.Save.setActive(flag);
+        this.Load.setActive(flag);
+    }
 
-        if(!Objects.equals(User.getUsername(), gameInfoJson.getString("white_Player")) || !Objects.equals(User.getUsername(), gameInfoJson.getString("black_Player"))){
-            return false;
+    public void loadGame(String gameName){
+        String gameInfoJsonStr = getStringFromFile(gamePath+gameName+"/"+gameInfoName);
+        JSONObject gameInfoJson = JSONObject.fromObject(gameInfoJsonStr);
+        if(!Objects.equals(User.getUsername(), gameInfoJson.getString("white_Player")) && !Objects.equals(User.getUsername(), gameInfoJson.getString("black_Player"))){
+            return;
         }
-        if(!Objects.equals(Competitor.getUsername(), gameInfoJson.getString("white_Player")) || !Objects.equals(Competitor.getUsername(), gameInfoJson.getString("black_Player"))){
-            return false;
+        if(!Objects.equals(Competitor.getUsername(), gameInfoJson.getString("black_Player")) && !Objects.equals(Competitor.getUsername(), gameInfoJson.getString("white_Player"))){
+            return;
         }
         this.operationManager.renew();
         this.game.renew();
         this.game.loadGameInfo(gameInfoJson);
+        this.game.setCurrentPlayer(1);
         this.operationManager.loadOperations();
-        return true;
+        System.out.println("Loaded");
     }
 
     private void cleanInComingOperations() {
@@ -319,27 +369,166 @@ public class Othello_Local extends OthelloObject implements GameStage {
     }
 
     public void recallCheck() {
-        if(this.playerInfoCompetitor.isWantSurrender()){
-            this.game.setWinner(User);
-        }
-        if(this.playerInfoUser.isWantSurrender()){
-            this.game.setWinner(Competitor);
-        }
-
         if(this.playerInfoUser.isWantRecall()){
-            this.game.playerRecall(User);
-            this.playerInfoUser.setRecalled(User.getReCalledTime());
+            operationManager.OperationHandler(new Operation(User.getUsername(),new intVct(),Recall));
             this.playerInfoUser.setRecall(false);
-            this.playerInfoUser.setRecall(false);
-            this.game.setHinted(false);
         }
         if(this.playerInfoCompetitor.isWantRecall()){
-            this.game.playerRecall(Competitor);
-            this.playerInfoCompetitor.setRecalled(Competitor.getReCalledTime());
+            operationManager.OperationHandler(new Operation(Competitor.getUsername(),new intVct(),Recall));
             this.playerInfoCompetitor.setRecall(false);
-            this.playerInfoCompetitor.setRecall(false);
-            this.game.setHinted(false);
+        }
+    }
+    public void surrenderCheck(){
+        if(this.playerInfoCompetitor.isWantSurrender()){
+            this.operationManager.OperationHandler(new Operation(User.getUsername(), new intVct(mouseBP().c,mouseBP().r), Surrender));
+            this.playerInfoCompetitor.setSurrender(false);
+        }
+        if(this.playerInfoUser.isWantSurrender()){
+            this.operationManager.OperationHandler(new Operation(Competitor.getUsername(), new intVct(mouseBP().c,mouseBP().r), Surrender));
+            this.playerInfoUser.setSurrender(false);
+
         }
     }
 
+    public void gameEnding(){
+        if (this.game.getGameEndingState()==1 && this.game.getWinner() != null) {
+            this.VictoryScene.setVictoryMenu(1);
+            this.VictoryScene.setAlpha(1);
+            this.VictoryScene.EndingButton_setActive(true);
+            this.game.setGameEndingState(2);
+            this.game.getPlayer(1).played();
+            this.game.getPlayer(-1).played();
+            if(this.game.getWinner()!=null) {
+                this.game.getWinner().winCntPlus(1);
+            }
+        }
+
+        if (this.game.getGameEndingState()==1 && this.game.getWinner() == null) {
+            this.game.checkGameEnd();
+            this.VictoryScene.setVictoryMenu(1);
+            this.VictoryScene.setAlpha(1);
+            this.VictoryScene.EndingButton_setActive(true);
+            this.game.setGameEndingState(2);
+            this.game.getPlayer(1).played();
+            this.game.getPlayer(-1).played();
+            if(this.game.getWinner()!=null) {
+                this.game.getWinner().winCntPlus(1);
+            }
+            System.out.println("end");
+        }
+
+
+
+
+    }
+
+
+
+    public void checkCheat(double dt){
+        if (isKeyDown(KeyEvent.VK_UP) && this.KeysCnt == 0){
+            this.CoolDown=0;
+            this.KeysCnt=1;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_UP) && this.KeysCnt == 1) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_UP) && this.KeysCnt == 1 && this.isReadyForNextCode){
+            this.KeysCnt=2;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_UP) && this.KeysCnt == 2) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_DOWN) && this.KeysCnt == 2 && this.isReadyForNextCode){
+            this.KeysCnt=3;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_DOWN) && this.KeysCnt == 3) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_DOWN) && this.KeysCnt == 3 && this.isReadyForNextCode){
+            this.KeysCnt=4;
+            this.isReadyForNextCode = false;
+
+        }
+        if (!isKeyDown(KeyEvent.VK_DOWN) && this.KeysCnt == 4) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_LEFT) && this.KeysCnt == 4 && this.isReadyForNextCode){
+            this.KeysCnt=5;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_LEFT) && this.KeysCnt == 5) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_RIGHT) && this.KeysCnt == 5 && this.isReadyForNextCode){
+            this.KeysCnt=6;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_RIGHT) && this.KeysCnt == 6) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_LEFT) && this.KeysCnt == 6 && this.isReadyForNextCode){
+            this.KeysCnt=7;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_LEFT) && this.KeysCnt == 7) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_RIGHT) && this.KeysCnt == 7 && this.isReadyForNextCode){
+            this.KeysCnt=8;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_RIGHT) && this.KeysCnt == 8) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_B) && this.KeysCnt == 8 && this.isReadyForNextCode){
+            this.KeysCnt=9;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_B) && this.KeysCnt == 9) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_A) && this.KeysCnt == 9 && this.isReadyForNextCode){
+            this.KeysCnt=10;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_A) && this.KeysCnt == 10) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_B) && this.KeysCnt == 10 && this.isReadyForNextCode){
+            this.KeysCnt=11;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_B) && this.KeysCnt == 11) {
+            this.isReadyForNextCode = true;
+        }
+        if (isKeyDown(KeyEvent.VK_A) && this.KeysCnt == 11 && this.isReadyForNextCode){
+            this.KeysCnt=12;
+            this.isReadyForNextCode = false;
+        }
+        if (!isKeyDown(KeyEvent.VK_A) && this.KeysCnt == 12) {
+            this.isReadyForNextCode = true;
+        }
+
+        if (this.KeysCnt != 0) {
+            this.CoolDown+=dt;
+            if(this.CoolDown>=10){
+                this.KeysCnt = 0;
+            }
+        }
+        if (this.KeysCnt == 12 && this.isReadyForNextCode) {
+            this.game.getPlayer(this.game.getCurrentSide()).setCheating(true);
+            this.TheWorld += dt;
+            System.out.println("砸 瓦鲁多"+this.TheWorld);
+            if (this.TheWorld >= 5) {
+                this.KeysCnt = 0;
+                this.TheWorld = 0;
+            }
+        }
+
+
+
+    }
 }

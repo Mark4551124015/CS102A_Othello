@@ -44,7 +44,7 @@ public class InputBox extends ButtonBase {
         this.Max = Max;
         this.resizeTo(size);
         this.setImage(new Image("InputBG"));
-
+        this.getImage().resizeTo(size.x*0.9,size.y*0.9);
         this.text = new Text(this.id + "_text_", "", Text_Font);
         this.defaultStr = hint;
         this.text.setText(hint);
@@ -66,11 +66,11 @@ public class InputBox extends ButtonBase {
     }
 
     public String getResult() {
-        if (this.submitted) {
+//        if (this.submitted) {
             this.submitted = false;
             return this.Result;
-        }
-        return null;
+//        }
+//        return null;
     }
 
     @Override
@@ -78,15 +78,31 @@ public class InputBox extends ButtonBase {
         if (this.isHovering() && this.active){
             this.onClicked(e.getButton());
         }
+
+        if (!this.isHovering() && this.active){
+            this.onOutClicked(e.getButton());
+        }
     }
 
     @Override
     public void onClicked(int button) {
-        if (button == 1 && this.Visibility) {
+        if (button == 1 && this.active) {
             this.isSelect=true;
         }
         AudioManager.Play("click");
     }
+
+    public void onOutClicked(int button) {
+        if (button == 1 && this.active) {
+            this.isSelect=false;
+            this.Result =this.stringBuilder.toString();
+        }
+    }
+
+
+
+
+
 
     @Override
     public AffineTransform render(Graphics2D g2d, AffineTransform parentTransform, double alpha) {
@@ -106,15 +122,14 @@ public class InputBox extends ButtonBase {
             if ((int)e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
                 if (this.stringBuilder.length() > 0)
                     this.stringBuilder.deleteCharAt(this.stringBuilder.length() - 1);
-            } else if ((int)e.getKeyChar() == KeyEvent.VK_ENTER) {
-                AudioManager.PlayWithVolume("type", 0.5, 0);
-                this.submit();
             } else {
                 AudioManager.PlayWithVolume("type", 0.5, 0);
                 if (this.stringBuilder.length() < this.Max)
                     this.stringBuilder.append(e.getKeyChar());
             }
         }
+
+
     }
 
     public void submit(){
@@ -122,7 +137,7 @@ public class InputBox extends ButtonBase {
         this.Result =this.stringBuilder.toString();
     }
 
-    public boolean getStatus(){
+    public boolean isSubmitted(){
         return this.submitted;
     }
 
@@ -161,10 +176,11 @@ public class InputBox extends ButtonBase {
     }
 
 
+
+
     public void setActive(boolean flag) {
         this.active = flag;
     }
-
 
     @Override
     public void onMouseMoved(Vct mousePos) {
@@ -181,4 +197,7 @@ public class InputBox extends ButtonBase {
         super.resizeTo(x, y);
     }
 
+    public void setSubmitted(boolean flag) {
+        this.submitted = flag;
+    }
 }

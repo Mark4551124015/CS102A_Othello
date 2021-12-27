@@ -62,7 +62,7 @@ public class OthelloObject {
         return this.id;
     }
 
-    public boolean getVisibility(){
+    public boolean isVisible(){
         return this.Visibility;
     }
 
@@ -245,7 +245,7 @@ public class OthelloObject {
 
 
     public AffineTransform render(Graphics2D g2d, AffineTransform parentTransform, double alpha) {
-        if (!this.getVisibility())
+        if (!this.isVisible())
             return null;
         AffineTransform at;
         if (!this.absoluteTransform)

@@ -14,7 +14,7 @@ import static stage.StageContainer.DiskSize;
 import static util.Tools.cleanArray;
 
 public class DiskManager extends OthelloObject {
-    public Disk[][] Disks = new Disk[8][8];
+    public Disk[][] Disks = new Disk[8][8] ;
     private final direction direction = new direction();
     public static int ReadyForNextOperation;
     private Disk lastDisk;
@@ -55,19 +55,14 @@ public class DiskManager extends OthelloObject {
     public void renewBoard(){
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                this.Disks[r][c].setStatus(0);
+                this.Disks[r][c].detachParentObj();
                 this.Disks[r][c].setVisibility(false);
             }
         }
-        this.Disks[3][4].setVisibility(true);
-        this.Disks[3][4].setStatus(-1);
-        this.Disks[4][3].setVisibility(true);
-        this.Disks[4][3].setStatus(-1);
 
-        this.Disks[3][3].setVisibility(true);
-        this.Disks[3][3].setStatus(1);
-        this.Disks[4][4].setVisibility(true);
-        this.Disks[4][4].setStatus(1);
+        this.initBoard();
+        this.lastDisk = null;
+        this.lastFlippedDisks = new ArrayList<>(0);
 
     }
 
@@ -97,7 +92,7 @@ public class DiskManager extends OthelloObject {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c<8; c++) {
-                if (this.Disks[r][c].getVisibility() && this.Disks[r][c].getStatus() == player.getColor()){
+                if (this.Disks[r][c].isVisible() && this.Disks[r][c].getStatus() == player.getColor()){
                     playerDisks.add(new intVct(r,c));
                 }
             }
@@ -113,11 +108,11 @@ public class DiskManager extends OthelloObject {
 
     //玩家落子
     public boolean SetDisk(intVct bp, Player player) {
-        this.lastFlippedDisks = new ArrayList<>(0);
-        this.lastDisk = Disks[bp.r][bp.c];
         if (checkDisk(bp, player)) {
                 forceSetDisk(bp, player.getColor());
                 switchRound();
+                this.lastFlippedDisks = new ArrayList<>(0);
+                this.lastDisk = Disks[bp.r][bp.c];
                 for (intVct index : check(bp, player, checkPurpose.Flip)) {
                     this.lastFlippedDisks.add(index);
                     this.flipDisk(index);
@@ -144,7 +139,7 @@ public class DiskManager extends OthelloObject {
         System.out.println();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (this.Disks[r][c].getVisibility()){
+                if (this.Disks[r][c].isVisible()){
                     if (this.getDiskStatus(new intVct(r, c))==-1) {
                         System.out.print(" "+ -1);
                     }else{
@@ -284,10 +279,6 @@ public class DiskManager extends OthelloObject {
                 this.WhiteCnt = whites;
             }
         }
-
-
-
-
 
         ReadyForNextOperation = index;
         super.update(dt);

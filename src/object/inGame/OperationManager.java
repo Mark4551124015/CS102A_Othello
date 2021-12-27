@@ -1,6 +1,7 @@
 package object.inGame;
 
 import main.AttentionManager;
+import main.PlayerManager;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import newData.Operation;
@@ -10,6 +11,7 @@ import object.Player;
 
 import java.util.ArrayList;
 
+import static main.PlayerManager.User;
 import static newData.Operation.Operation_Type.*;
 import static object.Game.gamePath;
 import static util.Tools.getStringFromFile;
@@ -41,23 +43,33 @@ public class OperationManager extends OthelloObject {
             operator = this.game.getPlayer(-1);
         }
 
+        if (operation.type == Recall) {
+            this.game.playerRecall(operator);
+            this.game.setHinted(false);
+            this.operationList.add(operation);
+        }
+
+
         if (operation.type == Surrender) {
             if (operator.getColor() == 1) {
                 this.game.setWinner(this.game.getPlayer(-1));
+                this.game.endTheGame();
             } else if (operator.getColor() == -1) {
                 this.game.setWinner(this.game.getPlayer(1));
+                this.game.endTheGame();
             }
-            this.operationList.add(operation);
         } else if (operation.type == MadeInHeaven) {
             this.game.getGrid().forceSetDisk(operation.position, operator.getColor());
             this.operationList.add(operation);
-        } else if (operator.getColor() == this.game.getCurrentSide()) {
-            if (operation.type == SetDisk) {
-                this.game.getGrid().SetDisk(operation.position, operator);
-                this.operationList.add(operation);
+        } else {
+            if (operator.getColor() == this.game.getCurrentSide()) {
+                if (operation.type == SetDisk) {
+                    this.game.getGrid().SetDisk(operation.position, operator);
+                    this.operationList.add(operation);
+                }
+            } else if (operator.getColor() != this.game.getCurrentSide()) {
+                AttentionManager.showWarnMessage("Not you round");
             }
-        } else if (operator.getColor() != this.game.getCurrentSide()){
-            AttentionManager.showWarnMessage("Not you round");
         }
     }
 
@@ -94,6 +106,7 @@ public class OperationManager extends OthelloObject {
         String operationsStr = getStringFromFile(gamePath+this.game.getName()+"/"+OperationFileName);
         for (Object index : JSONArray.fromObject(operationsStr)) {
             this.incomingOperations.add(new Operation(JSONObject.fromObject(index)));
+            System.out.println(index);
         }
     }
 

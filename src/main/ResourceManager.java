@@ -73,6 +73,9 @@ public class ResourceManager {
         addList(basicList, "popo");
         addList(basicList, "LoginBG");
         addList(basicList, "InputBG");
+        addList(basicList, "ChoosingButton");
+        addList(basicList, "LoginBox");
+
 
 
 
@@ -93,6 +96,8 @@ public class ResourceManager {
         addList(fullList, "Transition-left");
         addList(fullList, "Transition-right");
         addList(fullList, "recallCnt");
+        addList(fullList, "ChooseCom");
+
 
 
 

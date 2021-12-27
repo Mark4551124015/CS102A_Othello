@@ -23,6 +23,7 @@ public class GameResult extends OthelloObject{
     private OthelloObject CompetitorProfile;
     private OthelloObject White;
     private OthelloObject Black;
+    private Game game;
     private int WhiteCount;
     private int BlackCount;
     private Text WhiteCnt;
@@ -30,9 +31,9 @@ public class GameResult extends OthelloObject{
     private boolean wantRestart;
     private boolean wantBackToLobby;
 
-    public GameResult(Player User,Player Competitor){
+    public GameResult(Player User,Player Competitor, Game game){
         super("GameEnding");
-
+        this.game= game;
         this.VictoryMenu = new OthelloObject("VictoryMenu");
         this.setImage(new Image("User_info_backGround"));
         this.setSize(850,500);
@@ -66,12 +67,12 @@ public class GameResult extends OthelloObject{
         this.CompetitorProfile.resizeTo(120,120);
         this.CompetitorProfile.setPosition(250,-140);
 
-        this.White = new OthelloObject("White");
+        this.White = new OthelloObject("WhiteD");
         this.White.setImage(new Image("White_Disk"));
         this.White.resizeTo(150,150);
         this.White.setPosition(-250,0);
 
-        this.Black = new OthelloObject("Black");
+        this.Black = new OthelloObject("BlackD");
         this.Black.setImage(new Image("Black_Disk"));
         this.Black.resizeTo(150,150);
         this.Black.setPosition(250,0);
@@ -107,15 +108,17 @@ public class GameResult extends OthelloObject{
 
     public void setVictoryMenu(int a){
         this.VictoryMenu.setAlpha(a);
-        this.UserProfile.resizeTo(150,150);
         if (User.getColor() == 1) {
-            this.BlackCount = new Game(User,Competitor).getBlackCnt();
-            this.WhiteCount = new Game(User,Competitor).getWhiteCnt();
+            this.BlackCount = this.game.getBlackCnt();
+            this.BlackCnt.setText(this.BlackCount+"");
+            this.WhiteCount = this.game.getWhiteCnt();
+            this.WhiteCnt.setText(this.WhiteCount+"");
+
             this.UserProfile.setPosition(-250,-140);
             this.CompetitorProfile.setPosition(250,-140);
         } else if (User.getColor() == -1) {
-            this.BlackCount = new Game(Competitor,User).getBlackCnt();
-            this.WhiteCount = new Game(Competitor,User).getWhiteCnt();
+            this.BlackCount = this.game.getBlackCnt();
+            this.WhiteCount = this.game.getWhiteCnt();
             this.UserProfile.setPosition(250,-140);
             this.CompetitorProfile.setPosition(-250,-140);
         }
@@ -125,13 +128,13 @@ public class GameResult extends OthelloObject{
         this.DefeatMenu.setAlpha(a);
         this.CompetitorProfile.resizeTo(150,150);
         if (User.getColor() == 1) {
-            this.BlackCount = new Game(User,Competitor).getBlackCnt();
-            this.WhiteCount = new Game(User,Competitor).getWhiteCnt();
+            this.BlackCount = this.game.getBlackCnt();
+            this.WhiteCount = this.game.getWhiteCnt();
             this.UserProfile.setPosition(-250,-140);
             this.CompetitorProfile.setPosition(250,-140);
         } else if (User.getColor() == -1) {
-            this.BlackCount = new Game(Competitor,User).getBlackCnt();
-            this.WhiteCount = new Game(Competitor,User).getWhiteCnt();
+            this.BlackCount = this.game.getBlackCnt();
+            this.WhiteCount = this.game.getWhiteCnt();
             this.UserProfile.setPosition(250,-140);
             this.CompetitorProfile.setPosition(-250,-140);
         }
@@ -173,5 +176,16 @@ public class GameResult extends OthelloObject{
             this.wantBackToLobby = true;
         }
         super.update(dt);
+    }
+
+    public void winnerProfile(){
+        if (this.game.getWinner()!=null){
+            if(this.game.getWinner().getColor() == User.getColor()){
+                //
+            }
+            if(this.game.getWinner().getColor() == Competitor.getColor()){
+                //
+            }
+        }
     }
 }

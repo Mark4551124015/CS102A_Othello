@@ -8,7 +8,7 @@ public class EscMenu extends OthelloObject{
     private OthelloObject EscMenu;
     private NormalButton Back;
     private NormalButton Save;
-    private NormalButton Reload;
+    private NormalButton Load;
     private NormalButton Restart;
     private Animator EscMenuA;
     private Animator EscMenuB;
@@ -29,13 +29,13 @@ public class EscMenu extends OthelloObject{
         this.Back.setActive(false);
         this.Back.setPosition(0,120);
 
-        this.Save = new NormalButton("Sav3");
+        this.Save = new NormalButton("Save");
         this.Save.setActive(false);
         this.Save.setPosition(0,40);
 
-        this.Reload = new NormalButton("Reload");
-        this.Reload.setActive(false);
-        this.Reload.setPosition(0,-40);
+        this.Load = new NormalButton("Load");
+        this.Load.setActive(false);
+        this.Load.setPosition(0,-40);
 
         this.Restart = new NormalButton("Restart");
         this.Restart.setActive(false);
@@ -44,7 +44,7 @@ public class EscMenu extends OthelloObject{
         this.addObj(this.EscMenu);
         this.addObj(this.Back);
         this.addObj(this.Save);
-        this.addObj(this.Reload);
+        this.addObj(this.Load);
         this.addObj(this.Restart);
 
         this.EscMenuA = new Animator(0);
@@ -60,7 +60,7 @@ public class EscMenu extends OthelloObject{
     public void setEscMenuActive(boolean flag){
         this.Back.setActive(flag);
         this.Save.setActive(flag);
-        this.Reload.setActive(flag);
+        this.Load.setActive(flag);
         this.Restart.setActive(flag);
     }
 
@@ -88,7 +88,7 @@ public class EscMenu extends OthelloObject{
         this.wantSave = flag;
     }
 
-    public void setReload(boolean flag){
+    public void setLoad(boolean flag){
         this.wantReload = flag;
     }
 
@@ -105,7 +105,7 @@ public class EscMenu extends OthelloObject{
         if(this.Save.isClicked()){
             this.wantSave = true;
         }
-        if(this.Reload.isClicked()){
+        if(this.Load.isClicked()){
             this.wantReload = true;
         }
         if(this.Restart.isClicked()){

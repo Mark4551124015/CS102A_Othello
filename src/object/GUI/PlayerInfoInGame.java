@@ -13,6 +13,7 @@ import java.awt.*;
 public class PlayerInfoInGame extends OthelloObject {
     private OthelloObject playerProfile;
     private Text player_name;
+    private Player player;
     private NormalButton Recall;
     private NormalButton Surrender;
     private boolean wantRecall = false;
@@ -36,9 +37,12 @@ public class PlayerInfoInGame extends OthelloObject {
         this.Surrender = new NormalButton("Surrender");
         int Font_Size = 16;
 
+        this.player = player;
         Font font = FontLibrary.GetMenuButtonFont(10);
         this.Surrender.setFont(font);
         this.Recall.setFont(font);
+
+        this.Recall.setActive(true);
 
         ResourceManager.imgs.put(player.getUsername(),ResourceManager.loadImage("save/players/"+player.getUsername()+"/profile.png"));
         System.out.print("Loaded");
@@ -83,6 +87,7 @@ public class PlayerInfoInGame extends OthelloObject {
 
         this.Surrender.setPosition(0,140);
         this.Surrender.resizeTo(120,50 );
+        this.Surrender.setActive(true);
     }
 
     public boolean isWantRecall(){
@@ -97,6 +102,10 @@ public class PlayerInfoInGame extends OthelloObject {
         this.wantRecall = a;
     }
 
+    public void setSurrender(boolean flag) {
+        this.wantSurrender = flag;
+    }
+
     @Override
     public void update(double dt){
         if(this.Recall.isClicked()){
@@ -105,11 +114,12 @@ public class PlayerInfoInGame extends OthelloObject {
         if(Surrender.isClicked()){
             this.wantSurrender = true;
         }
+
+        this.Recalled = this.player.getReCalledTime();
+        RecallCheck();
         super.update(dt);
     }
-
-    public void setRecalled(int a){
-        this.Recalled = a;
+    public void RecallCheck(){
         if (this.Recalled == 0) {
             this.Recall1.setAlpha(1);
             this.Recall2.setAlpha(1);
