@@ -29,7 +29,7 @@ public class Text extends OthelloObject {
         this.fontName = this.font.getFontName();
         this.fontStyle = this.font.getStyle();
         this.fontSize = this.font.getSize();
-        this.updateSprite();
+        this.updateImage();
     }
 
     public Font getFont(){
@@ -38,7 +38,7 @@ public class Text extends OthelloObject {
 
     public void setColor(Color color) {
         this.color = color;
-        this.updateSprite();
+        this.updateImage();
     }
 
     public void setFontName(String fontName) {
@@ -55,14 +55,14 @@ public class Text extends OthelloObject {
 
     public void setText(String text) {
         this.text = text;
-        this.updateSprite();
+        this.updateImage();
     }
 
     public String getText() {
         return this.text;
     }
 
-    private void updateSprite() {
+    private void updateImage() {
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D tmpG = img.createGraphics();
         tmpG.setFont(this.font);
