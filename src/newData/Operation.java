@@ -42,7 +42,14 @@ public class Operation {
         return null;
     }
 
+    public String getOperator(){
+        return this.Operator;
+    }
+
     public enum Operation_Type {
         SetDisk,Recall,Surrender,MadeInHeaven
     }
+
+
 }
+

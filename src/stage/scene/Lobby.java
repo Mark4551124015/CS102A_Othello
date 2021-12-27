@@ -2,11 +2,14 @@ package stage.scene;
 
 import component.animation.Animation;
 import component.animation.Animator;
+import main.AttentionManager;
+import main.PlayerManager;
 import main.mainApp;
 import newData.Vct;
 import object.GUI.Buttons.MenuButton;
 import object.GUI.Buttons.NormalButton;
 import object.GUI.Buttons.SelectModeButton;
+import object.GUI.Menu.ChoosingMenu;
 import stage.GameStage;
 
 import object.OthelloObject;
@@ -14,6 +17,8 @@ import graphics.Image;
 import util.FontLibrary;
 
 import java.awt.*;
+
+import static main.GameManager.playerManager;
 
 public class Lobby extends OthelloObject implements GameStage {
     //数据部分
@@ -40,7 +45,7 @@ public class Lobby extends OthelloObject implements GameStage {
 
 
     private enum MenuState {
-        Main, SelectMode, Connect, Help, Room, Empty
+        Main, SelectMode, SelectCom, Connect, Help, Room, Empty
     }
 
     private MenuState menuState;
@@ -53,8 +58,7 @@ public class Lobby extends OthelloObject implements GameStage {
     private MenuButton button_main_exit;
     private Animator menu_main_animator;
     private Animator menu_main_alphaAnimator;
-    //
-//    //SelectModeMenu部分
+    //SelectModeMenu部分
     private OthelloObject menu_SelectMode;
     private SelectModeButton button_SelectMode_local;
     private SelectModeButton button_SelectMode_online;
@@ -62,6 +66,12 @@ public class Lobby extends OthelloObject implements GameStage {
     private NormalButton button_SelectMode_back;
     private Animator menu_SelectMode_animator;
     private Animator menu_SelectMode_alphaAnimator;
+    //ChooseCompetitor部分
+    private OthelloObject menu_ChooseCom;
+    private OthelloObject ChooseBox;
+    private ChoosingMenu choosingMenu;
+    private Animator menu_ChooseCom_animator;
+    private Animator menu_ChooseCom_alphaAnimator;
 
     public Lobby() {
         super("scene_lobby");
@@ -75,9 +85,9 @@ public class Lobby extends OthelloObject implements GameStage {
         this.background.resizeTo(mainApp.WinSize);
         this.background.setPosition(mainApp.WinSize.x / 2, mainApp.WinSize.y / 2);
 
-        initMainMenu();
-        initModeMenu();
-
+        this.initMainMenu();
+        this.initModeMenu();
+        this.initChoosingMenu();
         this.menu_main_setActive(true);
 //        this.menu_SelectMode_setActive(true);
 //        this.menuState = MenuState.SelectMode;
@@ -92,7 +102,7 @@ public class Lobby extends OthelloObject implements GameStage {
 
         this.menu_main_update(dt);
         this.menu_SelectMode_update(dt);
-
+        this.menu_ChooseCom_update(dt);
 
         if (this.menuState == MenuState.Main) { // MainTest
             if (this.button_main_start.isClicked()) {
@@ -112,7 +122,7 @@ public class Lobby extends OthelloObject implements GameStage {
 
         if(this.menuState == MenuState.SelectMode){
             if(this.button_SelectMode_local.isClicked()){
-                this.local = true;
+                this.changeMenuState(MenuState.SelectCom);
             }
             if(this.button_SelectMode_online.isClicked()){
                 this.online = true;
@@ -122,6 +132,26 @@ public class Lobby extends OthelloObject implements GameStage {
             }
             if(this.button_SelectMode_back.isClicked()){
                 this.changeMenuState(MenuState.Main);
+            }
+        }
+
+        if(this.menuState == MenuState.SelectCom){
+            if (this.choosingMenu.isSubmitted()) {
+                if (this.choosingMenu.getResult().equals(PlayerManager.User.getUsername())) {
+                    this.choosingMenu.clearChoice();
+                } else {
+                    try {
+                        PlayerManager.Competitor = playerManager.getPlayer(this.choosingMenu.getResult());
+                        this.local = true;
+                    } catch (Exception e) {
+                        AttentionManager.showWarnMessage("Invalid Player");
+                        this.choosingMenu.setSubmitted(false);
+                    }
+                }
+            }
+
+            if(this.button_SelectMode_back.isClicked()){
+                this.changeMenuState(MenuState.SelectMode);
             }
         }
         super.update(dt);
@@ -233,6 +263,8 @@ public class Lobby extends OthelloObject implements GameStage {
         return options;
     }
 
+
+
     public void initModeMenu() {
         this.menu_SelectMode = new OthelloObject("menu_SelectMode");
         this.addObj(this.menu_SelectMode);
@@ -324,6 +356,55 @@ public class Lobby extends OthelloObject implements GameStage {
         return this.back;
     }
 
+
+    public void initChoosingMenu(){
+        this.menu_ChooseCom = new OthelloObject("menu_ChooseCom");
+        this.addObj(this.menu_ChooseCom);
+        this.menu_ChooseCom.setPosition(mainApp.Width/2,mainApp.Height/2);
+
+        this.ChooseBox = new OthelloObject("ChooseBox", new Image("ChooseCom"));
+        this.ChooseBox.resizeTo(mainApp.Width/1.7, mainApp.Height/2);
+
+        this.menu_ChooseCom.addObj(this.ChooseBox);
+        this.choosingMenu = new ChoosingMenu(playerManager.getPlayersName(), "Choose User");
+        this.ChooseBox.addObj(this.choosingMenu);
+
+        //位置
+        this.ChooseBox.setPosition(0, 0);
+        this.choosingMenu.setPosition(0,-5);
+
+
+        this.menu_ChooseCom_animator = new Animator(0);
+        this.menu_ChooseCom_alphaAnimator = new Animator(0);
+        this.menu_ChooseCom.addComponent(this.menu_ChooseCom_animator);
+        this.menu_ChooseCom.addComponent(this.menu_ChooseCom_alphaAnimator);
+
+        this.menu_ChooseCom_setActive(false);
+
+    }
+    private void menu_ChooseCom_setActive(boolean flag) {
+        this.choosingMenu.setActive(flag);
+    }
+
+    private void  menu_ChooseCom_update(double dt) {
+        this.menu_ChooseCom.setPosition(mainApp.Width/2, this.menu_ChooseCom_animator.val());
+        this.menu_ChooseCom.setAlpha(this.menu_ChooseCom_alphaAnimator.val());
+    }
+
+    private void menu_ChooseCom_popOut(double delay) {
+        this.menu_ChooseCom_animator.forceAppend(Animation.GetSmooth(-MenuShift, mainApp.Height/2, PopOutDuration, delay));
+        this.menu_ChooseCom_alphaAnimator.forceAppend(Animation.GetSmooth(this.menu_SelectMode_alphaAnimator.val(), 1, PopOutDuration, delay));
+    }
+
+    private void menu_ChooseCom_popBack(double delay) {
+        this.menu_ChooseCom_animator.forceAppend(Animation.GetSmooth(this.menu_SelectMode_animator.val(), -MenuShift, PopBackDuration, delay));
+        this.menu_ChooseCom_alphaAnimator.forceAppend(Animation.GetSmooth(this.menu_SelectMode_alphaAnimator.val(), 0, PopBackDuration, delay));
+    }
+
+
+
+
+
     private void changeMenuState(MenuState nextState){
         switch (this.menuState) {
             case Main:
@@ -334,6 +415,9 @@ public class Lobby extends OthelloObject implements GameStage {
                 this.menu_SelectMode_popBack(PopBackDuration);
                 this.menu_SelectMode_setActive(false);
                 break;
+            case SelectCom:
+                this.menu_ChooseCom_popBack(PopBackDuration);
+                this.menu_ChooseCom_setActive(false);
             case Help:
                 break;
         }
@@ -346,9 +430,17 @@ public class Lobby extends OthelloObject implements GameStage {
                 this.menu_SelectMode_popOut(PopOutDuration);
                 this.menu_SelectMode_setActive(true);
                 break;
+            case SelectCom:
+                this.menu_ChooseCom_popOut(PopOutDuration);
+                this.menu_ChooseCom_setActive(true);
+                break;
             case Help:
                 break;
         }
+
+
+
+
         this.menuState = nextState;
 
     }

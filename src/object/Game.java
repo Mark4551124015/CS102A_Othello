@@ -20,6 +20,8 @@ public class Game extends OthelloObject{
     private Player whitePlayer;
     private Player blackPlayer;
     private boolean Hint;
+//    private boolean GameEnd;
+    private int GameEndingState;
     private DiskManager Grid;
     private int round;
     private static boolean hinted;
@@ -39,14 +41,19 @@ public class Game extends OthelloObject{
         this.name = "Game_"+formatter.format(date);
         this.setId(this.name);
         this.whitePlayer=white;
+        this.whitePlayer.setColor(1);
         this.blackPlayer=black;
+        this.blackPlayer.setColor(-1);
         this.Grid = new DiskManager();
         this.addObj(Grid);
-        white.setColor(1);
-        black.setColor(-1);
+
         this.Hint = true;
+//        this.GameEnd = false;
+        this.GameEndingState = 0;
         hinted = false;
         CurrentSide = 1;
+        User.renewReCalledTime();
+        Competitor.renewReCalledTime();
     }
 
     public String getName() {
@@ -63,22 +70,29 @@ public class Game extends OthelloObject{
 
     public void renew(){
         this.Grid.renewBoard();
+        User.renewReCalledTime();
+        Competitor.renewReCalledTime();
+
+        this.setHinted(false);
         CurrentSide = 1;
     }
 
     public void update(double dt) {
         super.update(dt);
-        this.Hint();
+        if (this.GameEndingState ==0) {
+            this.Hint();
 
-        if ((this.winner == null || !this.gameEnd() )) {
-            if (this.Grid.validBP(this.whitePlayer).isEmpty()) {
-                CurrentSide = -1;
+            if ((this.winner == null && !this.checkGameEnd() && this.GameEndingState == 0)) {
+                if (this.Grid.validBP(this.whitePlayer).isEmpty()) {
+                    CurrentSide = -1;
+                }
+                if (this.Grid.validBP(this.blackPlayer).isEmpty()) {
+                    CurrentSide = 1;
+                }
             }
-            if (this.Grid.validBP(this.blackPlayer).isEmpty()) {
-                CurrentSide = 1;
+            if(checkGameEnd()) {
             }
         }
-
 
     }
 
@@ -86,8 +100,9 @@ public class Game extends OthelloObject{
         return this.Grid;
     }
 
-    public boolean gameEnd() {
+    public boolean checkGameEnd() {
         if(this.Grid.validBP(this.whitePlayer).isEmpty() && this.Grid.validBP(this.blackPlayer).isEmpty()) {
+            this.GameEndingState = 1;
             return true;
         }
         return false;
@@ -98,15 +113,7 @@ public class Game extends OthelloObject{
         hinted=false;
     }
 
-    public void gameEnding(){
-        if (this.winner == null) {
-            System.out.println("Draw");
-        }
-        else {
-            this.winner.winCntPlus(1);
-            System.out.println("Winner is " + this.winner.getId());
-        }
-    }
+
 
     public int getCurrentSide() {
         return CurrentSide;
@@ -194,7 +201,7 @@ public class Game extends OthelloObject{
 
     public void loadGameInfo(JSONObject json) {
         this.name = json.getString("Name");
-        if (User.getUsername() == json.getString("white_Player") ){
+        if (User.getUsername().equals(json.getString("white_Player"))){
             this.whitePlayer = User;
             this.blackPlayer = Competitor;
             User.setColor(1);
@@ -228,4 +235,26 @@ public class Game extends OthelloObject{
         hinted = flag;
     }
 
+    public void endTheGame() {
+        this.GameEndingState = 1;
+        for (Hinter index : hinters) {
+            index.setVisibility(false);
+            index.detachParentObj();
+        }
+        hinters.clear();
+    }
+
+//    public boolean isGameEnd(){
+//        return this.GameEnd;
+//    }
+
+    public int getGameEndingState(){
+        return this.GameEndingState;
+    }
+    public void setGameEndingState(int a) {
+        this.GameEndingState = a;
+    }
+    public void setCurrentPlayer(int a){
+        this.CurrentSide = a;
+    }
 }

@@ -191,7 +191,7 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public void cleanClick(){
-        if (this.clicked == true ){
+        if (this.clicked ){
             this.clicked = false;
         }
     }

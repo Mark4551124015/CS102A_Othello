@@ -44,8 +44,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
 
     public Player AI;
     private AILevel level;
-    private ArrayList<Player> playerList;
-    private Map<Integer, Player> idMap;
+
 
     private OperationManager operationManager;
 
@@ -118,7 +117,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
             this.playerInfoCompetitor.setPosition(-465,-80);
         }
 
-        this.VictoryScene = new GameResult(User,Competitor);
+        this.VictoryScene = new GameResult(User,Competitor,this.game);
         this.Board.addObj(this.VictoryScene);
         this.VictoryScene.setAlpha(0);
 //        this.VictoryScene.setPosition(10000,10000);
@@ -184,7 +183,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
         }
 
         if(this.VictoryScene.isWantRestart()){
-            reStart();
+            this.reStart();
             this.VictoryScene.setAlpha(0);
             this.VictoryScene.EndingButton_setActive(false);
             this.VictoryScene.setRestart(false);
@@ -195,14 +194,10 @@ public class Othello_AI extends OthelloObject implements GameStage {
             System.out.println("dian");
         }
 
-        if(game.gameEnd()){
+        if(this.game.checkGameEnd()){
             this.VictoryScene.setVictoryMenu(1);
             this.VictoryScene.setAlpha(1);
             this.VictoryScene.EndingButton_setActive(true);
-        }
-
-        if(playerInfoUser.isWantSurrender() || playerInfoCompetitor.isWantSurrender()){
-            game.gameEnd();
         }
 
         if(isKeyDown(KeyEvent.VK_ESCAPE)){
@@ -479,27 +474,16 @@ public class Othello_AI extends OthelloObject implements GameStage {
     }
 
     public void recallCheck() {
-        if(this.playerInfoCompetitor.isWantSurrender()){
-            this.game.setWinner(User);
-        }
         if(this.playerInfoUser.isWantSurrender()){
             this.game.setWinner(Competitor);
         }
 
         if(this.playerInfoUser.isWantRecall()){
             this.game.playerRecall(User);
-            this.playerInfoUser.setRecalled(User.getReCalledTime());
-            this.playerInfoUser.setRecall(false);
             this.playerInfoUser.setRecall(false);
             this.game.setHinted(false);
         }
-        if(this.playerInfoCompetitor.isWantRecall()){
-            this.game.playerRecall(Competitor);
-            this.playerInfoCompetitor.setRecalled(Competitor.getReCalledTime());
-            this.playerInfoCompetitor.setRecall(false);
-            this.playerInfoCompetitor.setRecall(false);
-            this.game.setHinted(false);
-        }
+
     }
 
 

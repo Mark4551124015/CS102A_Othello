@@ -71,9 +71,11 @@ public class Tools {
 
     //删除文件
     public static void delete(String fileName) {
-        File file = new File(path + fileName);
-        if (!file.exists()) return;
+        File file = new File( fileName);
+        System.out.println(file.getPath());
 
+        System.out.print(file.getName());
+        if (!file.exists()) return;
         if (file.isFile() || file.list() == null) {
             file.delete();
             System.out.println("删除了" + file.getName());
@@ -105,6 +107,7 @@ public class Tools {
             }
         }
     }
+
     public static void removeString(ArrayList<String> list, String object) {
         for(int i=0;i<list.size();i++) {
             if(object.equals(list.get(i))) {
