@@ -21,7 +21,7 @@ public class EscMenu extends OthelloObject{
         super("GamePause");
 
         this.EscMenu = new OthelloObject("EscMenu");
-        this.setSprite(new Image("User_info_backGround"));
+        this.setImage(new Image("User_info_backGround"));
         this.setSize(500,150);
         this.EscMenu.setAlpha(0);
 
