@@ -5,7 +5,7 @@ import main.AttentionManager;
 import net.sf.json.JSONObject;
 import object.OthelloObject;
 import object.Player;
-import util.FontLibrary;
+import util.FontLib;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -33,7 +33,7 @@ public class Client_Room extends OthelloObject {
     public Client_Room() {
         super("room");
 
-        this.serverAddress = new Text("server_address", "", FontLibrary.GetMenuButtonFont(30));
+        this.serverAddress = new Text("server_address", "", FontLib.GetMenuButtonFont(30));
         this.serverAddress.setPosition(0, 250);
         this.serverAddress.setColor(new Color(212, 212, 212));
         this.addObj(this.serverAddress);
