@@ -6,7 +6,6 @@ import input.Controller;
 import main.AudioManager;
 import newData.Vct;
 import object.GUI.Buttons.ButtonBase;
-import object.GUI.Buttons.NormalButton;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -123,7 +122,7 @@ public class InputBox extends ButtonBase {
                 if (this.stringBuilder.length() > 0)
                     this.stringBuilder.deleteCharAt(this.stringBuilder.length() - 1);
             } else {
-                AudioManager.PlayWithVolume("type", 0.5, 0);
+                AudioManager.Play("type", 0.5, 0);
                 if (this.stringBuilder.length() < this.Max)
                     this.stringBuilder.append(e.getKeyChar());
             }

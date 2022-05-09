@@ -11,24 +11,24 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 public class AudioManager extends Application {
 
-    private static Map<String, Media> map = new HashMap<>();
+    private static Map<String, Media> ResourceMap = new HashMap<>();
     private static ReentrantLock lock = new ReentrantLock();
     private static MediaPlayer bgmPlayer;
 
 
-    public static void load(String audioName, String audioPath) {
-        if (map.containsKey(audioName))
+    public static void load(String name, String audioPath) {
+        if (ResourceMap.containsKey(name))
             return;
         Media sound = new Media(new File(audioPath).toURI().toString());
-        map.put(audioName, sound);
+        ResourceMap.put(name, sound);
     }
 
     public static void Play(String name, double delay) {
-        PlayWithVolume(name, 1.0, delay);
+        Play(name, 1.0, delay);
     }
 
-    public static void PlayWithVolume(String name, double volume, double delay) {
-        if (map.containsKey(name)) {
+    public static void Play(String name, double volume, double delay) {
+        if (ResourceMap.containsKey(name)) {
             Thread thread = new Thread() {
                 @Override
                 public void run() {
@@ -40,7 +40,7 @@ public class AudioManager extends Application {
                     }
                     if (!lock.isLocked()) {
                         lock.lock();
-                        MediaPlayer mp = new MediaPlayer(map.get(name));
+                        MediaPlayer mp = new MediaPlayer(ResourceMap.get(name));
                         mp.setVolume(volume);
                         mp.play();
                         lock.unlock();
@@ -61,7 +61,7 @@ public class AudioManager extends Application {
     }
 
     public static void initBGM() {
-        bgmPlayer = new MediaPlayer(map.get("bgm"));
+        bgmPlayer = new MediaPlayer(ResourceMap.get("bgm"));
         bgmPlayer.setVolume(0.1);
         bgmPlayer.setOnEndOfMedia(new Runnable() {
             @Override

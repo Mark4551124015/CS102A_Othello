@@ -1,7 +1,3 @@
-/**
- * @Author: RogerDTZ
- * @FileName: Transition.java
- */
 
 package stage.transition;
 

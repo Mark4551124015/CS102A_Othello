@@ -18,22 +18,22 @@ public class Shape extends OthelloObject {
         this.color = color;
         this.type = type;
         this.setSize(size);
-        this.updateSprite();
+        this.updateImage();
     }
 
     public void setColor(Color color) {
         this.color = color;
-        this.updateSprite();
+        this.updateImage();
     }
 
 
 
     public void setType(Type type) {
         this.type = type;
-        this.updateSprite();
+        this.updateImage();
     }
 
-    private void updateSprite() {
+    private void updateImage() {
         int w = (int)Math.round(this.size.x);
         int h = (int)Math.round(this.size.y);
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
