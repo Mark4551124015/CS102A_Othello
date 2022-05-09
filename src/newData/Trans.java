@@ -30,8 +30,8 @@ public class Trans {
         this.angle += angle;
     }
 
-    public void translate(Vct delta) {
-        this.position.add(delta);
+    public void translate(Vct derta) {
+        this.position.add(derta);
     }
 
 }
