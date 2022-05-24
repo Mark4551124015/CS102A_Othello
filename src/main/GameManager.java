@@ -18,7 +18,7 @@ import static stage.transition.FadeTransition.FadeType.OUT;
 public class GameManager implements Runnable {
     public static final int FPS = 144;
 
-    private StageContainer stageContainer;
+    private final StageContainer stageContainer;
     public static PlayerManager playerManager = new PlayerManager();
 
     public GameManager() {

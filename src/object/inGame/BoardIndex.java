@@ -20,10 +20,10 @@ public class BoardIndex extends OthelloObject {
     private boolean clicked;
 
 
-    private Animator amt_hx;
-    private Animator amt_hy;
-    private Animator amt_v;
-    private Animator amt_a;
+    private final Animator amt_hx;
+    private final Animator amt_hy;
+    private final Animator amt_v;
+    private final Animator amt_a;
 
     public BoardIndex(){
         super("boardIndex",new Image("BoardIndex"));

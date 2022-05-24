@@ -19,10 +19,10 @@ public class Game extends OthelloObject{
     private String name;
     private Player whitePlayer;
     private Player blackPlayer;
-    private boolean Hint;
+    private final boolean Hint;
 //    private boolean GameEnd;
     private int GameEndingState;
-    private DiskManager Grid;
+    private final DiskManager Grid;
     private int round;
     private static boolean hinted;
     private Player winner = null;
@@ -255,6 +255,6 @@ public class Game extends OthelloObject{
         this.GameEndingState = a;
     }
     public void setCurrentPlayer(int a){
-        this.CurrentSide = a;
+        CurrentSide = a;
     }
 }

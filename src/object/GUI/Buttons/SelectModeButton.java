@@ -27,16 +27,16 @@ public class SelectModeButton extends ButtonBase {
     public static final double PopInDuration = 0.12;
 
 
-    private OthelloObject root;
-    private Text text;
+    private final OthelloObject root;
+    private final Text text;
 
-    private OthelloObject base;
-    private OthelloObject surface;
+    private final OthelloObject base;
+    private final OthelloObject surface;
 
     private boolean hoverState;
     private boolean pressedState;
 
-    private Animator amt_v;
+    private final Animator amt_v;
 
     private boolean clicked;
 
@@ -127,15 +127,10 @@ public class SelectModeButton extends ButtonBase {
         } catch (NoninvertibleTransformException ignored) {
         }
         if (pos.x <= size.x * (-0.5 + 0.105)) {
-            if ((size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5);
         } else {
-            if ((size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5);
         }
-        return false;
     }
 
     public void toggleHoverZoom(boolean flag) {

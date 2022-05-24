@@ -12,7 +12,7 @@ public class FadeTransition implements Transition {
 
     private boolean active;
     private Animator alphaAnimator;
-    private Shape pc;
+    private final Shape pc;
 
 
     public FadeTransition(Color color, double fadeTime, double delay, FadeType type) {

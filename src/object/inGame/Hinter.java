@@ -10,8 +10,8 @@ import static stage.StageContainer.DiskSize;
 
 public class Hinter extends OthelloObject {
     private static int hinterCnt = 0;
-    private Animator amt_a;
-    private Animator amt_s;
+    private final Animator amt_a;
+    private final Animator amt_s;
     private boolean isEmerged;
     public Hinter(){
         super("Hinter" + hinterCnt,new Image("Hinter"));

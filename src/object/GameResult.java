@@ -13,21 +13,21 @@ import static main.PlayerManager.User;
 
 
 public class GameResult extends OthelloObject{
-    private OthelloObject VictoryMenu;
-    private OthelloObject DefeatMenu;
-    private NormalButton Restart;
-    private NormalButton BackToLobby;
-    private Animator EndingMenu;
-    private Animator EndingMenuA;
-    private OthelloObject UserProfile;
-    private OthelloObject CompetitorProfile;
-    private OthelloObject White;
-    private OthelloObject Black;
-    private Game game;
+    private final OthelloObject VictoryMenu;
+    private final OthelloObject DefeatMenu;
+    private final NormalButton Restart;
+    private final NormalButton BackToLobby;
+    private final Animator EndingMenu;
+    private final Animator EndingMenuA;
+    private final OthelloObject UserProfile;
+    private final OthelloObject CompetitorProfile;
+    private final OthelloObject White;
+    private final OthelloObject Black;
+    private final Game game;
     private int WhiteCount;
     private int BlackCount;
-    private Text WhiteCnt;
-    private Text BlackCnt;
+    private final Text WhiteCnt;
+    private final Text BlackCnt;
     private boolean wantRestart;
     private boolean wantBackToLobby;
 

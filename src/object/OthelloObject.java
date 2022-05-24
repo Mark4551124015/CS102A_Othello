@@ -21,9 +21,9 @@ public class OthelloObject {
     protected OthelloObject parentObject;
     protected ArrayList<OthelloObject> subObject;
     protected Image image;
-    private ArrayList<Component> components;
+    private final ArrayList<Component> components;
     protected double alpha;
-    private double renderPriority;
+    private final double renderPriority;
     private boolean absoluteTransform;
 
 

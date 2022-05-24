@@ -109,11 +109,7 @@ public class Matching extends OthelloObject implements stage.GameStage {
     @Override
     public void update(double dt) {
         if (this.Ready.isClicked()) {
-            if (!User.getReady()) {
-                User.setReady(true);
-            } else {
-                User.setReady(false);
-            }
+            User.setReady(!User.getReady());
         }
 //        System.out.println(mouseBP().c + "" + mouseBP().r);
         super.update(dt);

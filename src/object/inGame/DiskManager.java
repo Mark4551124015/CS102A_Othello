@@ -160,7 +160,7 @@ public class DiskManager extends OthelloObject {
         if(purpose == checkPurpose.Flip) {
             int alongStatus = player.getColor()*-1;
             int targetStatus = player.getColor();
-            for (intVct index : direction.list) {
+            for (intVct index : newData.direction.list) {
                 int k = 1; //每个方向k初始值都是1
                 while (true) {
                     if(        disk.r + k * index.r >= 0
@@ -193,7 +193,7 @@ public class DiskManager extends OthelloObject {
         else if(purpose == checkPurpose.valid) {
             int alongStatus = player.getColor()*-1;
             int targetStatus = 0;
-            for (intVct index : direction.list) {
+            for (intVct index : newData.direction.list) {
                 int k = 1; //每个方向k初始值都是1
                 while (true) {
                     if(        disk.r + k * index.r >= 0
@@ -285,10 +285,7 @@ public class DiskManager extends OthelloObject {
     }
 
     public static boolean isReadyForNextOperation() {
-        if(ReadyForNextOperation != 0){
-            return false;
-        }
-        return true;
+        return ReadyForNextOperation == 0;
     }
 
     public void recallLastDisk(){

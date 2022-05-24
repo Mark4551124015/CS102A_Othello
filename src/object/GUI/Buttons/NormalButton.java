@@ -25,14 +25,14 @@ public class NormalButton extends ButtonBase {
     public static final double PopOutDuration = 0.08;
     public static final double PopInDuration = 0.12;
     public static final Vct NormalButtonSize = new Vct(110,50);
-    private static int ButtonCnt = 0;
+    private static final int ButtonCnt = 0;
 
-    private Text text;
+    private final Text text;
 
 
     private boolean hoverState;
     private boolean pressedState;
-    private Animator amt_v;
+    private final Animator amt_v;
 
     private boolean clicked;
 
@@ -78,11 +78,7 @@ public class NormalButton extends ButtonBase {
         if (this.active) {
             if (isHovering()) {
                 this.toggleHoverZoom(true);
-                if (MouseKeyStatus==1) {
-                    this.togglePressedZoom(true);
-                } else {
-                    this.togglePressedZoom(false);
-                }
+                this.togglePressedZoom(MouseKeyStatus == 1);
             } else {
                 this.toggleHoverZoom(false);
             }
@@ -108,15 +104,10 @@ public class NormalButton extends ButtonBase {
         } catch (NoninvertibleTransformException ignored) {
         }
         if (pos.x <= size.x * (-0.5 + 0.105)) {
-            if ((size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5);
         } else {
-            if ((size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5);
         }
-        return false;
     }
 
     public void toggleHoverZoom(boolean flag) {

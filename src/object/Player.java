@@ -7,7 +7,7 @@ import static object.Player.playerType.local;
 
 public class Player extends OthelloObject{
     private String playerName;
-    private String username;
+    private final String username;
     private int winCnt;
     private int played;
     private boolean Ready;
@@ -19,13 +19,13 @@ public class Player extends OthelloObject{
 //    private boolean isLocal;
 
 
-    private boolean isCheating;
+    private final boolean isCheating;
 
-    public static enum playerType {
+    public enum playerType {
         local, Internet, AI
     }
 
-    private playerType type;
+    private final playerType type;
 
     public Player(String username, String playerName, playerType type) {
         super("Player_" + username);
@@ -118,10 +118,7 @@ public class Player extends OthelloObject{
     }
 
     public boolean isLocal() {
-        if (this.getType() == local) {
-            return true;
-        }
-        return false;
+        return this.getType() == local;
     }
 
     public void resetForGame() {

@@ -12,12 +12,12 @@ public class Disk extends OthelloObject {
     private int status;
     private boolean onBoard;
     private boolean isFlipping;
-    private intVct bP;
+    private final intVct bP;
     private double time;
     private int index;
-    private OthelloObject root;
-    private Animator amt_y;
-    private Animator amt_a;
+    private final OthelloObject root;
+    private final Animator amt_y;
+    private final Animator amt_a;
 
     private int SettingState;
 

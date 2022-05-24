@@ -10,7 +10,7 @@ import java.awt.image.*;
 public class Image {
 
     private int width, height;
-    private Vct baseScale;
+    private final Vct baseScale;
     private Vct unitSize;
     private Color color;
     private BufferedImage img;

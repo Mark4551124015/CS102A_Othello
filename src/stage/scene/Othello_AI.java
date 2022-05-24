@@ -43,7 +43,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
     private OthelloObject background;
 
     public Player AI;
-    private AILevel level;
+    private final AILevel level;
 
 
     private OperationManager operationManager;
@@ -241,11 +241,7 @@ public class Othello_AI extends OthelloObject implements GameStage {
         } catch (NoninvertibleTransformException ignored) {}
 
         intVct intPosition = new intVct((int) Math.floor(pos.x / (BoardSize / 8)) + 4, (int) Math.floor(pos.y / (BoardSize / 8)) + 4);
-        if (intPosition.r > 7 || intPosition.r < 0 || intPosition.c > 7 || intPosition.c < 0 ) {
-            mouseIsOnboard = false;
-        } else {
-            mouseIsOnboard = true;
-        }
+        mouseIsOnboard = intPosition.r <= 7 && intPosition.r >= 0 && intPosition.c <= 7 && intPosition.c >= 0;
     }
 
     public void OperationCheck(){

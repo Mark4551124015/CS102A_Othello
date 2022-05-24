@@ -6,13 +6,13 @@ import object.GUI.Buttons.NormalButton;
 import object.OthelloObject;
 
 public class EscMenu extends OthelloObject {
-    private OthelloObject EscMenu;
-    private NormalButton Quit;
-    private NormalButton Save;
-    private NormalButton Load;
-    private NormalButton Restart;
-    private Animator EscMenuA;
-    private Animator EscMenuB;
+    private final OthelloObject EscMenu;
+    private final NormalButton Quit;
+    private final NormalButton Save;
+    private final NormalButton Load;
+    private final NormalButton Restart;
+    private final Animator EscMenuA;
+    private final Animator EscMenuB;
     private boolean wantBack;
     private boolean wantSave;
     private boolean wantReload;

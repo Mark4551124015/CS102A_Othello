@@ -14,13 +14,13 @@ import java.awt.*;
 public class PlayerInfo extends OthelloObject {
 
     private OthelloObject Player_profile;
-    private OthelloObject Player_Ready;
-    private Player player;
-    private Text Player_Name;
-    private Text Player_Played;
-    private Text Player_WinRate;
+    private final OthelloObject Player_Ready;
+    private final Player player;
+    private final Text Player_Name;
+    private final Text Player_Played;
+    private final Text Player_WinRate;
     private static final int Letter_Space = 30;
-    private static Vct UserInfoSize = new Vct(240,360);
+    private static final Vct UserInfoSize = new Vct(240,360);
 
     public PlayerInfo(Player player) {
         super("Player_info_"+player.getUsername());
@@ -38,7 +38,7 @@ public class PlayerInfo extends OthelloObject {
         } catch (Throwable e){
             this.Player_profile = new OthelloObject(player.getUsername() + "_profile");
         }
-        this.Player_Name = new Text(player.getUsername()+"_Name", player.getName().toString(), new Font("黑体", Font.PLAIN, Font_Size ));
+        this.Player_Name = new Text(player.getUsername()+"_Name", player.getName(), new Font("黑体", Font.PLAIN, Font_Size ));
         String winRate;
         if (player.getPlayed() == 0) {
             winRate = "0";
@@ -67,11 +67,7 @@ public class PlayerInfo extends OthelloObject {
 
     @Override
     public void update(double dt) {
-        if (this.player.getReady()) {
-            this.Player_Ready.setVisibility(true);
-        } else {
-            this.Player_Ready.setVisibility(false);
-        }
+        this.Player_Ready.setVisibility(this.player.getReady());
         super.update(dt);
     }
 

@@ -22,15 +22,15 @@ import java.awt.geom.NoninvertibleTransformException;
 import static input.Controller.MouseKeyStatus;
 
 public class ChoosingButton extends ButtonBase {
-    private OthelloObject checker;
+    private final OthelloObject checker;
 
     private OthelloObject root;
-    private Text text;
+    private final Text text;
 
     private boolean hoverState;
     private boolean pressedState;
     private boolean chosen;
-    private String Contains;
+    private final String Contains;
 
 
     private boolean clicked;
@@ -137,15 +137,10 @@ public class ChoosingButton extends ButtonBase {
         } catch (NoninvertibleTransformException ignored) {
         }
         if (pos.x <= size.x * (-0.5 + 0.105)) {
-            if ((size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5);
         } else {
-            if ((size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5);
         }
-        return false;
     }
 
     @Override

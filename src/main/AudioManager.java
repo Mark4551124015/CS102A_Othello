@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 public class AudioManager extends Application {
 
-    private static Map<String, Media> ResourceMap = new HashMap<>();
-    private static ReentrantLock lock = new ReentrantLock();
+    private static final Map<String, Media> ResourceMap = new HashMap<>();
+    private static final ReentrantLock lock = new ReentrantLock();
     private static MediaPlayer bgmPlayer;
 
 

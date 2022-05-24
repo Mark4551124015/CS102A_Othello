@@ -29,11 +29,11 @@ public class InputBox extends ButtonBase {
     private final static Color Default_Color = new Color(0x98A4A1A1, true) ;
     private final static Font Text_Font = new Font("黑体", Font.BOLD, 15);
 
-    private int Max;
+    private final int Max;
 
-    private StringBuilder stringBuilder;
-    private Text text;
-    private String defaultStr;
+    private final StringBuilder stringBuilder;
+    private final Text text;
+    private final String defaultStr;
 
     public InputBox(Vct size, String hint, int Max) {
         super("InputBox_"+inputCnt);
@@ -163,15 +163,10 @@ public class InputBox extends ButtonBase {
         } catch (NoninvertibleTransformException ignored) {
         }
         if (pos.x <= size.x * (-0.5 + 0.105)) {
-            if ((size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5) <= pos.x && pos.x <= size.x * (-0.5 + 0.105)) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5) && pos.y <= -((-size.y / (0.105 * size.x)) * (pos.x - (size.x * -0.5)) + size.y * 0.5);
         } else {
-            if ((size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5)) {
-                return true;
-            }
+            return (size.x * (-0.5 + 0.105) <= pos.x && pos.x <= size.x * 0.5) && (pos.y >= size.y * (-0.5) && pos.y <= size.y * 0.5);
         }
-        return false;
     }
 
 

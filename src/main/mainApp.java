@@ -41,7 +41,7 @@ public class mainApp extends JFrame {
             @Override
             public void run() {
                 super.run();
-                gm.playerManager.save();
+                GameManager.playerManager.save();
             }
         });
 

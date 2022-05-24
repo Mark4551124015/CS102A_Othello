@@ -11,7 +11,7 @@ public interface GameStage {
     void update(double dt);
     AffineTransform render(Graphics2D g2d);
     GameStageID getGameStageID();
-    public enum GameStageID {
+    enum GameStageID {
         Empty,Launching,Login,Matching,Othello,Othello_AI,Othello_Local,Demo,Lobby
     }
 }

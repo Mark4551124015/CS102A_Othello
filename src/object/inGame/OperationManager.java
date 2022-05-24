@@ -15,10 +15,10 @@ import static util.Tools.getStringFromFile;
 import static util.Tools.saveDataToFile;
 
 public class OperationManager extends OthelloObject {
-    private Game game;
+    private final Game game;
 
     private ArrayList<Operation> operationList;
-    private ArrayList<Operation> incomingOperations;
+    private final ArrayList<Operation> incomingOperations;
 
 
     public static final String OperationFileName="Operations";

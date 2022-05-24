@@ -14,13 +14,13 @@ import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 public class ChoosingMenu extends OthelloObject implements InputCallback {
-    private ArrayList<String> list;
-    private ArrayList<ChoosingButton> buttons;
+    private final ArrayList<String> list;
+    private final ArrayList<ChoosingButton> buttons;
     private final int menuPos=-70;
     private boolean submitted;
     private String Result;
-    private Text title;
-    private OthelloObject menu;
+    private final Text title;
+    private final OthelloObject menu;
 
     public ChoosingMenu(ArrayList<String> list, String title){
         super("ChoosingMenu");

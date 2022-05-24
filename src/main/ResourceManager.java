@@ -20,9 +20,9 @@ import javax.imageio.ImageIO;
 public class ResourceManager {
 //    public static final int MineBackgroundNum = 4;
 
-    private static ArrayList<Pair<Pair<String, String>, Color>> basicList = new ArrayList<>();
-    private static ArrayList<Pair<Pair<String, String>, Color>> fullList = new ArrayList<>();
-    private static ArrayList<Pair<String, String>> soundList = new ArrayList<>();
+    private static final ArrayList<Pair<Pair<String, String>, Color>> basicList = new ArrayList<>();
+    private static final ArrayList<Pair<Pair<String, String>, Color>> fullList = new ArrayList<>();
+    private static final ArrayList<Pair<String, String>> soundList = new ArrayList<>();
     public static Map<String, BufferedImage> imgs = new HashMap<>();
     private static boolean basicLoaded;
     private static boolean fullyLoaded;

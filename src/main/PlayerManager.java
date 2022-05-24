@@ -13,8 +13,8 @@ import static object.Player.playerType.*;
 import static util.Tools.*;
 
 public class PlayerManager extends OthelloObject {
-    private ArrayList<Player> players;
-    private ArrayList<String> playersName;
+    private final ArrayList<Player> players;
+    private final ArrayList<String> playersName;
 
     public static Player User;
     public static Player Competitor;
@@ -48,7 +48,7 @@ public class PlayerManager extends OthelloObject {
             File newfile = new File("./save/"+playerPath + username+ "/profile.png");
 
             FileInputStream in = new FileInputStream(oldFile);
-            FileOutputStream out = new FileOutputStream(newfile);;
+            FileOutputStream out = new FileOutputStream(newfile);
 
 
             byte[] buffer=new byte[2097152];

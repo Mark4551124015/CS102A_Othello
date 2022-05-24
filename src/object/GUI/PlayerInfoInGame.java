@@ -11,16 +11,16 @@ import util.FontLib;
 import java.awt.*;
 
 public class PlayerInfoInGame extends OthelloObject {
-    private OthelloObject playerProfile;
-    private Text player_name;
-    private Player player;
-    private NormalButton Recall;
-    private NormalButton Surrender;
+    private final OthelloObject playerProfile;
+    private final Text player_name;
+    private final Player player;
+    private final NormalButton Recall;
+    private final NormalButton Surrender;
     private boolean wantRecall = false;
     private boolean wantSurrender= false;
-    private OthelloObject Recall1;
-    private OthelloObject Recall2;
-    private OthelloObject Recall3;
+    private final OthelloObject Recall1;
+    private final OthelloObject Recall2;
+    private final OthelloObject Recall3;
     private final static int RecallCntSize = 30;
     private final static int RecallCntSpace = 35;
     private final static int RecallCntFirstSpace = 75;

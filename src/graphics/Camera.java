@@ -9,12 +9,12 @@ import java.awt.geom.AffineTransform;
 
 public class Camera {
 
-    private static OthelloObject obj = new OthelloObject("camera_obj") ;
+    private static final OthelloObject obj = new OthelloObject("camera_obj") ;
 
-    private static Animator rotate = new Animator(0);
-    private static Animator px = new Animator(0);
-    private static Animator py = new Animator(0);
-    private static Animator scale = new Animator(1);
+    private static final Animator rotate = new Animator(0);
+    private static final Animator px = new Animator(0);
+    private static final Animator py = new Animator(0);
+    private static final Animator scale = new Animator(1);
 
 
     public static void update(double dt) {

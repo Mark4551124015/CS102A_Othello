@@ -5,11 +5,12 @@ import newData.intVct;
 import object.Player;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Tools {
 
-    private static String path = "./save/";
+    private static final String path = "./save/";
 
     //存Json
     public static void saveDataToFile(String fileName,String data) {
@@ -25,7 +26,7 @@ public class Tools {
         }
         //写入
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), StandardCharsets.UTF_8));
             writer.write(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,7 +49,7 @@ public class Tools {
         String laststr = "";
         try {
             FileInputStream fileInputStream = new FileInputStream(Path);
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
             reader = new BufferedReader(inputStreamReader);
             String tempString = null;
             while ((tempString = reader.readLine()) != null) {

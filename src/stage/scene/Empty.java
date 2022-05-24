@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Empty extends OthelloObject implements GameStage {
     private double totalTime;
-    private Shape empty;
+    private final Shape empty;
 
     public Empty() {
         super("scene_empty",null);

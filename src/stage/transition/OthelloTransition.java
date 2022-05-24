@@ -14,9 +14,9 @@ public class OthelloTransition implements Transition{
     private Animator alphaAnimator;
     private Animator left;
     private Animator right;
-    private OthelloObject TransitionLeft;
-    private OthelloObject TransitionRight;
-    private OthelloObject TransitionLOGO;
+    private final OthelloObject TransitionLeft;
+    private final OthelloObject TransitionRight;
+    private final OthelloObject TransitionLOGO;
 
 
 

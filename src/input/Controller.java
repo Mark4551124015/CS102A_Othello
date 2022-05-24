@@ -11,10 +11,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.lang.Thread.sleep;
 
 public class Controller implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
-    private static boolean pressed[] = new boolean[1024];
-    private static ArrayList<InputCallback> callbackObjects = new ArrayList<>();
-    private static Vct mousePos = new Vct(0, 0);
-    private static Lock lock = new ReentrantLock();
+    private static final boolean[] pressed = new boolean[1024];
+    private static final ArrayList<InputCallback> callbackObjects = new ArrayList<>();
+    private static final Vct mousePos = new Vct(0, 0);
+    private static final Lock lock = new ReentrantLock();
     public static int MouseKeyStatus;
     public static boolean mouseIsOnboard;
 
